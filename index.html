@@ -42,7 +42,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
         <div class="widget-card h-[380px]">
-            <div class="p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase">Gold Technical Radar</div>
+            <div class="p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-yellow-500">Gold Technical Radar</div>
             <div class="h-full">
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
                 { "interval": "4h", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "OANDA:XAUUSD", "showIntervalTabs": true, "locale": "en", "colorTheme": "dark" }
@@ -50,7 +50,7 @@
             </div>
         </div>
         <div class="widget-card h-[380px]">
-            <div class="p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase">AUD/USD Technical Radar</div>
+            <div class="p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-orange-400">AUD/USD Technical Radar</div>
             <div class="h-full">
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
                 { "interval": "4h", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "FX:AUDUSD", "showIntervalTabs": true, "locale": "en", "colorTheme": "dark" }
@@ -58,7 +58,7 @@
             </div>
         </div>
         <div class="widget-card h-[380px]">
-            <div class="p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 text-blue-400 uppercase font-mono">Volatility (VXX)</div>
+            <div class="p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 text-blue-400 uppercase font-mono">VIX Spot Price ($21.86 Range)</div>
             <div id="vix_chart" class="h-full w-full"></div>
         </div>
     </div>
@@ -69,8 +69,8 @@
             <p class="text-[11px] leading-relaxed text-gray-400 italic font-mono">Australia is a top gold exporter. When Gold (XAUUSD) trends up, the AUD usually follows. Look for moments where Gold moves up but AUD is still low—that is your trade signal.</p>
         </div>
         <div class="bg-gray-900/40 border border-gray-800 p-4 rounded-lg">
-            <h4 class="text-blue-400 font-bold text-xs mb-2 underline">Market Climate (Risk)</h4>
-            <p class="text-[11px] leading-relaxed text-gray-400 italic font-mono">VXX tracks market fear. If VXX is climbing, investors are running to safety. Avoid buying "Risky" pairs like AUD/USD during high VXX spikes.</p>
+            <h4 class="text-blue-400 font-bold text-xs mb-2 underline">Market Climate (VIX)</h4>
+            <p class="text-[11px] leading-relaxed text-gray-400 italic font-mono">The VIX tracks market fear. Levels above 20 indicate elevated risk. During these times, investors run to safety (Gold) and sell "risky" currencies like AUD.</p>
         </div>
         <div class="bg-gray-900/40 border border-gray-800 p-4 rounded-lg">
             <h4 class="text-orange-400 font-bold text-xs mb-2 underline">Radar Interpretation</h4>
@@ -87,16 +87,24 @@
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script>
-        function createChart(id, symbol) {
+        function createChart(id, symbol, style = "1") {
             new TradingView.widget({
-                "autosize": true, "symbol": symbol, "interval": "240", "theme": "dark", "style": "1", 
-                "hide_top_toolbar": true, "container_id": id, "locale": "en"
+                "autosize": true, 
+                "symbol": symbol, 
+                "interval": "240", 
+                "theme": "dark", 
+                "style": style, 
+                "hide_top_toolbar": true, 
+                "container_id": id, 
+                "locale": "en",
+                "hide_legend": true
             });
         }
         createChart("gold_chart", "OANDA:XAUUSD");
         createChart("aud_chart", "FX:AUDUSD");
-        // CHANGED TO VXX FOR RELIABILITY
-        createChart("vix_chart", "VXX");
+        
+        // VIX FIX: Using TVC:VIX for the 21.86 spot value and Style 2 (Line) for clarity
+        createChart("vix_chart", "TVC:VIX", "2");
 
         async function updateLogic() {
             try {
@@ -104,12 +112,10 @@
                 const data = await res.json();
                 const audVal = 1 / data.rates.AUD;
 
-                // Update Sentiment
                 const riskEl = document.getElementById('risk-sentiment');
                 riskEl.innerText = audVal < 0.65 ? "FEAR / RISK-OFF" : "CALM / RISK-ON";
                 riskEl.className = audVal < 0.65 ? "text-sm font-black text-red-500 uppercase" : "text-sm font-black text-green-400 uppercase";
 
-                // Update AUD Bias
                 const audBias = document.getElementById('aud-bias');
                 if(audVal < 0.67) {
                     audBias.innerText = "ACCUMULATE (BUY)";
