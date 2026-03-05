@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse AI | 2026 Resilient Dashboard</title>
+    <title>MacroPulse AI | Professional Terminal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; overflow-x: hidden; }
@@ -11,7 +11,6 @@
         .vix-number { font-size: 3rem; line-height: 1; letter-spacing: -2px; font-weight: 900; }
         .glow-blue { text-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
         .bias-box { background: #1e222d; border: 1px solid #363a45; padding: 10px; border-radius: 8px; text-align: center; flex: 1; }
-        .news-item { border-bottom: 1px solid #2a2e39; padding: 12px 0; }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-thumb { background: #363a45; border-radius: 10px; }
     </style>
@@ -34,7 +33,7 @@
             </div>
             <div class="bias-box border-l-4 border-l-orange-500">
                 <span class="text-[9px] uppercase text-gray-500 font-bold block mb-1">AUD Bias</span>
-                <div class="text-xs font-black text-orange-400 uppercase">NEUTRAL</div>
+                <div id="aud-bias" class="text-xs font-black text-orange-400 uppercase">NEUTRAL</div>
             </div>
         </div>
     </header>
@@ -85,8 +84,18 @@
                 <span class="text-[10px] font-bold uppercase text-yellow-500">Live Macro Wire</span>
                 <span class="animate-pulse w-2 h-2 bg-green-500 rounded-full"></span>
             </div>
-            <div id="news-feed" class="overflow-y-auto p-4 flex-grow space-y-4">
-                <div class="text-gray-500 text-xs animate-pulse italic">Connecting to Alpha Vantage stream...</div>
+            <div class="flex-grow">
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+                {
+                  "feedMode": "all_symbols",
+                  "isTransparent": true,
+                  "displayMode": "regular",
+                  "width": "100%",
+                  "height": "100%",
+                  "colorTheme": "dark",
+                  "locale": "en"
+                }
+                </script>
             </div>
         </div>
     </div>
@@ -95,7 +104,6 @@
     <script>
         const API_KEY = '8LHEJ8SZCZFNOMHN';
 
-        // Load TradingView Charts immediately
         function initCharts() {
             new TradingView.widget({
                 "autosize": true, "symbol": "OANDA:XAUUSD", "interval": "60", "theme": "dark", "style": "1", 
@@ -107,45 +115,24 @@
             });
         }
 
-        async function updateData() {
+        async function updateVix() {
             try {
-                // Fetch VIX first
-                const vixRes = await fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=VIX&apikey=${API_KEY}`);
-                const vixData = await vixRes.json();
-                if (vixData["Global Quote"]) {
-                    const vPrice = parseFloat(vixData["Global Quote"]["05. price"]) || 21.18;
-                    document.getElementById('vix-price').innerText = vPrice.toFixed(2);
-                    document.getElementById('vix-label').innerText = vPrice > 20 ? "Risk-Off Mode" : "Risk-On Mode";
-                    document.getElementById('risk-sentiment').innerText = vPrice > 20 ? "CAUTION / RISK-OFF" : "STABLE / RISK-ON";
+                const res = await fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=VIX&apikey=${API_KEY}`);
+                const data = await res.json();
+                if (data["Global Quote"]) {
+                    const price = parseFloat(data["Global Quote"]["05. price"]) || 21.18;
+                    document.getElementById('vix-price').innerText = price.toFixed(2);
+                    document.getElementById('vix-label').innerText = price > 20 ? "Risk-Off Mode" : "Risk-On Mode";
                 }
-
-                // Fetch News (Sentiment filtered)
-                const newsRes = await fetch(`https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=XAUUSD,AUD,USD&limit=15&apikey=${API_KEY}`);
-                const newsData = await newsRes.json();
-                const container = document.getElementById('news-feed');
-
-                if (newsData.feed) {
-                    container.innerHTML = '';
-                    newsData.feed.forEach(item => {
-                        container.innerHTML += `
-                            <div class="news-item">
-                                <a href="${item.url}" target="_blank" class="block group">
-                                    <p class="text-[8px] text-gray-600 font-bold mb-1 uppercase">${item.source} • ${item.overall_sentiment_label}</p>
-                                    <h4 class="text-[11px] font-bold leading-tight group-hover:text-yellow-500">${item.title}</h4>
-                                </a>
-                            </div>`;
-                    });
-                }
-            } catch (err) { console.error("Terminal Update Error:", err); }
+            } catch (e) { console.error("VIX Sync Error"); }
         }
 
         window.onload = () => {
             initCharts();
-            updateData();
+            updateVix();
         };
 
-        // Update news every 15 minutes to stay within 25 calls/day limit
-        setInterval(updateData, 900000); 
+        setInterval(updateVix, 300000); 
     </script>
 </body>
 </html>
