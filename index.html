@@ -58,7 +58,7 @@
             </div>
         </div>
         <div class="widget-card h-[380px]">
-            <div class="p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 text-blue-400 uppercase font-mono">VIX Spot Price ($21.86 Range)</div>
+            <div class="p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 text-blue-400 uppercase font-mono">VIX Fear Index (Spot)</div>
             <div id="vix_chart" class="h-full w-full"></div>
         </div>
     </div>
@@ -91,20 +91,24 @@
             new TradingView.widget({
                 "autosize": true, 
                 "symbol": symbol, 
-                "interval": "240", 
+                "interval": "D", 
                 "theme": "dark", 
                 "style": style, 
                 "hide_top_toolbar": true, 
                 "container_id": id, 
                 "locale": "en",
-                "hide_legend": true
+                "hide_legend": true,
+                "save_image": false
             });
         }
+        
+        // Standard Charts
         createChart("gold_chart", "OANDA:XAUUSD");
         createChart("aud_chart", "FX:AUDUSD");
         
-        // VIX FIX: Using TVC:VIX for the 21.86 spot value and Style 2 (Line) for clarity
-        createChart("vix_chart", "TVC:VIX", "2");
+        // VIX FIX: Using TVC:VIX for the spot value ($21.86 level)
+        // Style "3" (Area) or "2" (Line) usually bypasses symbol loading blocks better
+        createChart("vix_chart", "TVC:VIX", "3");
 
         async function updateLogic() {
             try {
