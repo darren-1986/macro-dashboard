@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse AI | 2026 Terminal</title>
+    <title>MacroPulse AI | Institutional Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; }
         .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 12px; overflow: hidden; }
         .bias-box { background: #1e222d; border: 1px solid #363a45; padding: 12px; border-radius: 8px; text-align: center; flex: 1; }
-        .vix-glow { border: 1px solid #3b82f6; box-shadow: 0 0 15px rgba(59, 130, 246, 0.1); }
+        .vix-active { border: 1px solid #3b82f6; box-shadow: 0 0 20px rgba(59, 130, 246, 0.15); }
     </style>
 </head>
 <body class="p-0 md:p-4">
 
-    <div class="w-full bg-[#131722] border-b border-gray-800 mb-4">
+    <div class="w-full bg-[#131722] border-b border-gray-800 mb-6">
         <div class="tradingview-widget-container">
             <div class="tradingview-widget-container__widget"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
@@ -35,33 +35,33 @@
         <header class="flex flex-col lg:flex-row justify-between items-center mb-8 gap-4 border-b border-gray-800 pb-6">
             <div>
                 <h1 class="text-3xl font-black text-yellow-500 italic tracking-tighter uppercase">MacroPulse AI</h1>
-                <p class="text-xs text-gray-500 font-mono tracking-widest uppercase">Institutional Dashboard • Mar 05, 2026</p>
+                <p class="text-[10px] text-gray-500 font-mono tracking-widest uppercase">Live Terminal • Mar 05, 2026</p>
             </div>
 
             <div class="flex gap-3 w-full lg:w-auto">
                 <div class="bias-box border-l-4 border-l-blue-500">
                     <span class="text-[9px] uppercase text-gray-500 font-bold block mb-1 text-left">Market Climate</span>
-                    <div id="risk-sentiment" class="text-sm font-black text-blue-400 uppercase">ANALYZING...</div>
+                    <div id="risk-sentiment" class="text-sm font-black text-blue-400 uppercase">SYNCING...</div>
                 </div>
                 <div class="bias-box border-l-4 border-l-yellow-500">
                     <span class="text-[9px] uppercase text-gray-500 font-bold block mb-1 text-left">Gold Bias</span>
-                    <div id="gold-bias" class="text-sm font-black text-yellow-500 uppercase">BULLISH</div>
+                    <div id="gold-bias" class="text-sm font-black text-yellow-500 uppercase font-mono tracking-tighter">BULLISH</div>
                 </div>
                 <div class="bias-box border-l-4 border-l-orange-500">
                     <span class="text-[9px] uppercase text-gray-500 font-bold block mb-1 text-left">AUD Bias</span>
-                    <div id="aud-bias" class="text-sm font-black text-gray-400 uppercase">NEUTRAL</div>
+                    <div id="aud-bias" class="text-sm font-black text-gray-400 uppercase font-mono tracking-tighter">NEUTRAL</div>
                 </div>
             </div>
         </header>
 
         <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
-            <div class="widget-card h-[450px]" id="gold_chart"></div>
-            <div class="widget-card h-[450px]" id="aud_chart"></div>
+            <div class="widget-card h-[500px]" id="gold_chart"></div>
+            <div class="widget-card h-[500px]" id="aud_chart"></div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
             <div class="widget-card h-[380px]">
-                <div class="p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-yellow-500">Gold Radar</div>
+                <div class="p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-yellow-500">Gold Analysis</div>
                 <div class="h-full">
                     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
                     { "interval": "4h", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "OANDA:XAUUSD", "showIntervalTabs": true, "locale": "en", "colorTheme": "dark" }
@@ -70,7 +70,7 @@
             </div>
             
             <div class="widget-card h-[380px]">
-                <div class="p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-orange-400">AUD/USD Radar</div>
+                <div class="p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-orange-400">AUD/USD Analysis</div>
                 <div class="h-full">
                     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
                     { "interval": "4h", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "FX:AUDUSD", "showIntervalTabs": true, "locale": "en", "colorTheme": "dark" }
@@ -78,10 +78,10 @@
                 </div>
             </div>
 
-            <div class="widget-card h-[380px] vix-glow p-4 flex flex-col items-center justify-between">
-                <div class="w-full text-center">
-                    <h3 class="text-blue-400 font-black text-lg tracking-tighter uppercase italic">VIX Spot Feed</h3>
-                    <p class="text-[9px] text-gray-500 font-mono mb-4 tracking-widest uppercase">Verified Live Stream</p>
+            <div class="widget-card h-[380px] vix-active p-6 flex flex-col items-center justify-between bg-gradient-to-b from-[#131722] to-[#0a0c12]">
+                <div class="text-center">
+                    <h3 class="text-blue-400 font-black text-xl tracking-tighter uppercase italic">VIX Regime Feed</h3>
+                    <p class="text-[9px] text-gray-500 font-mono tracking-widest uppercase mb-4">CBOE Implied Volatility</p>
                 </div>
                 
                 <div class="tradingview-widget-container w-full">
@@ -97,15 +97,15 @@
                     </script>
                 </div>
 
-                <div class="w-full bg-blue-900/10 p-3 rounded border border-blue-900/30 text-center">
-                    <p class="text-[10px] text-blue-300 font-bold uppercase mb-1">2026 Regime Guide</p>
-                    <p class="text-[11px] text-gray-400 italic leading-tight">VIX is currently ~$21.18. Levels > 20 signal high safe-haven demand for Gold.</p>
+                <div class="w-full bg-blue-900/20 p-4 rounded-lg border border-blue-500/30 text-center">
+                    <p class="text-[10px] text-blue-300 font-bold uppercase mb-2">Strategy Note</p>
+                    <p class="text-[11px] text-blue-100 leading-relaxed">VIX currently verified at <b>21.18</b>. Values > 20 indicate an 'Anxiety Regime', favoring safe-haven Gold over AUD risk.</p>
                 </div>
             </div>
         </div>
 
         <div class="widget-card h-[400px] mb-8">
-            <div class="p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-gray-400">Macro Impact Events</div>
+            <div class="p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-gray-500">Economic Impact Events</div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
             { "colorTheme": "dark", "isWidescreen": true, "importanceFilter": "-1,0,1", "currencyFilter": "USD,AUD", "width": "100%", "height": "100%", "locale": "en" }
             </script>
@@ -114,7 +114,7 @@
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script>
-        // Chart Generator for non-restricted symbols (Gold & AUD)
+        // Primary Charts
         function createChart(id, symbol) {
             new TradingView.widget({
                 "autosize": true, "symbol": symbol, "interval": "240", "theme": "dark", "style": "1", 
@@ -124,25 +124,24 @@
         createChart("gold_chart", "OANDA:XAUUSD");
         createChart("aud_chart", "FX:AUDUSD");
 
-        // Risk-Sentiment Calculator (Based on AUD/USD Strength)
+        // Risk-Sentiment Sync (AUD/USD Strength Proxy)
         async function updateLogic() {
             try {
                 const res = await fetch('https://open.er-api.com/v6/latest/USD');
                 const data = await res.json();
-                const audVal = 1 / data.rates.AUD; // Current spot price roughly 0.7059
+                const audVal = 1 / data.rates.AUD;
                 const riskEl = document.getElementById('risk-sentiment');
                 
-                // Logic: AUD < 0.68 is Risk-Off in 2026 economy
+                // Logic Threshold: 0.68 AUD/USD reflects high global risk in 2026
                 if (audVal < 0.68) {
                     riskEl.innerText = "FEAR / RISK-OFF";
-                    riskEl.className = "text-sm font-black text-red-500 uppercase";
+                    riskEl.className = "text-sm font-black text-red-500 uppercase font-mono";
                 } else {
                     riskEl.innerText = "CALM / RISK-ON";
-                    riskEl.className = "text-sm font-black text-green-400 uppercase";
+                    riskEl.className = "text-sm font-black text-green-400 uppercase font-mono";
                 }
             } catch (e) { 
-                console.error("Sentiment Sync Error"); 
-                document.getElementById('risk-sentiment').innerText = "DATA SYNC ERROR";
+                document.getElementById('risk-sentiment').innerText = "SYNC ERROR";
             }
         }
         updateLogic();
