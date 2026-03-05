@@ -57,41 +57,23 @@
                 </script>
             </div>
         </div>
+
         <div class="widget-card h-[380px]">
-            <div class="p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 text-blue-400 uppercase font-mono">Volatility Index (VIX)</div>
-            <div class="h-full w-full bg-[#131722]">
+            <div class="p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 text-blue-400 uppercase font-mono">Volatility (VIX Spot)</div>
+            <div class="h-full w-full p-2">
                 <div class="tradingview-widget-container">
                     <div class="tradingview-widget-container__widget"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
                     {
-                      "symbols": [ ["VIX Spot", "TVC:VIX|1D"] ],
-                      "chartOnly": true,
+                      "symbol": "TVC:VIX",
                       "width": "100%",
                       "height": "100%",
                       "locale": "en",
+                      "dateRange": "1M",
                       "colorTheme": "dark",
+                      "isTransparent": true,
                       "autosize": true,
-                      "showVolume": false,
-                      "showMA": false,
-                      "hideDateRanges": false,
-                      "hideMarketStatus": true,
-                      "hideSymbolLogo": true,
-                      "scalePosition": "right",
-                      "scaleMode": "Normal",
-                      "fontFamily": "-apple-system, BlinkMacSystemFont, Trebuchet MS, Roboto, Ubuntu, sans-serif",
-                      "fontSize": "10",
-                      "noTimeScale": false,
-                      "valuesTracking": "1",
-                      "changeMode": "price-and-percent",
-                      "chartType": "area",
-                      "maLineColor": "#2962FF",
-                      "maLineWidth": 1,
-                      "maLength": 9,
-                      "lineWidth": 2,
-                      "lineColor": "#2962FF",
-                      "topColor": "rgba(41, 98, 255, 0.3)",
-                      "bottomColor": "rgba(41, 98, 255, 0)",
-                      "dateFormat": "MMM dd, yyyy"
+                      "largeChartUrl": ""
                     }
                     </script>
                 </div>
@@ -102,15 +84,15 @@
     <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 px-2">
         <div class="bg-gray-900/40 border border-gray-800 p-4 rounded-lg">
             <h4 class="text-yellow-500 font-bold text-xs mb-2 underline">The Gold-AUD Link</h4>
-            <p class="text-[11px] leading-relaxed text-gray-400 italic font-mono">Australia is a top gold exporter. When Gold (XAUUSD) trends up, the AUD usually follows. Look for moments where Gold moves up but AUD is still low—that is your trade signal.</p>
+            <p class="text-[11px] leading-relaxed text-gray-400 italic font-mono">Australia is a top gold exporter. When Gold (XAUUSD) trends up, the AUD usually follows.</p>
         </div>
         <div class="bg-gray-900/40 border border-gray-800 p-4 rounded-lg">
             <h4 class="text-blue-400 font-bold text-xs mb-2 underline">Market Climate (VIX)</h4>
-            <p class="text-[11px] leading-relaxed text-gray-400 italic font-mono">The VIX tracks market fear. Levels above 20 indicate elevated risk. During these times, investors run to safety (Gold) and sell "risky" currencies like AUD.</p>
+            <p class="text-[11px] leading-relaxed text-gray-400 italic font-mono">VIX above 20 (like the current $21.86) means high fear. Avoid risky AUD buys; look for Gold safety.</p>
         </div>
         <div class="bg-gray-900/40 border border-gray-800 p-4 rounded-lg">
             <h4 class="text-orange-400 font-bold text-xs mb-2 underline">Radar Interpretation</h4>
-            <p class="text-[11px] leading-relaxed text-gray-400 italic font-mono">These gauges show the "Buy/Sell" consensus. For a high-probability trade, you want the Gold Radar and AUD Radar to both point toward "Strong Buy" at the same time.</p>
+            <p class="text-[11px] leading-relaxed text-gray-400 italic font-mono">For a safe trade, wait for both Gold and AUD radars to hit "Strong Buy" together.</p>
         </div>
     </section>
 
@@ -125,15 +107,8 @@
     <script>
         function createChart(id, symbol) {
             new TradingView.widget({
-                "autosize": true, 
-                "symbol": symbol, 
-                "interval": "240", 
-                "theme": "dark", 
-                "style": "1", 
-                "hide_top_toolbar": true, 
-                "container_id": id, 
-                "locale": "en",
-                "hide_legend": true
+                "autosize": true, "symbol": symbol, "interval": "240", "theme": "dark", "style": "1", 
+                "hide_top_toolbar": true, "container_id": id, "locale": "en"
             });
         }
         createChart("gold_chart", "OANDA:XAUUSD");
@@ -144,22 +119,11 @@
                 const res = await fetch('https://open.er-api.com/v6/latest/USD');
                 const data = await res.json();
                 const audVal = 1 / data.rates.AUD;
-
                 const riskEl = document.getElementById('risk-sentiment');
                 riskEl.innerText = audVal < 0.65 ? "FEAR / RISK-OFF" : "CALM / RISK-ON";
                 riskEl.className = audVal < 0.65 ? "text-sm font-black text-red-500 uppercase" : "text-sm font-black text-green-400 uppercase";
-
-                const audBias = document.getElementById('aud-bias');
-                if(audVal < 0.67) {
-                    audBias.innerText = "ACCUMULATE (BUY)";
-                    audBias.className = "text-sm font-black text-green-500 uppercase";
-                } else {
-                    audBias.innerText = "FAIR VALUE (HOLD)";
-                    audBias.className = "text-sm font-black text-gray-400 uppercase";
-                }
             } catch (e) { console.error("Sync Error"); }
         }
-        setInterval(updateLogic, 60000);
         updateLogic();
     </script>
 </body>
