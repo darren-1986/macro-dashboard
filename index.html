@@ -58,43 +58,25 @@
             </div>
         </div>
 
-        <div class="widget-card h-[380px]">
-            <div class="p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 text-blue-400 uppercase font-mono">Volatility (VIX Spot)</div>
-            <div class="h-full w-full p-2">
-                <div class="tradingview-widget-container">
-                    <div class="tradingview-widget-container__widget"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
-                    {
-                      "symbol": "TVC:VIX",
-                      "width": "100%",
-                      "height": "100%",
-                      "locale": "en",
-                      "dateRange": "1M",
-                      "colorTheme": "dark",
-                      "isTransparent": true,
-                      "autosize": true,
-                      "largeChartUrl": ""
-                    }
-                    </script>
-                </div>
+        <div class="widget-card h-[380px] flex flex-col justify-center items-center">
+            <div class="w-full p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 text-blue-400 uppercase font-mono mb-auto">VIX Fear Index (Spot)</div>
+            <div class="tradingview-widget-container w-full px-4 pb-8">
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+                {
+                  "symbol": "TVC:VIX",
+                  "width": "100%",
+                  "colorTheme": "dark",
+                  "isTransparent": true,
+                  "locale": "en"
+                }
+                </script>
+            </div>
+            <div class="p-4 text-[10px] text-gray-500 italic text-center border-t border-gray-800 w-full">
+                If the chart above is blank, CBOE is blocking your IP. <br> Use the $21.86 spot value for bias.
             </div>
         </div>
     </div>
-
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 px-2">
-        <div class="bg-gray-900/40 border border-gray-800 p-4 rounded-lg">
-            <h4 class="text-yellow-500 font-bold text-xs mb-2 underline">The Gold-AUD Link</h4>
-            <p class="text-[11px] leading-relaxed text-gray-400 italic font-mono">Australia is a top gold exporter. When Gold (XAUUSD) trends up, the AUD usually follows.</p>
-        </div>
-        <div class="bg-gray-900/40 border border-gray-800 p-4 rounded-lg">
-            <h4 class="text-blue-400 font-bold text-xs mb-2 underline">Market Climate (VIX)</h4>
-            <p class="text-[11px] leading-relaxed text-gray-400 italic font-mono">VIX above 20 (like the current $21.86) means high fear. Avoid risky AUD buys; look for Gold safety.</p>
-        </div>
-        <div class="bg-gray-900/40 border border-gray-800 p-4 rounded-lg">
-            <h4 class="text-orange-400 font-bold text-xs mb-2 underline">Radar Interpretation</h4>
-            <p class="text-[11px] leading-relaxed text-gray-400 italic font-mono">For a safe trade, wait for both Gold and AUD radars to hit "Strong Buy" together.</p>
-        </div>
-    </section>
 
     <div class="widget-card h-[400px] mb-8">
         <div class="p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase">Macro Economic Calendar</div>
@@ -116,15 +98,4 @@
 
         async function updateLogic() {
             try {
-                const res = await fetch('https://open.er-api.com/v6/latest/USD');
-                const data = await res.json();
-                const audVal = 1 / data.rates.AUD;
-                const riskEl = document.getElementById('risk-sentiment');
-                riskEl.innerText = audVal < 0.65 ? "FEAR / RISK-OFF" : "CALM / RISK-ON";
-                riskEl.className = audVal < 0.65 ? "text-sm font-black text-red-500 uppercase" : "text-sm font-black text-green-400 uppercase";
-            } catch (e) { console.error("Sync Error"); }
-        }
-        updateLogic();
-    </script>
-</body>
-</html>
+                const res =
