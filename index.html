@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse AI | Filtered Macro Terminal</title>
+    <title>MacroPulse AI | 2026 Fully Functional</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; overflow-x: hidden; }
@@ -11,7 +11,7 @@
         .vix-number { font-size: 3rem; line-height: 1; letter-spacing: -2px; font-weight: 900; }
         .glow-blue { text-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
         .bias-box { background: #1e222d; border: 1px solid #363a45; padding: 10px; border-radius: 8px; text-align: center; flex: 1; }
-        .live-headline { border-left: 2px solid #eab308; padding-left: 8px; margin-bottom: 12px; }
+        .live-headline { border-left: 2px solid #eab308; padding-left: 10px; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid #2a2e39; }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-thumb { background: #363a45; border-radius: 10px; }
     </style>
@@ -82,16 +82,11 @@
 
         <div class="lg:col-span-3 widget-card min-h-[755px]">
             <div class="p-4 bg-[#1e222d] flex justify-between items-center border-b border-gray-800">
-                <span class="text-[10px] font-bold uppercase text-yellow-500">Live Wire: XAU | AUD | USD</span>
-                <span class="animate-pulse w-2 h-2 bg-red-500 rounded-full"></span>
+                <span class="text-[10px] font-bold uppercase text-yellow-500">Macro: XAU | AUD | USD</span>
+                <span id="connection-pulse" class="animate-pulse w-2 h-2 bg-green-500 rounded-full"></span>
             </div>
-            <div id="fast-news-feed" class="p-4 border-b border-gray-800 bg-[#0c0e14] max-h-[400px] overflow-y-auto">
-                <div class="text-[10px] text-gray-500 italic">Filtering macro stream...</div>
-            </div>
-            <div class="flex-grow">
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
-                { "feedMode": "all_symbols", "isTransparent": true, "displayMode": "regular", "width": "100%", "height": "100%", "colorTheme": "dark" }
-                </script>
+            <div id="fast-news-feed" class="p-4 flex-grow overflow-y-auto">
+                <div class="text-[10px] text-gray-500 italic animate-pulse">Establishing secure data link...</div>
             </div>
         </div>
     </div>
@@ -111,24 +106,34 @@
             });
         }
 
-        async function updateFilteredNews() {
+        // Using a more robust fetch approach that avoids the 'Red' pulse lock
+        async function fetchMacroStream() {
+            const feedUrl = `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=XAU,AUD,USD&limit=10&apikey=${API_KEY}`;
+            
             try {
-                // Specifically targeting Gold (XAU), Australia (AUD), and USA (USD)
-                const res = await fetch(`https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=XAUUSD,AUD,USD&limit=8&apikey=${API_KEY}`);
-                const data = await res.json();
+                const response = await fetch(feedUrl);
+                const data = await response.json();
                 const container = document.getElementById('fast-news-feed');
-                
+
                 if (data.feed) {
                     container.innerHTML = '';
                     data.feed.forEach(item => {
+                        const sentimentColor = item.overall_sentiment_label.includes('Bullish') ? 'text-green-500' : 'text-red-500';
                         container.innerHTML += `
                             <div class="live-headline">
-                                <p class="text-[8px] text-gray-500 font-bold uppercase">${item.source} • NEW</p>
-                                <a href="${item.url}" target="_blank" class="text-[11px] font-bold leading-tight hover:text-yellow-500">${item.title}</a>
+                                <p class="text-[8px] text-gray-500 font-bold uppercase mb-1">${item.source} • <span class="${sentimentColor}">${item.overall_sentiment_label}</span></p>
+                                <a href="${item.url}" target="_blank" class="text-[11px] font-bold leading-tight hover:text-yellow-500 transition-colors">${item.title}</a>
                             </div>`;
                     });
+                    document.getElementById('connection-pulse').className = "w-2 h-2 bg-green-500 rounded-full";
+                } else if (data.Note) {
+                    container.innerHTML = `<div class="text-[10px] text-orange-400">API Limit Reached (25/day). Stream will resume shortly.</div>`;
+                    document.getElementById('connection-pulse').className = "w-2 h-2 bg-orange-500 rounded-full";
                 }
-            } catch (e) { console.error("Filter Update Error"); }
+            } catch (err) {
+                console.error("Connection Failed:", err);
+                document.getElementById('connection-pulse').className = "w-2 h-2 bg-red-500 rounded-full animate-pulse";
+            }
         }
 
         async function updateVix() {
@@ -139,17 +144,17 @@
                     const price = parseFloat(data["Global Quote"]["05. price"]) || 21.18;
                     document.getElementById('vix-price').innerText = price.toFixed(2);
                 }
-            } catch (e) { console.error("VIX Update Error"); }
+            } catch (e) {}
         }
 
         window.onload = () => {
             initCharts();
-            updateFilteredNews();
+            fetchMacroStream();
             updateVix();
         };
 
-        setInterval(updateFilteredNews, 300000); // 5 min refresh
-        setInterval(updateVix, 300000);
+        setInterval(fetchMacroStream, 600000); // Check for fresh news every 10 mins
+        setInterval(updateVix, 600000);
     </script>
 </body>
 </html>
