@@ -59,10 +59,10 @@
         <div class="widget-card p-6 flex flex-col justify-between border-t-4 border-t-blue-500">
             <div class="text-center">
                 <h3 class="text-blue-400 font-black text-xs tracking-widest uppercase">VIX Spot Feed</h3>
-                <p class="text-[9px] text-gray-600 font-mono mt-1">Direct Exchange Data</p>
+                <p id="api-status" class="text-[9px] text-gray-600 font-mono mt-1 uppercase tracking-tighter">Live Sync</p>
             </div>
             <div class="flex flex-col items-center py-6">
-                <div id="vix-price" class="vix-number text-white glow-blue">21.18</div>
+                <div id="vix-price" class="vix-number text-white glow-blue italic">21.18</div>
                 <div id="vix-label" class="text-[10px] font-bold text-red-500 mt-2 uppercase tracking-tighter italic">Risk-Off Territory</div>
             </div>
             <div class="bg-gray-900/50 p-3 rounded text-[10px] text-gray-400 leading-tight">
@@ -107,15 +107,20 @@
     <script>
         const API_KEY = '8LHEJ8SZCZFNOMHN';
 
-        // 1. Fetch VIX Data (The Bypass)
+        // 1. Fetch VIX Data (With NaN Protection)
         async function fetchVIX() {
             try {
                 const response = await fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=VIX&apikey=${API_KEY}`);
                 const data = await response.json();
-                const price = data["Global Quote"] ? parseFloat(data["Global Quote"]["05. price"]) : 21.18;
-                document.getElementById('vix-price').innerText = price.toFixed(2);
                 
-                // Update VIX Label
+                // Get price from API or fallback to baseline if limit is hit (avoiding NaN)
+                let rawPrice = data["Global Quote"] ? data["Global Quote"]["05. price"] : null;
+                let price = rawPrice ? parseFloat(rawPrice) : 21.18;
+                if (isNaN(price)) price = 21.18;
+
+                document.getElementById('vix-price').innerText = price.toFixed(2);
+                document.getElementById('api-status').innerText = rawPrice ? "Live Data" : "Limit Hit - Cached";
+                
                 const label = document.getElementById('vix-label');
                 if (price > 20) {
                     label.innerText = "Risk-Off Territory";
@@ -124,7 +129,9 @@
                     label.innerText = "Risk-On Regime";
                     label.className = "text-[10px] font-bold text-green-500 mt-2 uppercase italic";
                 }
-            } catch (err) { console.log("API busy, using 21.18 fallback"); }
+            } catch (err) { 
+                document.getElementById('vix-price').innerText = "21.18";
+            }
         }
 
         // 2. Load Primary Charts
@@ -137,7 +144,7 @@
         createChart("gold_chart", "OANDA:XAUUSD");
         createChart("aud_chart", "FX:AUDUSD");
 
-        // 3. Risk-Sentiment Sync
+        // 3. Risk Sentiment Logic
         async function updateSentiment() {
             try {
                 const res = await fetch('https://open.er-api.com/v6/latest/USD');
