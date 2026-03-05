@@ -57,23 +57,26 @@
                 </script>
             </div>
         </div>
-
-        <div class="widget-card h-[380px] flex flex-col justify-center items-center">
-            <div class="w-full p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 text-blue-400 uppercase font-mono mb-auto">VIX Fear Index (Spot)</div>
-            <div class="tradingview-widget-container w-full px-4 pb-8">
-                <div class="tradingview-widget-container__widget"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-                {
-                  "symbol": "TVC:VIX",
-                  "width": "100%",
-                  "colorTheme": "dark",
-                  "isTransparent": true,
-                  "locale": "en"
-                }
-                </script>
+        <div class="widget-card h-[380px] flex flex-col">
+            <div class="p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 text-blue-400 uppercase font-mono">Volatility Index (Spot)</div>
+            <div class="flex-grow flex items-center justify-center p-4">
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js" async>
+                    {
+                      "symbol": "TVC:VIX",
+                      "width": "100%",
+                      "locale": "en",
+                      "colorTheme": "dark",
+                      "isTransparent": true
+                    }
+                    </script>
+                </div>
             </div>
-            <div class="p-4 text-[10px] text-gray-500 italic text-center border-t border-gray-800 w-full">
-                If the chart above is blank, CBOE is blocking your IP. <br> Use the $21.86 spot value for bias.
+            <div class="p-4 bg-blue-900/10 border-t border-gray-800">
+                <p class="text-[10px] text-gray-400 font-mono leading-tight">
+                    <span class="text-blue-400 font-bold">BIAS NOTE:</span> If VIX stays above 20.00, avoid "Risk-On" AUD plays. Watch for Gold safe-haven moves.
+                </p>
             </div>
         </div>
     </div>
@@ -89,8 +92,15 @@
     <script>
         function createChart(id, symbol) {
             new TradingView.widget({
-                "autosize": true, "symbol": symbol, "interval": "240", "theme": "dark", "style": "1", 
-                "hide_top_toolbar": true, "container_id": id, "locale": "en"
+                "autosize": true, 
+                "symbol": symbol, 
+                "interval": "240", 
+                "theme": "dark", 
+                "style": "1", 
+                "hide_top_toolbar": true, 
+                "container_id": id, 
+                "locale": "en",
+                "hide_legend": true
             });
         }
         createChart("gold_chart", "OANDA:XAUUSD");
@@ -98,4 +108,26 @@
 
         async function updateLogic() {
             try {
-                const res =
+                const res = await fetch('https://open.er-api.com/v6/latest/USD');
+                const data = await res.json();
+                const audVal = 1 / data.rates.AUD;
+
+                const riskEl = document.getElementById('risk-sentiment');
+                riskEl.innerText = audVal < 0.65 ? "FEAR / RISK-OFF" : "CALM / RISK-ON";
+                riskEl.className = audVal < 0.65 ? "text-sm font-black text-red-500 uppercase" : "text-sm font-black text-green-400 uppercase";
+
+                const audBias = document.getElementById('aud-bias');
+                if(audVal < 0.67) {
+                    audBias.innerText = "ACCUMULATE (BUY)";
+                    audBias.className = "text-sm font-black text-green-500 uppercase";
+                } else {
+                    audBias.innerText = "FAIR VALUE (HOLD)";
+                    audBias.className = "text-sm font-black text-gray-400 uppercase";
+                }
+            } catch (e) { console.error("Sync Error"); }
+        }
+        setInterval(updateLogic, 60000);
+        updateLogic();
+    </script>
+</body>
+</html>
