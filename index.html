@@ -9,7 +9,141 @@
         body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; overflow-x: hidden; }
         .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%; }
         .vix-number { font-size: 3rem; line-height: 1; letter-spacing: -2px; font-weight: 900; }
+        .glow-blue { text-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MacroPulse AI | Proxy-Linked Terminal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%; }
+        .vix-number { font-size: 3rem; line-height: 1; letter-spacing: -2px; font-weight: 900; }
         .glow-blue { text-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+        .bias-box { background: #1e222d; border: 1px solid #363a45; padding: 10px; border-radius: 8px; text-align: center; flex: 1; }
+        .live-headline { border-left: 2px solid #eab308; padding-left: 10px; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid #2a2e39; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: #363a45; border-radius: 10px; }
+        .btn-refresh { background: #1e222d; border: 1px solid #eab308; color: #eab308; padding: 2px 8px; border-radius: 4px; font-size: 9px; cursor: pointer; }
+        .btn-refresh:hover { background: #eab308; color: black; }
+    </style>
+</head>
+<body class="p-4 md:p-6">
+
+    <header class="flex flex-col lg:flex-row justify-between items-center mb-6 gap-4 border-b border-gray-800 pb-6">
+        <div>
+            <h1 class="text-3xl font-black text-yellow-500 italic uppercase">MacroPulse AI</h1>
+            <p class="text-[10px] text-gray-500 font-mono tracking-widest uppercase">Institutional Terminal • Mar 05, 2026</p>
+        </div>
+        <div class="flex gap-3 w-full lg:w-auto">
+            <div class="bias-box border-l-4 border-l-blue-500">
+                <span class="text-[9px] uppercase text-gray-500 font-bold block mb-1">Market Climate</span>
+                <div id="risk-sentiment" class="text-xs font-black text-blue-400 uppercase italic">RISK-ON</div>
+            </div>
+            <div class="bias-box border-l-4 border-l-yellow-500">
+                <span class="text-[9px] uppercase text-gray-500 font-bold block mb-1">Gold Bias</span>
+                <div class="text-xs font-black text-yellow-500 uppercase">BULLISH</div>
+            </div>
+            <div class="bias-box border-l-4 border-l-orange-500">
+                <span class="text-[9px] uppercase text-gray-500 font-bold block mb-1">AUD Bias</span>
+                <div class="text-xs font-black text-orange-400 uppercase">NEUTRAL</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-3 flex flex-col gap-6">
+            <div class="widget-card p-6 border-t-4 border-t-blue-500" style="height: auto;">
+                <h3 class="text-blue-400 font-black text-[10px] uppercase text-center mb-4">VIX Spot Feed</h3>
+                <div class="flex flex-col items-center">
+                    <div id="vix-price" class="vix-number text-white glow-blue italic">21.18</div>
+                    <div id="vix-label" class="text-[10px] font-bold text-red-500 mt-2 uppercase">Risk-Off Mode</div>
+                </div>
+            </div>
+            <div class="widget-card min-h-[450px]">
+                <div class="p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-blue-400">Economic Events</div>
+                <div class="flex-grow">
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
+                    { "colorTheme": "dark", "importanceFilter": "-1,0,1", "currencyFilter": "USD,AUD", "width": "100%", "height": "100%" }
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-6 flex flex-col gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-[350px]">
+                <div class="widget-card" id="gold_chart"></div>
+                <div class="widget-card" id="aud_chart"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-[350px]">
+                <div class="widget-card">
+                    <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-yellow-500 text-center">Gold Technical</div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                    { "interval": "4h", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "OANDA:XAUUSD", "colorTheme": "dark" }
+                    </script>
+                </div>
+                <div class="widget-card">
+                    <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-orange-400 text-center">AUD Technical</div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                    { "interval": "4h", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "FX:AUDUSD", "colorTheme": "dark" }
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-3 widget-card min-h-[755px]">
+            <div class="p-4 bg-[#1e222d] flex justify-between items-center border-b border-gray-800">
+                <span class="text-[10px] font-bold uppercase text-yellow-500">Macro: XAU | AUD | USA</span>
+                <button onclick="fetchMacroStream()" class="btn-refresh">REFRESH</button>
+            </div>
+            <div id="fast-news-feed" class="p-4 flex-grow overflow-y-auto">
+                <div class="text-[10px] text-gray-500 italic">Bypassing local restrictions...</div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script>
+        const API_KEY = '8LHEJ8SZCZFNOMHN';
+
+        function initCharts() {
+            new TradingView.widget({ "autosize": true, "symbol": "OANDA:XAUUSD", "interval": "60", "theme": "dark", "container_id": "gold_chart", "hide_top_toolbar": true });
+            new TradingView.widget({ "autosize": true, "symbol": "FX:AUDUSD", "interval": "60", "theme": "dark", "container_id": "aud_chart", "hide_top_toolbar": true });
+        }
+
+        async function fetchMacroStream() {
+            const feedUrl = `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=XAU,AUD,USD&limit=10&apikey=${API_KEY}`;
+            // Proxy bypass to allow local HTML files to work
+            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(feedUrl)}`;
+            
+            try {
+                const response = await fetch(proxyUrl);
+                const result = await response.json();
+                const data = JSON.parse(result.contents); // AllOrigins wraps the data in a 'contents' string
+                
+                const container = document.getElementById('fast-news-feed');
+                if (data.feed) {
+                    container.innerHTML = '';
+                    data.feed.forEach(item => {
+                        container.innerHTML += `
+                            <div class="live-headline">
+                                <p class="text-[8px] text-gray-500 font-bold uppercase mb-1">${item.source} • ${item.overall_sentiment_label}</p>
+                                <a href="${item.url}" target="_blank" class="text-[11px] font-bold leading-tight hover:text-yellow-500">${item.title}</a>
+                            </div>`;
+                    });
+                } else if (data.Note) {
+                    container.innerHTML = `<div class="text-[10px] text-orange-400">Limit Reached. Please wait 15 mins or hit Refresh later.</div>`;
+                }
+            } catch (err) {
+                document.getElementById('fast-news-feed').innerHTML = `<div class="text-[10px] text-red-500">Connection Error. Click REFRESH to try again.</div>`;
+            }
+        }
+
+        window.onload = () => { initCharts(); fetchMacroStream(); };
+    </script>
+</body>
+</html>
         .bias-box { background: #1e222d; border: 1px solid #363a45; padding: 10px; border-radius: 8px; text-align: center; flex: 1; }
         .live-headline { border-left: 2px solid #eab308; padding-left: 10px; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid #2a2e39; }
         ::-webkit-scrollbar { width: 4px; }
