@@ -3,120 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse Pro | Explained</title>
+    <title>MacroPulse AI | Gold & AUD Terminal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; }
-        .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 12px; overflow: hidden; height: 400px; }
+        .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 12px; overflow: hidden; }
         .bias-box { background: #1e222d; border: 1px solid #363a45; padding: 12px; border-radius: 8px; text-align: center; flex: 1; }
-        .info-pill { background: #2a2e39; padding: 2px 8px; border-radius: 4px; font-size: 10px; color: #9ca3af; }
     </style>
 </head>
 <body class="p-4 md:p-6">
 
-    <div class="flex flex-col lg:flex-row gap-4 mb-8">
-        <div class="bias-box border-l-4 border-l-blue-500">
-            <span class="text-[10px] uppercase text-gray-500 font-bold block">Macro Climate</span>
-            <div id="risk-sentiment" class="text-lg font-black text-blue-400 uppercase tracking-tighter">ANALYZING...</div>
-            <span class="text-[9px] text-gray-500 italic">Overall Market "Weather"</span>
+    <header class="flex flex-col lg:flex-row justify-between items-center mb-8 gap-4 border-b border-gray-800 pb-6">
+        <div>
+            <h1 class="text-3xl font-black text-yellow-500 italic tracking-tighter">MACROPULSE AI</h1>
+            <p class="text-xs text-gray-500 font-mono tracking-widest uppercase">Institutional Gold & FX Dashboard</p>
         </div>
-        <div class="bias-box border-l-4 border-l-yellow-500">
-            <span class="text-[10px] uppercase text-gray-500 font-bold block">Gold (XAU) Bias</span>
-            <div id="gold-bias" class="text-lg font-black text-yellow-500 uppercase tracking-tighter">BULLISH</div>
-            <span class="text-[9px] text-gray-500 italic">Safe Haven Demand</span>
+
+        <div class="flex gap-3 w-full lg:w-auto">
+            <div class="bias-box border-l-4 border-l-blue-500">
+                <span class="text-[9px] uppercase text-gray-500 font-bold block mb-1 text-left">Market Climate</span>
+                <div id="risk-sentiment" class="text-sm font-black text-blue-400 uppercase">ANALYZING...</div>
+            </div>
+            <div class="bias-box border-l-4 border-l-yellow-500">
+                <span class="text-[9px] uppercase text-gray-500 font-bold block mb-1 text-left">Gold Bias</span>
+                <div id="gold-bias" class="text-sm font-black text-yellow-500 uppercase">NEUTRAL</div>
+            </div>
+            <div class="bias-box border-l-4 border-l-orange-500">
+                <span class="text-[9px] uppercase text-gray-500 font-bold block mb-1 text-left">AUD Bias</span>
+                <div id="aud-bias" class="text-sm font-black text-gray-400 uppercase">NEUTRAL</div>
+            </div>
         </div>
-        <div class="bias-box border-l-4 border-l-orange-500">
-            <span class="text-[10px] uppercase text-gray-500 font-bold block">AUD/USD Bias</span>
-            <div id="aud-bias" class="text-lg font-black text-gray-400 uppercase tracking-tighter">NEUTRAL</div>
-            <span class="text-[9px] text-gray-500 italic">Commodity-Linked Strength</span>
-        </div>
+    </header>
+
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
+        <div class="widget-card h-[450px]" id="gold_chart"></div>
+        <div class="widget-card h-[450px]" id="aud_chart"></div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <div class="widget-card" id="gold_chart"></div>
-        <div class="widget-card" id="aud_chart"></div>
-    </div>
-
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <div class="bg-gray-900/50 border border-gray-800 p-5 rounded-xl">
-            <h3 class="text-yellow-500 font-bold text-sm mb-2">Why Gold & AUD?</h3>
-            <p class="text-xs leading-relaxed text-gray-400">
-                Australia is a top-3 global gold producer. When Gold prices rise, the Australian economy gets a massive cash injection, making the <span class="text-white font-bold">AUD</span> stronger. 
-                <br><br>
-                <span class="info-pill">PRO TIP</span> If Gold pumps and AUD stays flat, the AUD is "lagging" and often presents a buy opportunity.
-            </p>
-        </div>
-        <div class="bg-gray-900/50 border border-gray-800 p-5 rounded-xl">
-            <h3 class="text-blue-400 font-bold text-sm mb-2">Understanding Sentiment</h3>
-            <p class="text-xs leading-relaxed text-gray-400">
-                <b class="text-white font-semibold">Risk-On:</b> Investors feel safe. They buy AUD and Stocks.
-                <br><br>
-                <b class="text-white font-semibold">Risk-Off:</b> Fear is high (Watch the VIX). Investors sell AUD and buy Gold or USD for safety. 
-                <br><br>
-                Check the <span class="text-white font-bold">VIX Index</span> below; if it's over 20, the market is getting nervous.
-            </p>
-        </div>
-        <div class="bg-gray-900/50 border border-gray-800 p-5 rounded-xl">
-            <h3 class="text-orange-400 font-bold text-sm mb-2">Macro Calendar Info</h3>
-            <p class="text-xs leading-relaxed text-gray-400">
-                Watch for <b class="text-white font-semibold">CPI (Inflation)</b> and <b class="text-white font-semibold">Interest Rate</b> decisions. 
-                <br><br>
-                If the US Fed raises rates, Gold usually drops. If the RBA (Australia) raises rates, AUD usually climbs. "High Impact" events appear in red on the calendar.
-            </p>
-        </div>
-    </section>
-
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="widget-card lg:col-span-1" id="vix_chart"></div>
-        <div class="widget-card lg:col-span-2">
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
-            { "colorTheme": "dark", "isWidescreen": true, "importanceFilter": "0,1", "currencyFilter": "USD,AUD", "width": "100%", "height": "100%", "locale": "en" }
-            </script>
-        </div>
-    </div>
-
-    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-    <script>
-        function initChart(id, symbol) {
-            new TradingView.widget({
-                "autosize": true, "symbol": symbol, "interval": "240", "theme": "dark", "style": "1", 
-                "hide_top_toolbar": true, "container_id": id
-            });
-        }
-        initChart("gold_chart", "OANDA:XAUUSD");
-        initChart("aud_chart", "FX:AUDUSD");
-        initChart("vix_chart", "TVC:VIX");
-
-        async function updateMacroEngine() {
-            try {
-                const res = await fetch('https://open.er-api.com/v6/latest/USD');
-                const data = await res.json();
-                const audUsd = 1 / data.rates.AUD;
-
-                // 1. RISK SENTIMENT
-                const riskEl = document.getElementById('risk-sentiment');
-                if (audUsd < 0.655) {
-                    riskEl.innerText = "RISK-OFF (FEAR)";
-                    riskEl.className = "text-lg font-black text-red-500 uppercase tracking-tighter";
-                } else {
-                    riskEl.innerText = "RISK-ON (CALM)";
-                    riskEl.className = "text-lg font-black text-green-400 uppercase tracking-tighter";
-                }
-
-                // 2. AUD BIAS
-                const audBias = document.getElementById('aud-bias');
-                if (audUsd < 0.675) {
-                    audBias.innerText = "ACCUMULATE (BUY)";
-                    audBias.className = "text-lg font-black text-green-500 uppercase tracking-tighter";
-                } else {
-                    audBias.innerText = "HOLD POSITION";
-                    audBias.className = "text-lg font-black text-gray-400 uppercase tracking-tighter";
-                }
-            } catch (e) { console.log("Engine refresh failed"); }
-        }
-
-        setInterval(updateMacroEngine, 60000);
-        updateMacroEngine();
-    </script>
-</body>
-</html>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+        <div class="widget-card h-[380px]">
+            <div class="p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800">GOLD (XAUUSD) RADAR</div>
+            <div class="
