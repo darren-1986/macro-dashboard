@@ -58,29 +58,23 @@
             </div>
         </div>
 
-        <div class="widget-card h-[380px] flex flex-col items-center justify-center p-6 bg-[#131722] border-2 border-blue-900/30">
-            <div class="w-full text-center mb-6">
-                <h3 class="text-blue-400 font-black text-xl tracking-tighter uppercase">VIX Spot Feed</h3>
-                <p class="text-[10px] text-gray-500 font-mono">Real-time Fear Index</p>
-            </div>
-            
+        <div class="widget-card h-[380px] flex flex-col items-center justify-center p-4">
+            <div class="w-full p-3 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 text-blue-400 uppercase font-mono mb-auto">VIX Fear Gauge (Spot)</div>
             <div class="tradingview-widget-container w-full">
                 <div class="tradingview-widget-container__widget"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js" async>
                 {
                   "symbol": "TVC:VIX",
                   "width": "100%",
+                  "locale": "en",
                   "colorTheme": "dark",
-                  "isTransparent": true,
-                  "locale": "en"
+                  "isTransparent": true
                 }
                 </script>
             </div>
-
-            <div class="mt-8 text-center bg-gray-900/50 p-3 rounded border border-gray-800 w-full">
-                <p class="text-[11px] text-blue-300 italic font-mono">
-                    Note: Full VIX charts are restricted to TradingView.com only. Use this price quote for your manual bias check.
-                </p>
+            <div class="mt-auto p-3 bg-blue-500/5 rounded-lg border border-blue-900/30 w-full text-center">
+                <p class="text-[10px] text-blue-400 font-bold uppercase tracking-widest mb-1">Current Risk Threshold</p>
+                <p class="text-[11px] text-gray-400 italic font-mono">Bias: VIX above 20.00 signals Gold strength over AUD.</p>
             </div>
         </div>
     </div>
