@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse AI | Final 2026 Build</title>
+    <title>MacroPulse AI | 2026 Restored Terminal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; overflow: hidden; }
         .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%; }
         .vix-number { font-size: 3.5rem; line-height: 1; letter-spacing: -3px; font-weight: 900; }
         .glow-blue { text-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
-        .bias-box { background: #1e222d; border: 1px solid #363a45; padding: 12px; border-radius: 8px; text-align: center; flex: 1; min-width: 140px; }
+        .bias-box { background: #1e222d; border: 1px solid #363a45; padding: 12px; border-radius: 8px; text-align: center; flex: 1; min-width: 130px; }
     </style>
 </head>
 <body class="p-4 md:p-6">
@@ -33,6 +33,10 @@
             <div class="bias-box border-l-4 border-l-orange-500">
                 <span class="text-[10px] uppercase text-gray-400 font-bold block mb-1">AUD Bias</span>
                 <div class="text-sm font-black text-orange-400 uppercase">WEAK (0.7031)</div>
+            </div>
+            <div class="bias-box border-l-4 border-l-green-500">
+                <span class="text-[10px] uppercase text-gray-400 font-bold block mb-1">USA (DXY)</span>
+                <div class="text-sm font-black text-green-400 uppercase">STRENGTHENING</div>
             </div>
         </div>
     </header>
@@ -61,13 +65,13 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-[350px]">
                 <div class="widget-card">
-                    <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-yellow-500 text-center">Gold Technicals</div>
+                    <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-yellow-500 text-center">XAU/USD Technicals</div>
                     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
                     { "interval": "4h", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "OANDA:XAUUSD", "colorTheme": "dark" }
                     </script>
                 </div>
                 <div class="widget-card">
-                    <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-orange-400 text-center">AUD Technicals</div>
+                    <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-orange-400 text-center">AUD/USD Technicals</div>
                     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
                     { "interval": "4h", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "FX:AUDUSD", "colorTheme": "dark" }
                     </script>
