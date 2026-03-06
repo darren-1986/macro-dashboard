@@ -3,75 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse AI | Independent Scroll</title>
+    <title>MacroPulse AI | Professional Terminal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%; }
-        .bias-box { background: #1e222d; border: 1px solid #363a45; padding: 8px 12px; border-radius: 8px; text-align: center; flex: 1; min-width: 120px; }
+        body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; overflow: hidden; }
+        .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
+        .bias-box { background: #1e222d; border: 1px solid #363a45; padding: 6px 10px; border-radius: 6px; text-align: center; flex: 1; }
         .vix-badge { background: linear-gradient(270deg, #450a0a 0%, #1e222d 100%); border: 1px solid #7f1d1d; }
-        .vix-glow { text-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
-        .video-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; }
-        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        
+        /* Ultra-tight video wrapper */
+        .video-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-        /* Custom Scrollbar for Independent News Feed */
+        /* Custom Scrollbar for independent feeds */
         .custom-scroll::-webkit-scrollbar { width: 4px; }
         .custom-scroll::-webkit-scrollbar-track { background: #131722; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #363a45; border-radius: 10px; }
-        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #4b5563; }
     </style>
 </head>
-<body class="p-4 md:p-6">
+<body class="p-4 h-screen flex flex-col">
 
-    <header class="sticky top-0 z-50 bg-[#060809]/95 backdrop-blur-md flex flex-col xl:flex-row justify-between items-center mb-6 gap-4 border-b border-gray-800 pb-4 pt-2">
+    <header class="flex flex-col xl:flex-row justify-between items-center mb-4 gap-4 border-b border-gray-800 pb-3">
         <div class="flex items-center gap-6 w-full xl:w-auto">
             <div>
-                <h1 class="text-2xl font-black text-yellow-500 italic uppercase tracking-tighter leading-none">MacroPulse AI</h1>
-                <p class="text-[9px] text-gray-500 font-mono tracking-widest uppercase">Institutional Terminal</p>
+                <h1 class="text-xl font-black text-yellow-500 italic uppercase leading-none">MacroPulse AI</h1>
+                <p class="text-[8px] text-gray-500 font-mono tracking-widest uppercase">Institutional Terminal</p>
             </div>
-            <div class="flex flex-wrap gap-2">
-                <div class="bias-box border-l-4 border-l-red-500"><span class="text-[9px] uppercase text-gray-400 font-bold block">Sentiment</span><div class="text-xs font-black text-red-500 italic uppercase">Risk-Off</div></div>
-                <div class="bias-box border-l-4 border-l-yellow-600"><span class="text-[9px] uppercase text-gray-400 font-bold block">Gold Bias</span><div class="text-xs font-black text-yellow-500 italic uppercase">Bullish</div></div>
-                <div class="bias-box border-l-4 border-l-orange-500"><span class="text-[9px] uppercase text-gray-400 font-bold block">Australia</span><div class="text-xs font-black text-orange-400 italic uppercase">AUD Weak</div></div>
-                <div class="bias-box border-l-4 border-l-green-500"><span class="text-[9px] uppercase text-gray-400 font-bold block">USA (DXY)</span><div class="text-xs font-black text-green-400 italic uppercase">Strong</div></div>
+            <div class="flex gap-2">
+                <div class="bias-box border-l-2 border-l-red-500"><span class="text-[8px] uppercase text-gray-400 font-bold block">Sentiment</span><div class="text-[10px] font-black text-red-500 uppercase">Risk-Off</div></div>
+                <div class="bias-box border-l-2 border-l-yellow-600"><span class="text-[8px] uppercase text-gray-400 font-bold block">Gold Bias</span><div class="text-[10px] font-black text-yellow-500 uppercase">Bullish</div></div>
+                <div class="bias-box border-l-2 border-l-orange-500"><span class="text-[8px] uppercase text-gray-400 font-bold block">Australia</span><div class="text-[10px] font-black text-orange-400 uppercase">AUD Weak</div></div>
+                <div class="bias-box border-l-2 border-l-green-500"><span class="text-[8px] uppercase text-gray-400 font-bold block">USA (ORT)</span><div class="text-[10px] font-black text-green-400 uppercase">Strong</div></div>
             </div>
         </div>
-        <div class="vix-badge flex items-center gap-3 px-4 py-2 rounded-lg border-r-4 border-r-red-600 ml-auto">
+        
+        <div class="vix-badge flex items-center gap-3 px-3 py-1.5 rounded-md border-r-4 border-r-red-600 ml-auto">
             <div class="text-right">
-                <span id="sentiment-tag" class="text-[10px] font-black uppercase text-red-400 animate-pulse block">Risk-Off</span>
-                <span class="text-[9px] text-gray-500 font-medium uppercase leading-none">Elevated Fear</span>
+                <span class="text-[9px] font-black uppercase text-red-400 block">Risk-Off</span>
+                <span class="text-[8px] text-gray-500 uppercase">Elevated Fear</span>
             </div>
-            <div class="h-8 w-[1px] bg-gray-700"></div>
+            <div class="h-6 w-[1px] bg-gray-700"></div>
             <div class="text-right">
-                <span class="text-[9px] uppercase text-gray-400 font-bold block leading-none">CBOE VIX SPOT</span>
-                <div id="vix-val" class="text-xl font-black text-red-500 vix-glow italic">23.75</div>
+                <span class="text-[8px] uppercase text-gray-400 font-bold block leading-none">CBOE VIX SPOT</span>
+                <div class="text-lg font-black text-red-500 italic leading-none">23.75</div>
             </div>
         </div>
     </header>
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 h-[calc(100vh-140px)]">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-grow overflow-hidden">
         
         <div class="lg:col-span-3 flex flex-col gap-4 overflow-hidden">
             <div class="widget-card shrink-0">
-                <div class="p-1.5 bg-[#1e222d] text-[9px] font-bold border-b border-gray-800 uppercase text-yellow-500 text-center">Bloomberg Live</div>
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/iEpJwprxDdk?autoplay=1&mute=1" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+                <div class="p-1 bg-[#1e222d] text-[9px] font-bold border-b border-gray-800 uppercase text-yellow-500 text-center">Bloomberg Live</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/iEpJwprxDdk?autoplay=1&mute=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 </div>
             </div>
-            <div class="widget-card flex-grow overflow-hidden">
-                <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-blue-400 text-center">Macro Events</div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
-                { "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "importanceFilter": "0,1", "currencyFilter": "USD,AUD" }
-                </script>
+            <div class="widget-card flex-grow">
+                <div class="p-1.5 bg-[#1e222d] text-[9px] font-bold border-b border-gray-800 uppercase text-blue-400 text-center">Macro Events</div>
+                <div class="flex-grow">
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
+                    { "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "importanceFilter": "0,1", "currencyFilter": "USD,AUD" }
+                    </script>
+                </div>
             </div>
         </div>
 
-        <div class="lg:col-span-6 flex flex-col gap-6 overflow-y-auto custom-scroll pr-1">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 min-h-[400px]">
+        <div class="lg:col-span-6 flex flex-col gap-4 overflow-y-auto custom-scroll pr-1">
+            <div class="grid grid-cols-2 gap-3 h-[300px] shrink-0">
                 <div id="gold_chart" class="widget-card"></div>
                 <div id="aud_chart" class="widget-card"></div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 min-h-[300px] mb-4">
+            <div class="grid grid-cols-2 gap-3 h-[250px] shrink-0">
                 <div class="widget-card">
                     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
                     { "interval": "1h", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "OANDA:XAUUSD", "colorTheme": "dark" }
@@ -86,9 +89,9 @@
         </div>
 
         <div class="lg:col-span-3 widget-card h-full">
-            <div class="p-4 bg-[#1e222d] border-b border-gray-800 flex justify-between items-center shrink-0">
-                <span class="text-[11px] font-black uppercase text-yellow-500 italic">Market Wire</span>
-                <span class="text-[9px] text-green-500 font-bold animate-pulse uppercase">Live</span>
+            <div class="p-3 bg-[#1e222d] border-b border-gray-800 flex justify-between items-center shrink-0">
+                <span class="text-[10px] font-black uppercase text-yellow-500 italic">Market Wire</span>
+                <span class="text-[8px] text-green-500 font-bold animate-pulse uppercase">Live</span>
             </div>
             <div class="flex-grow overflow-y-auto custom-scroll">
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
