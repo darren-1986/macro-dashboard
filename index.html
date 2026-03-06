@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse AI | Professional HUD & Logic Guide</title>
+    <title>MacroPulse AI | Full Terminal & Custom Logic</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { 
@@ -15,7 +15,6 @@
         }
         .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 8px; overflow: hidden; }
         
-        /* HEADER BOXES - LOCKED */
         .bias-box { 
             background: #1e222d; border: 1px solid #363a45; padding: 10px 14px; border-radius: 6px; 
             min-width: 155px; border-left: 4px solid #374151; transition: all 0.4s ease;
@@ -23,21 +22,15 @@
         .vix-badge { background: linear-gradient(270deg, #450a0a 0%, #1e222d 100%); border: 1px solid #7f1d1d; border-right: 4px solid #ef4444; }
         .bullish { border-left-color: #22c55e !important; }
         .bearish { border-left-color: #ef4444 !important; }
-        .neutral { border-left-color: #3b82f6 !important; }
 
         .video-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; background: #000; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-        .chart-box {
-            width: 100%;
-            height: 320px !important; 
-            max-height: 320px;
-        }
-
-        /* CHEAT SHEET STYLING */
-        .cheat-sheet {
-            background: #0f172a; border-top: 2px solid #1e293b; padding: 30px; margin-top: 40px; border-radius: 12px 12px 0 0;
-        }
+        .chart-box { width: 100%; height: 320px !important; max-height: 320px; }
+        
+        /* NEW SECTION STYLING */
+        .logic-section { background: #0f172a; border-top: 2px solid #1e293b; padding: 30px; margin-top: 40px; }
+        .code-block { background: #000; color: #10b981; padding: 15px; border-radius: 6px; font-family: monospace; font-size: 12px; overflow-x: auto; border: 1px solid #065f46; }
 
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #060809; }
@@ -53,35 +46,29 @@
                 <p class="text-[9px] text-gray-500 font-mono tracking-widest uppercase mt-1">Institutional Live Feed</p>
             </div>
             <div class="flex gap-3">
-                <div class="bias-box" id="box-sent"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Sentiment</span><div id="val-sent" class="text-xs font-black uppercase">Syncing...</div></div>
-                <div class="bias-box" id="box-gold"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Gold Bias</span><div id="val-gold" class="text-xs font-black uppercase text-yellow-500">Syncing...</div></div>
-                <div class="bias-box" id="box-aud"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Australia</span><div id="val-aud" class="text-xs font-black uppercase">Syncing...</div></div>
-                <div class="bias-box" id="box-usa"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">USA (DXY)</span><div id="val-usa" class="text-xs font-black uppercase text-blue-400">Syncing...</div></div>
+                <div class="bias-box" id="box-sent"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Sentiment</span><div id="val-sent" class="text-xs font-black uppercase text-red-500">Risk-Off</div></div>
+                <div class="bias-box bullish" id="box-gold"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Gold Bias</span><div class="text-xs font-black uppercase text-yellow-500">Institutional Buy</div></div>
+                <div class="bias-box bearish" id="box-aud"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Australia</span><div class="text-xs font-black uppercase text-red-400">Weak (Short)</div></div>
+                <div class="bias-box" id="box-usa"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">USA (DXY)</span><div class="text-xs font-black uppercase text-blue-400">Safe Haven Strong</div></div>
             </div>
         </div>
         <div class="vix-badge flex items-center gap-4 px-4 py-1 rounded-md">
             <div class="text-right">
-                <span class="text-[10px] font-black uppercase text-red-400 block" id="vix-status">Risk-Off</span>
+                <span class="text-[10px] font-black uppercase text-red-400 block">Risk-Off</span>
                 <span class="text-[9px] text-gray-500 uppercase font-mono">March 06, 2026</span>
             </div>
             <div class="h-10 w-[1px] bg-gray-700"></div>
-            <div><span class="text-[9px] uppercase text-gray-400 font-bold block">CBOE VIX SPOT</span><div id="vix-price" class="text-2xl font-black italic leading-none text-white">23.75</div></div>
+            <div><span class="text-[9px] uppercase text-gray-400 font-bold block">CBOE VIX SPOT</span><div class="text-2xl font-black italic text-white">23.75</div></div>
         </div>
     </header>
 
     <div class="grid grid-cols-12 gap-4">
-        
         <div class="col-span-3 flex flex-col gap-4">
             <div class="widget-card shrink-0">
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/iEpJwprxDdk?autoplay=1&mute=1&rel=0" frameborder="0" allowfullscreen></iframe>
-                </div>
+                <div class="video-container"><iframe src="https://www.youtube.com/embed/iEpJwprxDdk?autoplay=1&mute=1" frameborder="0"></iframe></div>
             </div>
             <div class="widget-card" style="height: 1000px;">
-                <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-blue-400 text-center">Economic Calendar</div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
-                { "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "importanceFilter": "0,1", "currencyFilter": "USD,AUD" }
-                </script>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>{ "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "importanceFilter": "0,1", "currencyFilter": "USD,AUD" }</script>
             </div>
         </div>
 
@@ -92,80 +79,56 @@
             </div>
             <div class="flex gap-4" style="height: 600px;"> 
                 <div class="widget-card w-1/2 p-2">
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
-                    { "interval": "1m", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "OANDA:XAUUSD", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "dark" }
-                    </script>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>{ "interval": "1m", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "OANDA:XAUUSD", "colorTheme": "dark" }</script>
                 </div>
                 <div class="widget-card w-1/2 p-2">
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
-                    { "interval": "1m", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "FX:AUDUSD", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "dark" }
-                    </script>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>{ "interval": "1m", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "FX:AUDUSD", "colorTheme": "dark" }</script>
                 </div>
             </div>
         </div>
 
         <div class="col-span-3">
             <div class="widget-card" style="height: 1045px;">
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
-                { "feedMode": "all_symbols", "symbolsGroups": [{"name": "Macro", "symbols": ["OANDA:XAUUSD", "FX:AUDUSD"]}], "isTransparent": true, "displayMode": "regular", "width": "100%", "height": "100%", "colorTheme": "dark", "locale": "en" }
-                </script>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>{ "feedMode": "all_symbols", "symbolsGroups": [{"name": "Macro", "symbols": ["OANDA:XAUUSD", "FX:AUDUSD"]}], "isTransparent": true, "width": "100%", "height": "100%", "colorTheme": "dark" }</script>
             </div>
         </div>
     </div>
 
-    <div class="cheat-sheet">
-        <h2 class="text-xl font-black text-yellow-500 mb-6 uppercase italic">Operational Cheat Sheet: The Macro Triangle</h2>
+    <div class="logic-section rounded-xl shadow-2xl">
+        <h2 class="text-xl font-black text-yellow-500 mb-4 uppercase italic">Custom Pine Script: MacroPulse Risk Oscillator</h2>
+        <p class="text-xs text-gray-400 mb-4">Copy the code below into your TradingView <strong>Pine Editor</strong>. This script calculates the ratio between Gold and AUD/USD to visualize global risk sentiment.</p>
+        
+        <div class="code-block mb-8">
+//@version=5<br>
+indicator("MacroPulse Risk Sentiment", overlay=false)<br>
+gold = request.security("OANDA:XAUUSD", timeframe.period, close)<br>
+aud = request.security("FX:AUDUSD", timeframe.period, close)<br>
+ratio = gold / aud<br>
+plot(ratio, color=color.yellow, linewidth=2, title="Fear Ratio")<br>
+hline(5000, "Pivot", color=color.gray, linestyle=hline.style_dashed)
+        </div>
+
         <div class="grid grid-cols-3 gap-8">
             <div class="bg-[#131722] p-4 rounded border border-gray-800">
-                <h3 class="text-red-500 font-bold mb-2">1. THE VIX SIGNAL</h3>
-                <p class="text-xs text-gray-400 leading-relaxed">
-                    <strong>Below 20:</strong> Risk-On. Capital flows into AUD and Equities. Short Gold.<br><br>
-                    <strong>Above 20:</strong> Risk-Off. Capital flees to USD and Gold. Short AUD.
-                </p>
+                <h3 class="text-red-500 font-bold mb-2">VIX LOGIC</h3>
+                <p class="text-[11px] text-gray-400">Current VIX (23.75) > 20. Institutional fear is high. Bias: Safe Haven demand.</p>
             </div>
             <div class="bg-[#131722] p-4 rounded border border-gray-800">
-                <h3 class="text-yellow-500 font-bold mb-2">2. THE GOLD PIVOT</h3>
-                <p class="text-xs text-gray-400 leading-relaxed">
-                    <strong>Gold > $5,000:</strong> Bullish regime. Look for "Strong Buy" gauge confluence.<br><br>
-                    <strong>Gold < $5,000:</strong> Bearish regime. Potential USD dominance or "melt-up" in risk assets.
-                </p>
+                <h3 class="text-yellow-500 font-bold mb-2">GOLD PIVOT</h3>
+                <p class="text-[11px] text-gray-400">Gold above $5,000 indicates a long-term bullish cycle. Watch for DXY weakness.</p>
             </div>
             <div class="bg-[#131722] p-4 rounded border border-gray-800">
-                <h3 class="text-blue-500 font-bold mb-2">3. THE AUD PROXY</h3>
-                <p class="text-xs text-gray-400 leading-relaxed">
-                    <strong>AUD/USD Up:</strong> Signals global growth and commodity demand.<br><br>
-                    <strong>AUD/USD Down:</strong> Signals global fear or US Dollar shortage.
-                </p>
+                <h3 class="text-blue-500 font-bold mb-2">CORRELATION</h3>
+                <p class="text-[11px] text-gray-400">AUD and Gold are inversely correlated to the DXY. When DXY rises, both usually fall.</p>
             </div>
-        </div>
-        <div class="mt-6 p-4 bg-gray-900 border-l-4 border-yellow-500 rounded text-xs italic text-gray-300">
-            "Check Header Bias -> Confirm Technical Gauge -> Check Calendar for High Impact (USD/AUD) -> Execute."
         </div>
     </div>
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script>
-        function updateHeaderData() {
-            const mkt = { vix: 23.75, gold: 5081.60, aud: 0.7038, dxy: 99.07 };
-            document.getElementById('vix-price').innerText = mkt.vix.toFixed(2);
-            const isFear = mkt.vix > 20;
-            document.getElementById('vix-status').innerText = isFear ? "Risk-Off" : "Risk-On";
-            const sent = document.getElementById('val-sent');
-            sent.innerText = isFear ? "Risk-Off" : "Risk-On";
-            sent.className = "text-xs font-black uppercase " + (isFear ? "text-red-500" : "text-green-500");
-            document.getElementById('box-sent').className = "bias-box " + (isFear ? "bearish" : "bullish");
-            document.getElementById('val-gold').innerText = mkt.gold > 5000 ? "Institutional Buy" : "Bearish Pivot";
-            document.getElementById('box-gold').className = "bias-box bullish";
-            document.getElementById('val-aud').innerText = mkt.aud < 0.7100 ? "Weak (Short)" : "Strong (Long)";
-            document.getElementById('box-aud').className = "bias-box bearish";
-            document.getElementById('val-usa').innerText = "Safe Haven Strong";
-            document.getElementById('box-usa').className = "bias-box neutral";
-        }
         window.onload = () => {
             new TradingView.widget({ "autosize": true, "symbol": "OANDA:XAUUSD", "interval": "15", "theme": "dark", "container_id": "chart-gold", "hide_top_toolbar": true });
             new TradingView.widget({ "autosize": true, "symbol": "FX:AUDUSD", "interval": "15", "theme": "dark", "container_id": "chart-aud", "hide_top_toolbar": true });
-            updateHeaderData();
-            setInterval(updateHeaderData, 30000); 
         };
     </script>
 </body>
