@@ -90,63 +90,62 @@
             </div>
 
             <div class="flex justify-center">
-                <div id="macro-logic-indicator" style="width: 100%; max-width: 600px; background: #0b0e14; color: #e2e8f0; font-family: 'Inter', system-ui, sans-serif; border-radius: 12px; padding: 20px; border: 1px solid #2d3748; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                        <span style="font-size: 11px; font-weight: 700; color: #718096; text-transform: uppercase;">Custom Macro Score</span>
-                        <div id="status-dot-macro" style="display: flex; align-items: center; font-size: 10px; color: #48bb78;">
-                            <span style="height: 6px; width: 6px; background-color: #48bb78; border-radius: 50%; display: inline-block; margin-right: 5px;"></span> Live
+                <div id="macro-custom-box" style="width: 100%; max-width: 600px; background: #0b0f19; color: #f1f5f9; font-family: 'Segoe UI', Roboto, sans-serif; border-radius: 12px; border: 1px solid #1e293b; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);">
+                    <div style="padding: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <span style="font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Massive Logic Engine</span>
+                            <span id="update-pulse" style="font-size: 10px; color: #10b981;">● CONNECTED</span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px;">
+                            <div style="background: #1e293b; padding: 12px; border-radius: 8px; border: 1px solid #334155;">
+                                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 4px;">XAU/USD (Gold)</div>
+                                <div id="price-xau" style="font-size: 18px; font-weight: 800; color: #fbbf24;">$0.00</div>
+                            </div>
+                            <div style="background: #1e293b; padding: 12px; border-radius: 8px; border: 1px solid #334155;">
+                                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 4px;">AUD/USD</div>
+                                <div id="price-aud" style="font-size: 18px; font-weight: 800; color: #38bdf8;">0.0000</div>
+                            </div>
+                        </div>
+                        <div style="text-align: center; background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); padding: 15px; border-radius: 10px; border: 1px solid #2563eb;">
+                            <div style="font-size: 10px; color: #94a3b8; text-transform: uppercase;">2026 Confluence Score</div>
+                            <div id="macro-score-val" style="font-size: 42px; font-weight: 900; color: #10b981; line-height: 1.1;">--</div>
+                            <div id="macro-signal-msg" style="font-size: 11px; font-weight: 700; margin-top: 5px; color: #f8fafc;">INITIALIZING MATH...</div>
                         </div>
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
-                        <div style="background: #1a202c; padding: 10px; border-radius: 8px; border: 1px solid #2d3748;">
-                            <div style="font-size: 10px; color: #a0aec0; margin-bottom: 4px;">GOLD SPOT</div>
-                            <div id="val-gold" style="font-size: 16px; font-weight: 700; color: #ecc94b;">$0.00</div>
-                        </div>
-                        <div style="background: #1a202c; padding: 10px; border-radius: 8px; border: 1px solid #2d3748;">
-                            <div style="font-size: 10px; color: #a0aec0; margin-bottom: 4px;">AUD/USD</div>
-                            <div id="val-aud" style="font-size: 16px; font-weight: 700; color: #4299e1;">0.0000</div>
+                    <div style="background: #1e293b; border-top: 1px solid #334155; padding: 6px 0; overflow: hidden; white-space: nowrap;">
+                        <div id="macro-ticker" style="display: inline-block; animation: macro-scroll 35s linear infinite; font-size: 11px; color: #cbd5e0; font-weight: 500;">
+                            [GOLD] March 6, 2026: Safe-haven demand spikes on Gulf tensions... [AUD] RBA Governor Bullock holds 3.85% hawkish bias... [USD] Fed Funds Rate at 3.64% as disinflation stalls... [MACRO] Real Yields support Gold long-bias below 2.0%...
                         </div>
                     </div>
-                    <div style="text-align: center; margin-bottom: 15px;">
-                        <div id="score-display" style="font-size: 48px; font-weight: 900; line-height: 1; color: #48bb78;">0/5</div>
-                        <div id="signal-label" style="font-size: 12px; font-weight: 600; margin-top: 8px; text-transform: uppercase; letter-spacing: 1px;">Neutral</div>
-                    </div>
-                    <div style="background: #171923; border-radius: 6px; padding: 8px; overflow: hidden; white-space: nowrap;">
-                        <div id="news-ticker" style="display: inline-block; animation: ticker-scroll 30s linear infinite; font-size: 11px; color: #cbd5e0;">
-                            [GOLD] Spot $5,084: Oil-led inflation fears offset USD surge... [AUD] RBA Bullock signals March 17 hike is 'Live'... [USD] 10Y Real Yield holds 1.80% amid Iran conflict escalation...
-                        </div>
-                    </div>
-                    <style>@keyframes ticker-scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }</style>
+                    <style>@keyframes macro-scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }</style>
                     <script>
                         (function() {
-                            const API_KEY = 'qSDkvqGOK32orOQ_2fyg8IaGITVUpESh';
-                            const FED_RATE = 3.64; const RBA_RATE = 3.85; const REAL_YIELD = 1.80;
-                            async function updateIndicator() {
+                            const MASSIVE_KEY = 'qSDkvqGOK32orOQ_2fyg8IaGITVUpESh';
+                            const RBA_RATE = 3.85; const FED_RATE = 3.64; const TARGET_REAL_YIELD = 1.85; 
+                            async function runIndicatorLogic() {
                                 try {
-                                    const [gRes, aRes] = await Promise.all([
-                                        fetch(`https://api.massive.com/v2/last/forex/C:XAUUSD?apiKey=${API_KEY}`),
-                                        fetch(`https://api.massive.com/v2/last/forex/C:AUDUSD?apiKey=${API_KEY}`)
-                                    ]);
-                                    const gData = await gRes.json(); const aData = await aRes.json();
-                                    const gold = gData.last.bid; const aud = aData.last.bid;
-                                    document.getElementById('val-gold').innerText = `$${gold.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-                                    document.getElementById('val-aud').innerText = aud.toFixed(4);
+                                    const xauResp = await fetch(`https://api.massive.com/v2/last/forex/C:XAUUSD?apiKey=${MASSIVE_KEY}`);
+                                    const audResp = await fetch(`https://api.massive.com/v2/last/forex/C:AUDUSD?apiKey=${MASSIVE_KEY}`);
+                                    const xauJson = await xauResp.json(); const audJson = await audResp.json();
+                                    const goldPrice = xauJson.last.bid; const audPrice = audJson.last.bid;
+                                    document.getElementById('price-xau').innerText = `$${goldPrice.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+                                    document.getElementById('price-aud').innerText = audPrice.toFixed(4);
                                     let score = 0;
-                                    if (RBA_RATE > FED_RATE) score += 2;
-                                    if (REAL_YIELD < 2.0) score += 1;
-                                    score += 2;
-                                    const scoreEl = document.getElementById('score-display');
-                                    const labelEl = document.getElementById('signal-label');
-                                    scoreEl.innerText = score + "/5";
-                                    if (score >= 4) { scoreEl.style.color = "#48bb78"; labelEl.innerText = "Strong Buy Confluence"; }
-                                    else if (score >= 2) { scoreEl.style.color = "#ecc94b"; labelEl.innerText = "Consolidating / Neutral"; }
-                                    else { scoreEl.style.color = "#f56565"; labelEl.innerText = "USD Dominance"; }
-                                } catch (e) {
-                                    document.getElementById('status-dot-macro').style.color = "#f56565";
-                                    document.getElementById('status-dot-macro').innerText = "Offline";
+                                    if (RBA_RATE > FED_RATE) score += 2; 
+                                    if (goldPrice > 4500) score += 1; 
+                                    score += 2; 
+                                    const scoreDisplay = document.getElementById('macro-score-val');
+                                    const signalDisplay = document.getElementById('macro-signal-msg');
+                                    scoreDisplay.innerText = score + "/5";
+                                    if (score >= 4) { scoreDisplay.style.color = "#10b981"; signalDisplay.innerText = "STRONG BUY (CONFLUENCE)"; }
+                                    else if (score >= 2) { scoreDisplay.style.color = "#fbbf24"; signalDisplay.innerText = "NEUTRAL / SIDEWAYS"; }
+                                    else { scoreDisplay.style.color = "#ef4444"; signalDisplay.innerText = "USD STRENGTH / SELL"; }
+                                } catch (err) {
+                                    document.getElementById('update-pulse').innerText = "● OFFLINE";
+                                    document.getElementById('update-pulse').style.color = "#ef4444";
                                 }
                             }
-                            updateIndicator(); setInterval(updateIndicator, 60000);
+                            runIndicatorLogic(); setInterval(runIndicatorLogic, 60000);
                         })();
                     </script>
                 </div>
@@ -184,6 +183,14 @@
                 <h3 class="text-blue-500 font-bold mb-2 uppercase text-sm">3. DXY Connection</h3>
                 <p class="text-[11px] text-gray-400 leading-relaxed">Strong DXY is a headwind for Gold and AUD. Watch for USD strength in the USA box.</p>
             </div>
+        </div>
+        <h2 class="text-lg font-black text-green-500 mb-4 uppercase italic">Custom Pine Script: Sentiment Oscillator</h2>
+        <div class="code-block">
+            //@version=5<br>
+            indicator("MacroPulse Risk Ratio", overlay=false)<br>
+            gold = request.security("OANDA:XAUUSD", timeframe.period, close)<br>
+            aud = request.security("FX:AUDUSD", timeframe.period, close)<br>
+            plot(gold / aud, color=color.yellow, linewidth=2)
         </div>
     </div>
 
