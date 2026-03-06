@@ -8,24 +8,14 @@
     <style>
         body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; overflow-y: auto; min-height: 100vh; }
         .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 8px; overflow: hidden; }
-        
-        /* HEADER BOXES */
         .bias-box { background: #1e222d; border: 1px solid #363a45; padding: 10px 14px; border-radius: 6px; min-width: 155px; border-left: 4px solid #374151; }
         .vix-badge { background: linear-gradient(270deg, #450a0a 0%, #1e222d 100%); border: 1px solid #7f1d1d; border-right: 4px solid #ef4444; }
         .bearish { border-left-color: #ef4444 !important; }
         .bullish { border-left-color: #22c55e !important; }
-
-        /* CONTAINERS */
         .video-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; background: #000; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         .chart-box { width: 100%; height: 320px !important; }
-        
         .logic-section { background: #0f172a; border-top: 2px solid #1e293b; padding: 30px; margin-top: 40px; border-radius: 12px; }
-        .code-block { background: #000; color: #10b981; padding: 15px; border-radius: 6px; font-family: monospace; font-size: 12px; overflow-x: auto; border: 1px solid #065f46; }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #060809; }
-        ::-webkit-scrollbar-thumb { background: #363a45; border-radius: 10px; }
     </style>
 </head>
 <body class="p-4">
@@ -36,27 +26,21 @@
                 <h1 class="text-2xl font-black text-yellow-500 italic uppercase leading-none">MacroPulse AI</h1>
                 <p class="text-[9px] text-gray-500 font-mono tracking-widest uppercase mt-1">Institutional Live Feed</p>
             </div>
-            <div class="flex gap-3">
-                <div class="bias-box bearish"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Sentiment</span><div class="text-xs font-black uppercase text-red-500">Risk-Off</div></div>
-                <div class="bias-box bullish"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Gold Bias</span><div class="text-xs font-black uppercase text-yellow-500">Institutional Buy</div></div>
-                <div class="bias-box bearish"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Australia</span><div class="text-xs font-black uppercase text-red-400">Weak (Short)</div></div>
-                <div class="bias-box"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">USA (DXY)</span><div class="text-xs font-black uppercase text-blue-400">Safe Haven Strong</div></div>
+            <div class="flex gap-3 text-center">
+                <div class="bias-box bearish"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Sentiment</span><div class="text-xs font-black uppercase text-red-500 italic">Risk-Off</div></div>
+                <div class="bias-box bullish"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Gold Australia</span><div class="text-xs font-black uppercase text-yellow-500 italic">Target: Long</div></div>
+                <div class="bias-box"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">USA (DXY)</span><div class="text-xs font-black uppercase text-blue-400 italic">Support Watch</div></div>
             </div>
         </div>
         <div class="vix-badge flex items-center gap-4 px-4 py-1 rounded-md">
-            <div><span class="text-[9px] uppercase text-gray-400 font-bold block">CBOE VIX SPOT</span><div class="text-2xl font-black italic text-white">23.75</div></div>
+            <div><span class="text-[9px] uppercase text-gray-400 font-bold block leading-none">VIX SPOT</span><div class="text-2xl font-black text-white">23.75</div></div>
         </div>
     </header>
 
     <div class="grid grid-cols-12 gap-4">
         <div class="col-span-3 flex flex-col gap-4">
-            <div class="widget-card">
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/iEpJwprxDdk?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
-                </div>
-            </div>
+            <div class="widget-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/iEpJwprxDdk?autoplay=1&mute=1"></iframe></div></div>
             <div class="widget-card" style="height: 1000px;">
-                <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-blue-400 text-center">Economic Calendar</div>
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
                 { "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "importanceFilter": "0,1", "currencyFilter": "USD,AUD" }
                 </script>
@@ -84,49 +68,30 @@
 
         <div class="col-span-3 flex flex-col gap-4">
             <div class="widget-card" style="height: 515px;">
-                <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-green-400 text-center">TV News Flow</div>
+                <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-green-400 text-center uppercase">TV Global News Wire</div>
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
-                { "feedMode": "all_symbols", "symbolsGroups": [{"name": "Macro", "symbols": ["OANDA:XAUUSD", "FX:AUDUSD"]}], "isTransparent": true, "displayMode": "regular", "width": "100%", "height": "100%", "colorTheme": "dark", "locale": "en" }
+                { "feedMode": "all_symbols", "isTransparent": true, "displayMode": "regular", "width": "100%", "height": "100%", "colorTheme": "dark", "locale": "en" }
                 </script>
             </div>
 
-            <div class="widget-card" style="height: 515px; overflow-y: scroll;">
-                <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-blue-400 text-center sticky top-0 z-10">Live X Macro Feed</div>
-                <div class="p-4 flex flex-col items-center">
-                    <a class="twitter-timeline" data-theme="dark" data-chrome="noheader nofooter transparent" href="https://twitter.com/business/lists/1478103300589133824?ref_src=twsrc%5Etfw">Loading Bloomberg List...</a> 
-                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            <div class="widget-card" style="height: 515px; overflow-y: auto; background-color: #000;">
+                <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-blue-400 text-center sticky top-0 z-10 italic">Live X Macro Wire</div>
+                <div class="p-0">
+                    <a class="twitter-timeline" data-theme="dark" data-chrome="noheader nofooter transparent noborders" href="https://twitter.com/GoldPredict?ref_src=twsrc%5Etfw">Loading Live Market Feed...</a> 
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="logic-section shadow-2xl">
-        <h2 class="text-xl font-black text-yellow-500 mb-6 uppercase italic">Operational Cheat Sheet: The Macro Triangle</h2>
-        <div class="grid grid-cols-3 gap-8 mb-8 text-xs">
-            <div class="bg-[#131722] p-4 rounded border border-gray-800">
-                <h3 class="text-red-500 font-bold mb-2 uppercase">1. The VIX Signal</h3>
-                <p class="text-gray-400">VIX > 20: Risk-Off (Buy Gold/USD, Short AUD).<br>VIX < 20: Risk-On (Buy AUD, Short Gold/USD).</p>
-            </div>
-            <div class="bg-[#131722] p-4 rounded border border-gray-800">
-                <h3 class="text-yellow-500 font-bold mb-2 uppercase">2. Gold/AUD Ratio</h3>
-                <p class="text-gray-400">Rising: Capital is hiding (Defensive).<br>Falling: Capital is seeking growth (Aggressive).</p>
-            </div>
-            <div class="bg-[#131722] p-4 rounded border border-gray-800">
-                <h3 class="text-blue-500 font-bold mb-2 uppercase">3. DXY Connection</h3>
-                <p class="text-gray-400">The US Dollar is the pivot. If DXY is blue (Safe Haven Strong), expect resistance in Gold and AUD.</p>
-            </div>
-        </div>
-        
-        <h2 class="text-lg font-black text-green-500 mb-4 uppercase italic">Custom Pine Script: Sentiment Oscillator</h2>
-        <div class="code-block">
-            //@version=5<br>
-            indicator("MacroPulse Risk Ratio", overlay=false)<br>
-            gold = request.security("OANDA:XAUUSD", timeframe.period, close)<br>
-            aud = request.security("FX:AUDUSD", timeframe.period, close)<br>
-            plot(gold / aud, color=color.yellow, linewidth=2)
+    <div class="logic-section">
+        <h2 class="text-xl font-black text-yellow-500 mb-4 uppercase italic">Operational Logic</h2>
+        <div class="grid grid-cols-2 gap-4 text-xs">
+            <div class="bg-[#131722] p-3 rounded border border-gray-800 italic">VIX > 20: Focus Gold Longs.</div>
+            <div class="bg-[#131722] p-3 rounded border border-gray-800 italic">Gold/AUD Up: Institutional Safety Flight.</div>
         </div>
     </div>
 
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script>
         window.onload = () => {
