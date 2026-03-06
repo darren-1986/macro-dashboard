@@ -3,24 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse AI | 2026 Fully Functional</title>
+    <title>MacroPulse AI | Macro-Focus Terminal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Body now allows scrolling while keeping the dark aesthetic */
         body { 
             background-color: #060809; 
             color: #e5e7eb; 
             font-family: 'Inter', sans-serif; 
-            overflow-y: auto; /* SCROLLING ENABLED */
+            overflow-y: auto; 
             min-height: 100vh;
         }
-
-        /* Custom scrollbar to maintain the 'Institutional' look */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #060809; }
         ::-webkit-scrollbar-thumb { background: #2a2e39; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
-
         .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%; }
         .vix-number { font-size: 3.5rem; line-height: 1; letter-spacing: -3px; font-weight: 900; }
         .glow-blue { text-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
@@ -55,7 +50,9 @@
         </div>
     </header>
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pb-12"> <div class="lg:col-span-3 flex flex-col gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pb-12">
+        
+        <div class="lg:col-span-3 flex flex-col gap-6">
             <div class="widget-card p-8 border-t-4 border-t-blue-500">
                 <h3 class="text-blue-400 font-black text-xs uppercase tracking-widest text-center mb-4">CBOE VIX SPOT</h3>
                 <div class="flex flex-col items-center">
@@ -94,11 +91,11 @@
 
         <div class="lg:col-span-3 widget-card min-h-[755px]">
             <div class="p-4 bg-[#1e222d] border-b border-gray-800">
-                <span class="text-[11px] font-black uppercase text-yellow-500 italic">Institutional Macro Flow</span>
+                <span class="text-[11px] font-black uppercase text-yellow-500 italic">Gold & Forex Flow</span>
             </div>
             <div class="flex-grow">
-                <iframe src="https://cryptopanic.com/widgets/news/?bg_color=131722&font_family=sans-serif&header_bg_color=1e222d&header_text_color=e5e7eb&link_color=e5e7eb&news_feed=all&posts_limit=10&text_color=9ca3af&title=Macro%20Gold%20AUD" 
-                width="100%" height="100%" frameborder="0" style="border:none;"></iframe>
+                <iframe src="https://www.investing.com/webmaster-tools/real-time-news-feed" 
+                width="100%" height="100%" frameborder="0" style="border:none; filter: invert(0.9) hue-rotate(180deg) brightness(0.8);"></iframe>
             </div>
         </div>
     </div>
