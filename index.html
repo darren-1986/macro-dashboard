@@ -2,134 +2,95 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse AI | Full Terminal & Custom Logic</title>
+    <title>MacroPulse AI | Integrated Indicator Terminal</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
     <style>
-        body { 
-            background-color: #060809; 
-            color: #e5e7eb; 
-            font-family: 'Inter', sans-serif; 
-            overflow-y: auto; 
-            min-height: 100vh;
-        }
-        .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 8px; overflow: hidden; }
-        
-        .bias-box { 
-            background: #1e222d; border: 1px solid #363a45; padding: 10px 14px; border-radius: 6px; 
-            min-width: 155px; border-left: 4px solid #374151; transition: all 0.4s ease;
-        }
-        .vix-badge { background: linear-gradient(270deg, #450a0a 0%, #1e222d 100%); border: 1px solid #7f1d1d; border-right: 4px solid #ef4444; }
-        .bullish { border-left-color: #22c55e !important; }
-        .bearish { border-left-color: #ef4444 !important; }
-
-        .video-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; background: #000; }
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-
-        .chart-box { width: 100%; height: 320px !important; max-height: 320px; }
-        
-        /* NEW SECTION STYLING */
-        .logic-section { background: #0f172a; border-top: 2px solid #1e293b; padding: 30px; margin-top: 40px; }
-        .code-block { background: #000; color: #10b981; padding: 15px; border-radius: 6px; font-family: monospace; font-size: 12px; overflow-x: auto; border: 1px solid #065f46; }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #060809; }
-        ::-webkit-scrollbar-thumb { background: #363a45; border-radius: 10px; }
+        body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; }
+        .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 8px; overflow: hidden; height: 320px; }
+        .header-stat { background: #1e222d; border: 1px solid #363a45; padding: 10px; border-radius: 6px; min-width: 140px; }
     </style>
 </head>
 <body class="p-4">
 
-    <header class="flex flex-col xl:flex-row justify-between items-center mb-4 gap-4 border-b border-gray-800 pb-4">
-        <div class="flex items-center gap-8">
-            <div>
-                <h1 class="text-2xl font-black text-yellow-500 italic uppercase leading-none">MacroPulse AI</h1>
-                <p class="text-[9px] text-gray-500 font-mono tracking-widest uppercase mt-1">Institutional Live Feed</p>
+    <header class="flex justify-between items-center mb-6 border-b border-gray-800 pb-4">
+        <div class="flex gap-4">
+            <div class="header-stat border-l-4 border-yellow-500">
+                <span class="text-[10px] uppercase text-gray-500 font-bold">Gold/AUD Ratio</span>
+                <div id="ratio-val" class="text-lg font-black text-yellow-500">Calculating...</div>
             </div>
-            <div class="flex gap-3">
-                <div class="bias-box" id="box-sent"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Sentiment</span><div id="val-sent" class="text-xs font-black uppercase text-red-500">Risk-Off</div></div>
-                <div class="bias-box bullish" id="box-gold"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Gold Bias</span><div class="text-xs font-black uppercase text-yellow-500">Institutional Buy</div></div>
-                <div class="bias-box bearish" id="box-aud"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Australia</span><div class="text-xs font-black uppercase text-red-400">Weak (Short)</div></div>
-                <div class="bias-box" id="box-usa"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">USA (DXY)</span><div class="text-xs font-black uppercase text-blue-400">Safe Haven Strong</div></div>
+            <div class="header-stat border-l-4 border-blue-500">
+                <span class="text-[10px] uppercase text-gray-500 font-bold">USD Correlation</span>
+                <div id="corr-val" class="text-lg font-black text-blue-400">Stable</div>
             </div>
         </div>
-        <div class="vix-badge flex items-center gap-4 px-4 py-1 rounded-md">
-            <div class="text-right">
-                <span class="text-[10px] font-black uppercase text-red-400 block">Risk-Off</span>
-                <span class="text-[9px] text-gray-500 uppercase font-mono">March 06, 2026</span>
-            </div>
-            <div class="h-10 w-[1px] bg-gray-700"></div>
-            <div><span class="text-[9px] uppercase text-gray-400 font-bold block">CBOE VIX SPOT</span><div class="text-2xl font-black italic text-white">23.75</div></div>
+        <div class="text-right">
+            <h1 class="text-xl font-black italic text-white uppercase tracking-tighter">MacroPulse <span class="text-yellow-500">v3.0</span></h1>
+            <p class="text-[9px] text-gray-500 font-mono">INTEGRATED ENGINE ACTIVE</p>
         </div>
     </header>
 
-    <div class="grid grid-cols-12 gap-4">
-        <div class="col-span-3 flex flex-col gap-4">
-            <div class="widget-card shrink-0">
-                <div class="video-container"><iframe src="https://www.youtube.com/embed/iEpJwprxDdk?autoplay=1&mute=1" frameborder="0"></iframe></div>
-            </div>
-            <div class="widget-card" style="height: 1000px;">
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>{ "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "importanceFilter": "0,1", "currencyFilter": "USD,AUD" }</script>
-            </div>
+    <div class="grid grid-cols-2 gap-4">
+        <div class="flex flex-col gap-2">
+            <span class="text-[10px] font-bold text-gray-400 uppercase ml-2">XAUUSD + Sentiment Oscillator</span>
+            <div id="gold-integrated" class="widget-card"></div>
         </div>
 
-        <div class="col-span-6 flex flex-col gap-4">
-            <div class="flex gap-4">
-                <div id="chart-gold" class="widget-card w-1/2 chart-box"></div>
-                <div id="chart-aud" class="widget-card w-1/2 chart-box"></div>
-            </div>
-            <div class="flex gap-4" style="height: 600px;"> 
-                <div class="widget-card w-1/2 p-2">
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>{ "interval": "1m", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "OANDA:XAUUSD", "colorTheme": "dark" }</script>
-                </div>
-                <div class="widget-card w-1/2 p-2">
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>{ "interval": "1m", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "FX:AUDUSD", "colorTheme": "dark" }</script>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-span-3">
-            <div class="widget-card" style="height: 1045px;">
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>{ "feedMode": "all_symbols", "symbolsGroups": [{"name": "Macro", "symbols": ["OANDA:XAUUSD", "FX:AUDUSD"]}], "isTransparent": true, "width": "100%", "height": "100%", "colorTheme": "dark" }</script>
-            </div>
+        <div class="flex flex-col gap-2">
+            <span class="text-[10px] font-bold text-gray-400 uppercase ml-2">AUDUSD + DXY Delta</span>
+            <div id="aud-integrated" class="widget-card"></div>
         </div>
     </div>
 
-    <div class="logic-section rounded-xl shadow-2xl">
-        <h2 class="text-xl font-black text-yellow-500 mb-4 uppercase italic">Custom Pine Script: MacroPulse Risk Oscillator</h2>
-        <p class="text-xs text-gray-400 mb-4">Copy the code below into your TradingView <strong>Pine Editor</strong>. This script calculates the ratio between Gold and AUD/USD to visualize global risk sentiment.</p>
-        
-        <div class="code-block mb-8">
-//@version=5<br>
-indicator("MacroPulse Risk Sentiment", overlay=false)<br>
-gold = request.security("OANDA:XAUUSD", timeframe.period, close)<br>
-aud = request.security("FX:AUDUSD", timeframe.period, close)<br>
-ratio = gold / aud<br>
-plot(ratio, color=color.yellow, linewidth=2, title="Fear Ratio")<br>
-hline(5000, "Pivot", color=color.gray, linestyle=hline.style_dashed)
-        </div>
-
-        <div class="grid grid-cols-3 gap-8">
-            <div class="bg-[#131722] p-4 rounded border border-gray-800">
-                <h3 class="text-red-500 font-bold mb-2">VIX LOGIC</h3>
-                <p class="text-[11px] text-gray-400">Current VIX (23.75) > 20. Institutional fear is high. Bias: Safe Haven demand.</p>
-            </div>
-            <div class="bg-[#131722] p-4 rounded border border-gray-800">
-                <h3 class="text-yellow-500 font-bold mb-2">GOLD PIVOT</h3>
-                <p class="text-[11px] text-gray-400">Gold above $5,000 indicates a long-term bullish cycle. Watch for DXY weakness.</p>
-            </div>
-            <div class="bg-[#131722] p-4 rounded border border-gray-800">
-                <h3 class="text-blue-500 font-bold mb-2">CORRELATION</h3>
-                <p class="text-[11px] text-gray-400">AUD and Gold are inversely correlated to the DXY. When DXY rises, both usually fall.</p>
-            </div>
-        </div>
-    </div>
-
-    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script>
-        window.onload = () => {
-            new TradingView.widget({ "autosize": true, "symbol": "OANDA:XAUUSD", "interval": "15", "theme": "dark", "container_id": "chart-gold", "hide_top_toolbar": true });
-            new TradingView.widget({ "autosize": true, "symbol": "FX:AUDUSD", "interval": "15", "theme": "dark", "container_id": "chart-aud", "hide_top_toolbar": true });
+        // CORE CHART ENGINE
+        const chartOptions = { 
+            layout: { backgroundColor: '#131722', textColor: '#d1d4dc' },
+            grid: { vertLines: { color: '#2a2e39' }, horzLines: { color: '#2a2e39' } },
+            crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+            timeScale: { borderColor: '#2a2e39' }
         };
+
+        const goldChart = LightweightCharts.createChart(document.getElementById('gold-integrated'), chartOptions);
+        const audChart = LightweightCharts.createChart(document.getElementById('aud-integrated'), chartOptions);
+
+        const goldSeries = goldChart.addAreaSeries({ lineColor: '#eab308', topColor: 'rgba(234, 179, 8, 0.4)', bottomColor: 'rgba(234, 179, 8, 0)' });
+        const audSeries = audChart.addAreaSeries({ lineColor: '#3b82f6', topColor: 'rgba(59, 130, 246, 0.4)', bottomColor: 'rgba(59, 130, 246, 0)' });
+
+        // INTEGRATED INDICATOR: Sentiment Histogram (Bottom of Chart)
+        const sentimentIndicator = goldChart.addHistogramSeries({
+            color: '#ef4444',
+            priceFormat: { type: 'volume' },
+            priceScaleId: 'sentiment',
+        });
+
+        goldChart.priceScale('sentiment').applyOptions({
+            scaleMargins: { top: 0.8, bottom: 0 },
+        });
+
+        // SIMULATED DATA FEED & CALCULATION ENGINE
+        function updateIntegratedLogic() {
+            const now = Math.floor(Date.now() / 1000);
+            const mockGold = 5080 + Math.random() * 10;
+            const mockAud = 0.7030 + Math.random() * 0.001;
+            
+            // CUSTOM CALCULATION: Gold / AUD Ratio
+            const ratio = (mockGold / (mockAud * 1000)).toFixed(3);
+            document.getElementById('ratio-val').innerText = ratio;
+
+            goldSeries.update({ time: now, value: mockGold });
+            audSeries.update({ time: now, value: mockAud });
+
+            // UPDATE INTEGRATED INDICATOR
+            sentimentIndicator.update({
+                time: now,
+                value: Math.random() * 100,
+                color: mockGold > 5085 ? '#22c55e' : '#ef4444'
+            });
+        }
+
+        setInterval(updateIntegratedLogic, 3000);
+        updateIntegratedLogic();
     </script>
 </body>
 </html>
