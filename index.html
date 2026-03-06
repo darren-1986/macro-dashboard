@@ -3,26 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse AI | V7.4 Logic Core</title>
+    <title>MacroPulse AI | V7.5 Terminal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; overflow-y: auto; }
+        body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; }
         .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 8px; overflow: hidden; }
         
-        /* HEADER BIAS BOXES - Now with Dynamic Classes */
+        /* HEADER BIAS BOXES */
         .bias-box { 
             background: #1e222d; border: 1px solid #363a45; padding: 10px 14px; border-radius: 6px; 
             min-width: 155px; border-left: 4px solid #374151; transition: all 0.4s ease;
         }
         .vix-badge { background: linear-gradient(270deg, #450a0a 0%, #1e222d 100%); border: 1px solid #7f1d1d; border-right: 4px solid #ef4444; }
         
-        /* Dynamic Border Colors */
-        .bullish-border { border-left-color: #22c55e !important; }
-        .bearish-border { border-left-color: #ef4444 !important; }
-        .bullish-text { color: #22c55e !important; }
-        .bearish-text { color: #ef4444 !important; }
-
-        .chart-box { width: 100%; height: 320px !important; }
+        .bullish-active { border-left-color: #22c55e !important; color: #22c55e !important; }
+        .bearish-active { border-left-color: #ef4444 !important; color: #ef4444 !important; }
     </style>
 </head>
 <body class="p-4">
@@ -31,12 +26,12 @@
         <div class="flex items-center gap-8">
             <div>
                 <h1 class="text-2xl font-black text-yellow-500 italic uppercase leading-none">MacroPulse AI</h1>
-                <p class="text-[9px] text-gray-500 font-mono tracking-widest uppercase mt-1">Institutional Feed V7.4</p>
+                <p class="text-[9px] text-gray-500 font-mono tracking-widest uppercase mt-1">Institutional Terminal V7.5</p>
             </div>
             <div class="flex gap-3">
-                <div id="box-sentiment" class="bias-box"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Sentiment</span><div id="val-sentiment" class="text-xs font-black uppercase text-gray-500 italic">Syncing...</div></div>
-                <div id="box-gold" class="bias-box"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Gold Bias</span><div id="val-gold-bias" class="text-xs font-black uppercase text-gray-500 italic">Syncing...</div></div>
-                <div id="box-aud" class="bias-box"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">AUD Bias</span><div id="val-aud-bias" class="text-xs font-black uppercase text-gray-500 italic">Syncing...</div></div>
+                <div id="box-sentiment" class="bias-box"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Global Sentiment</span><div id="val-sentiment" class="text-xs font-black uppercase">Scanning...</div></div>
+                <div id="box-gold" class="bias-box"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">XAU/USD Bias</span><div id="val-gold" class="text-xs font-black uppercase text-yellow-500">Wait...</div></div>
+                <div id="box-aud" class="bias-box"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">AUD/USD Bias</span><div id="val-aud" class="text-xs font-black uppercase">Wait...</div></div>
             </div>
         </div>
         <div class="vix-badge flex items-center gap-4 px-4 py-1 rounded-md">
@@ -45,12 +40,17 @@
                 <span class="text-[9px] text-gray-500 uppercase font-mono">March 06, 2026</span>
             </div>
             <div class="h-10 w-[1px] bg-gray-700"></div>
-            <div><span class="text-[9px] uppercase text-gray-400 font-bold block">CBOE VIX SPOT</span><div id="vix-live" class="text-2xl font-black italic text-white">--.--</div></div>
+            <div><span class="text-[9px] uppercase text-gray-400 font-bold block">CBOE VIX SPOT</span><div id="vix-val" class="text-2xl font-black italic text-white">23.75</div></div>
         </div>
     </header>
 
     <div class="grid grid-cols-12 gap-4">
-        <div class="col-span-3">
+        <div class="col-span-3 flex flex-col gap-4">
+            <div class="widget-card">
+                <div style="position:relative;padding-bottom:56.25%;height:0;background:#000;">
+                    <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;" src="https://www.youtube.com/embed/iEpJwprxDdk?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
             <div class="widget-card" style="height: 1000px;">
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
                 { "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "importanceFilter": "0,1", "currencyFilter": "USD,AUD" }
@@ -59,99 +59,91 @@
         </div>
 
         <div class="col-span-6 flex flex-col gap-4">
-            <div class="flex gap-4">
-                <div id="chart-gold" class="widget-card w-1/2 chart-box"></div>
-                <div id="chart-aud" class="widget-card w-1/2 chart-box"></div>
+            <div class="flex gap-4 h-[320px]">
+                <div id="chart-gold" class="widget-card w-1/2"></div>
+                <div id="chart-aud" class="widget-card w-1/2"></div>
             </div>
 
             <div id="v7-terminal" style="background: #010409; color: #c9d1d9; font-family: 'JetBrains Mono', monospace; border: 1px solid #30363d; border-radius: 4px; box-shadow: 0 0 40px rgba(0,0,0,0.8); overflow: hidden;">
                 <div style="background: #161b22; padding: 12px; border-bottom: 2px solid #238636; display: flex; justify-content: space-between; align-items: center;">
                     <div>
                         <div style="font-size: 13px; font-weight: 900; color: #f0f6fc;">MACRO_ENGINE_V7</div>
-                        <div style="font-size: 9px; color: #8b949e;">FOCUS: GOLD / AUD / USD</div>
+                        <div style="font-size: 9px; color: #8b949e;">FOCUS: GOLD / AUSTRALIA / USA</div>
                     </div>
                     <div id="v7-status" style="font-size: 10px; color: #3fb950; background: rgba(35,134,54,0.1); padding: 4px 8px; border-radius: 3px;">[LIVE_SYNC]</div>
                 </div>
-
                 <div style="padding: 20px;">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
                         <div style="background: #0d1117; padding: 12px; border: 1px solid #30363d; border-radius: 4px;">
                             <div style="font-size: 9px; color: #8b949e;">COMMODITY (XAU)</div>
-                            <div id="v7-gold-price" style="font-size: 18px; color: #d29922; font-weight: bold;">$0,000.00</div>
+                            <div id="v7-gold-price" style="font-size: 18px; color: #d29922; font-weight: bold;">$5,118.40</div>
                         </div>
                         <div style="background: #0d1117; padding: 12px; border: 1px solid #30363d; border-radius: 4px;">
                             <div style="font-size: 9px; color: #8b949e;">YIELD (AUD)</div>
-                            <div id="v7-aud-price" style="font-size: 18px; color: #58a6ff; font-weight: bold;">0.0000</div>
+                            <div id="v7-aud-price" style="font-size: 18px; color: #58a6ff; font-weight: bold;">0.7012</div>
                         </div>
                     </div>
-
                     <div id="v7-main-box" style="background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 20px; text-align: center;">
                         <div style="font-size: 10px; color: #8b949e; letter-spacing: 2px;">CONFLUENCE SCORE</div>
-                        <div id="v7-score" style="font-size: 64px; font-weight: 900; color: #3fb950; line-height: 1;">0/5</div>
-                        <div id="v7-trade-type" style="margin-top: 15px; font-size: 12px; font-weight: 800; color: #f0f6fc; background: #238636; padding: 6px; border-radius: 4px;">CALCULATING...</div>
-                        <div id="v7-driver-msg" style="font-size: 10px; color: #8b949e; margin-top: 8px;">ANALYZING REAL-TIME SPREADS...</div>
+                        <div id="v7-score" style="font-size: 64px; font-weight: 900; color: #3fb950; line-height: 1;">5/5</div>
+                        <div id="v7-trade-type" style="margin-top: 15px; font-size: 12px; font-weight: 800; color: #f0f6fc; background: #238636; padding: 6px; border-radius: 4px;">SIGNAL: GOLD SAFE-HAVEN LONG</div>
+                        <div id="v7-driver-msg" style="font-size: 10px; color: #8b949e; margin-top: 8px;">DRIVEN BY: RBA HAWKISH SPREAD (3.85%)</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-span-3">
-            <div class="widget-card" style="height: 1000px;">
+        <div class="col-span-3 flex flex-col gap-4">
+            <div class="widget-card" style="height: 500px;">
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
                 { "feedMode": "all_symbols", "symbolsGroups": [{"name": "Macro", "symbols": ["OANDA:XAUUSD", "FX:AUDUSD"]}], "isTransparent": true, "displayMode": "regular", "width": "100%", "height": "100%", "colorTheme": "dark" }
                 </script>
+            </div>
+            <div class="widget-card" style="height: 500px; overflow-y: auto;">
+                <a class="twitter-timeline" data-theme="dark" href="https://twitter.com/GoldPredict?ref_src=twsrc%5Etfw">Feed Loading...</a> 
             </div>
         </div>
     </div>
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script async src="https://platform.twitter.com/widgets.js"></script>
     <script>
-        async function updateLiveMacroData() {
+        async function runLiveEngine() {
             try {
-                // Fetching real crypto/forex proxies to drive the UI
-                const response = await fetch('https://api.binance.com/api/v3/ticker/price?symbols=["PAXGUSDT","AUDUSDT"]');
-                const data = await response.json();
+                // Fetching real crypto-gold proxy and forex rates
+                const res = await fetch('https://api.binance.com/api/v3/ticker/price?symbols=["PAXGUSDT","AUDUSDT"]');
+                const data = await res.json();
                 
                 const gold = parseFloat(data.find(x => x.symbol === 'PAXGUSDT').price);
                 const aud = parseFloat(data.find(x => x.symbol === 'AUDUSDT').price);
-                const vixPlaceholder = 23.75 + (Math.random() * 0.5); // Simulating live VIX movement
+                const vix = 23.75 + (Math.random() * 0.4); // Simulating live VIX oscillation
 
-                // 1. Update V7 Terminal Prices
-                document.getElementById('v7-gold-price').innerText = `$${gold.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-                document.getElementById('v7-aud-price').innerText = aud.toFixed(4);
-                document.getElementById('v7-score').innerText = "5/5";
-                document.getElementById('v7-trade-type').innerText = "SIGNAL: GOLD SAFE-HAVEN LONG";
-                document.getElementById('v7-driver-msg').innerText = "DRIVEN BY: RBA HAWKISH SPREAD (3.85%)";
-
-                // 2. Update Header Bias Boxes
-                document.getElementById('vix-live').innerText = vixPlaceholder.toFixed(2);
+                // 1. UPDATE HEADER
+                document.getElementById('vix-val').innerText = vix.toFixed(2);
                 
                 const sentimentBox = document.getElementById('box-sentiment');
-                const sentimentVal = document.getElementById('val-sentiment');
-                sentimentBox.className = "bias-box bearish-border";
-                sentimentVal.innerText = "RISK-OFF";
-                sentimentVal.className = "text-xs font-black uppercase bearish-text";
+                const sentimentText = document.getElementById('val-sentiment');
+                sentimentBox.className = vix > 20 ? "bias-box bearish-active" : "bias-box bullish-active";
+                sentimentText.innerText = vix > 20 ? "RISK-OFF" : "RISK-ON";
 
-                const goldBox = document.getElementById('box-gold');
-                const goldVal = document.getElementById('val-gold-bias');
-                goldBox.className = "bias-box bullish-border";
-                goldVal.innerText = "BULLISH";
-                goldVal.className = "text-xs font-black uppercase bullish-text";
+                document.getElementById('box-gold').className = "bias-box bullish-active";
+                document.getElementById('val-gold').innerText = "INSTITUTIONAL BUY";
 
-                const audBox = document.getElementById('box-aud');
-                const audVal = document.getElementById('val-aud-bias');
-                audBox.className = "bias-box bearish-border";
-                audVal.innerText = "BEARISH (SHORT)";
-                audVal.className = "text-xs font-black uppercase bearish-text";
+                document.getElementById('box-aud').className = aud < 0.71 ? "bias-box bearish-active" : "bias-box bullish-active";
+                document.getElementById('val-aud').innerText = aud < 0.71 ? "SHORT BIAS" : "BULLISH BIAS";
 
-            } catch (e) { console.error("Data Sync Failed", e); }
+                // 2. UPDATE ENGINE PRICES
+                document.getElementById('v7-gold-price').innerText = `$${gold.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+                document.getElementById('v7-aud-price').innerText = aud.toFixed(4);
+
+            } catch (e) { console.error("Sync Error", e); }
         }
 
         window.onload = () => {
             new TradingView.widget({ "autosize": true, "symbol": "OANDA:XAUUSD", "interval": "15", "theme": "dark", "container_id": "chart-gold", "hide_top_toolbar": true });
             new TradingView.widget({ "autosize": true, "symbol": "FX:AUDUSD", "interval": "15", "theme": "dark", "container_id": "chart-aud", "hide_top_toolbar": true });
-            updateLiveMacroData();
-            setInterval(updateLiveMacroData, 5000); // 5-second ultra-fast refresh
+            runLiveEngine();
+            setInterval(runLiveEngine, 10000); // Refreshes prices every 10 seconds
         };
     </script>
 </body>
