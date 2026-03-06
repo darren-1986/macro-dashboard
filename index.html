@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse AI | Professional HUD</title>
+    <title>MacroPulse AI | Professional HUD & Logic Guide</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { 
@@ -15,6 +15,7 @@
         }
         .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 8px; overflow: hidden; }
         
+        /* HEADER BOXES - LOCKED */
         .bias-box { 
             background: #1e222d; border: 1px solid #363a45; padding: 10px 14px; border-radius: 6px; 
             min-width: 155px; border-left: 4px solid #374151; transition: all 0.4s ease;
@@ -27,11 +28,15 @@
         .video-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; background: #000; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-        /* CHART PROTECTION - HEIGHT REDUCED TO 320px */
         .chart-box {
             width: 100%;
             height: 320px !important; 
             max-height: 320px;
+        }
+
+        /* CHEAT SHEET STYLING */
+        .cheat-sheet {
+            background: #0f172a; border-top: 2px solid #1e293b; padding: 30px; margin-top: 40px; border-radius: 12px 12px 0 0;
         }
 
         ::-webkit-scrollbar { width: 6px; }
@@ -69,7 +74,7 @@
         <div class="col-span-3 flex flex-col gap-4">
             <div class="widget-card shrink-0">
                 <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/iEpJwprxDdk?autoplay=1&mute=1&rel=0&modestbranding=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/iEpJwprxDdk?autoplay=1&mute=1&rel=0" frameborder="0" allowfullscreen></iframe>
                 </div>
             </div>
             <div class="widget-card" style="height: 1000px;">
@@ -85,16 +90,13 @@
                 <div id="chart-gold" class="widget-card w-1/2 chart-box"></div>
                 <div id="chart-aud" class="widget-card w-1/2 chart-box"></div>
             </div>
-            
             <div class="flex gap-4" style="height: 600px;"> 
                 <div class="widget-card w-1/2 p-2">
-                    <div class="p-2 text-[10px] font-bold uppercase text-gray-400 text-center">Gold Strength</div>
                     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
                     { "interval": "1m", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "OANDA:XAUUSD", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "dark" }
                     </script>
                 </div>
                 <div class="widget-card w-1/2 p-2">
-                    <div class="p-2 text-[10px] font-bold uppercase text-gray-400 text-center">AUD/USD Strength</div>
                     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
                     { "interval": "1m", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "FX:AUDUSD", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "dark" }
                     </script>
@@ -104,11 +106,40 @@
 
         <div class="col-span-3">
             <div class="widget-card" style="height: 1045px;">
-                <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-green-400 text-center">Macro News Wire</div>
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
-                { "feedMode": "all_symbols", "symbolsGroups": [{"name": "Macro", "symbols": ["OANDA:XAUUSD", "FX:AUDUSD", "TVC:DXY"]}], "isTransparent": true, "displayMode": "regular", "width": "100%", "height": "100%", "colorTheme": "dark", "locale": "en" }
+                { "feedMode": "all_symbols", "symbolsGroups": [{"name": "Macro", "symbols": ["OANDA:XAUUSD", "FX:AUDUSD"]}], "isTransparent": true, "displayMode": "regular", "width": "100%", "height": "100%", "colorTheme": "dark", "locale": "en" }
                 </script>
             </div>
+        </div>
+    </div>
+
+    <div class="cheat-sheet">
+        <h2 class="text-xl font-black text-yellow-500 mb-6 uppercase italic">Operational Cheat Sheet: The Macro Triangle</h2>
+        <div class="grid grid-cols-3 gap-8">
+            <div class="bg-[#131722] p-4 rounded border border-gray-800">
+                <h3 class="text-red-500 font-bold mb-2">1. THE VIX SIGNAL</h3>
+                <p class="text-xs text-gray-400 leading-relaxed">
+                    <strong>Below 20:</strong> Risk-On. Capital flows into AUD and Equities. Short Gold.<br><br>
+                    <strong>Above 20:</strong> Risk-Off. Capital flees to USD and Gold. Short AUD.
+                </p>
+            </div>
+            <div class="bg-[#131722] p-4 rounded border border-gray-800">
+                <h3 class="text-yellow-500 font-bold mb-2">2. THE GOLD PIVOT</h3>
+                <p class="text-xs text-gray-400 leading-relaxed">
+                    <strong>Gold > $5,000:</strong> Bullish regime. Look for "Strong Buy" gauge confluence.<br><br>
+                    <strong>Gold < $5,000:</strong> Bearish regime. Potential USD dominance or "melt-up" in risk assets.
+                </p>
+            </div>
+            <div class="bg-[#131722] p-4 rounded border border-gray-800">
+                <h3 class="text-blue-500 font-bold mb-2">3. THE AUD PROXY</h3>
+                <p class="text-xs text-gray-400 leading-relaxed">
+                    <strong>AUD/USD Up:</strong> Signals global growth and commodity demand.<br><br>
+                    <strong>AUD/USD Down:</strong> Signals global fear or US Dollar shortage.
+                </p>
+            </div>
+        </div>
+        <div class="mt-6 p-4 bg-gray-900 border-l-4 border-yellow-500 rounded text-xs italic text-gray-300">
+            "Check Header Bias -> Confirm Technical Gauge -> Check Calendar for High Impact (USD/AUD) -> Execute."
         </div>
     </div>
 
