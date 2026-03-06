@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse AI | Terminal 2026</title>
+    <title>MacroPulse AI | 2026 Live Terminal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; }
         .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%; }
         .vix-number { font-size: 3.5rem; line-height: 1; letter-spacing: -3px; font-weight: 900; }
         .glow-blue { text-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
         .bias-box { background: #1e222d; border: 1px solid #363a45; padding: 12px; border-radius: 8px; text-align: center; flex: 1; min-width: 140px; }
-        .news-item { border-bottom: 1px solid #2a2e39; padding: 10px; font-size: 12px; }
+        .news-item { border-bottom: 1px solid #2a2e39; padding: 12px; transition: background 0.2s; }
         .news-item:hover { background: #1e222d; }
+        .news-tag { font-size: 9px; font-weight: 900; padding: 2px 6px; border-radius: 4px; margin-right: 8px; text-transform: uppercase; }
     </style>
 </head>
 <body class="p-4 md:p-6">
@@ -44,6 +45,7 @@
     </header>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
         <div class="lg:col-span-3 flex flex-col gap-6">
             <div class="widget-card p-8 border-t-4 border-t-blue-500">
                 <h3 class="text-blue-400 font-black text-xs uppercase tracking-widest text-center mb-4">CBOE VIX SPOT</h3>
@@ -65,14 +67,14 @@
                 <div class="widget-card" id="aud_chart"></div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-[350px]">
-                <div class="widget-card" id="gold_gauge_container">
-                    <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-yellow-500 text-center">Gold Technicals</div>
+                <div class="widget-card">
+                    <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-yellow-500 text-center">XAU/USD Gauge</div>
                     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
                     { "interval": "4h", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "OANDA:XAUUSD", "colorTheme": "dark" }
                     </script>
                 </div>
-                <div class="widget-card" id="aud_gauge_container">
-                    <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-orange-400 text-center">AUD/USD Technicals</div>
+                <div class="widget-card">
+                    <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-orange-400 text-center">AUD/USD Gauge</div>
                     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
                     { "interval": "4h", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "FX:AUDUSD", "colorTheme": "dark" }
                     </script>
@@ -82,26 +84,56 @@
 
         <div class="lg:col-span-3 widget-card min-h-[755px]">
             <div class="p-4 bg-[#1e222d] border-b border-gray-800 flex justify-between">
-                <span class="text-[11px] font-black uppercase text-yellow-500">Live Wire: Gold • AUD • USD</span>
-                <span class="text-[9px] text-green-500 animate-pulse">● STREAMING</span>
+                <span class="text-[11px] font-black uppercase text-yellow-500">Live Wire: Macro Flow</span>
+                <span class="text-[9px] text-green-500 animate-pulse">● ACTIVE</span>
             </div>
-            <div class="flex-grow overflow-y-auto" id="custom-news-feed">
-                <script src="https://rss.app/static/widgets/imageboard.js" type="text/javascript"></script>
-                <ins class="rssapp" data-id="vG5NfO6mZ7pU2E8S" style="display:block"></ins>
-                <div class="text-center p-10 text-xs text-gray-600">
-                    Attempting to establish news handshake...<br>
-                    <span class="text-[10px] mt-2 block italic">(Make sure you are connected to the internet)</span>
-                </div>
+            <div id="news-feed-container" class="flex-grow overflow-y-auto">
+                <div class="p-10 text-center text-xs text-gray-500">Initializing 2026 News Stream...</div>
             </div>
         </div>
     </div>
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script>
+        // TRADINGVIEW CHARTS
         window.onload = () => {
             new TradingView.widget({ "autosize": true, "symbol": "OANDA:XAUUSD", "interval": "60", "theme": "dark", "container_id": "gold_chart", "hide_top_toolbar": true, "hide_legend": true });
             new TradingView.widget({ "autosize": true, "symbol": "FX:AUDUSD", "interval": "60", "theme": "dark", "container_id": "aud_chart", "hide_top_toolbar": true, "hide_legend": true });
+            fetchNews();
         };
+
+        // CUSTOM NEWS ENGINE (RSS Bypass)
+        async function fetchNews() {
+            const container = document.getElementById('news-feed-container');
+            const rssUrl = encodeURIComponent('https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=2000&keywords=gold,australia,usa');
+            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                
+                if (data.status === 'ok') {
+                    container.innerHTML = '';
+                    data.items.forEach(item => {
+                        const date = new Date(item.pubDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                        const div = document.createElement('div');
+                        div.className = 'news-item';
+                        div.innerHTML = `
+                            <div class="flex items-center mb-1">
+                                <span class="news-tag bg-blue-900 text-blue-200">MACRO</span>
+                                <span class="text-[10px] text-gray-500">${date}</span>
+                            </div>
+                            <a href="${item.link}" target="_blank" class="font-bold text-[13px] leading-tight hover:text-yellow-500 block">${item.title}</a>
+                        `;
+                        container.appendChild(div);
+                    });
+                }
+            } catch (e) {
+                container.innerHTML = '<div class="p-10 text-center text-red-500 text-xs">Feed offline. Check internet connection.</div>';
+            }
+        }
+        // Refresh news every 2 minutes
+        setInterval(fetchNews, 120000);
     </script>
 </body>
 </html>
