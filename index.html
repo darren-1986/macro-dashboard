@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse AI | 2026 Final Build</title>
+    <title>MacroPulse AI | High-Velocity Terminal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; overflow-y: auto; min-height: 100vh; }
@@ -55,7 +55,6 @@
                 </div>
             </div>
             <div class="widget-card flex-grow min-h-[400px]">
-                <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-blue-400 text-center">Macro Events</div>
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
                 { "colorTheme": "dark", "importanceFilter": "0,1", "currencyFilter": "USD,AUD", "width": "100%", "height": "100%" }
                 </script>
@@ -84,23 +83,15 @@
         </div>
 
         <div class="lg:col-span-3 widget-card min-h-[755px]">
-            <div class="p-4 bg-[#1e222d] border-b border-gray-800 flex justify-between">
-                <span class="text-[11px] font-black uppercase text-yellow-500 italic">Macro & Commodities Flow</span>
+            <div class="p-4 bg-[#1e222d] border-b border-gray-800 flex justify-between items-center">
+                <span class="text-[11px] font-black uppercase text-yellow-500 italic">Live Macro News Stream</span>
+                <span class="text-[9px] text-green-500 animate-pulse font-bold tracking-tighter">SOCKET ACTIVE</span>
             </div>
             <div class="flex-grow">
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
-                {
-                  "feedMode": "market",
-                  "market": "forex",
-                  "isTransparent": true,
-                  "displayMode": "regular",
-                  "width": "100%",
-                  "height": "100%",
-                  "colorTheme": "dark",
-                  "locale": "en",
-                  "symbol": "OANDA:XAUUSD" 
-                }
-                </script>
+                <iframe src="https://www.tradingeconomics.com/stream?c=gold,australia,united+states" 
+                    width="100%" height="100%" frameborder="0" 
+                    style="border:none; filter: invert(0.9) hue-rotate(180deg) brightness(0.7); background: #131722;">
+                </iframe>
             </div>
         </div>
     </div>
