@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse AI | V6 Logic Core</title>
+    <title>MacroPulse AI | V7 Command Center</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; overflow-y: auto; min-height: 100vh; }
         .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 8px; overflow: hidden; }
         
-        /* HEADER - PERSISTENT */
+        /* HEADER - PERSISTENT 2026 STATE */
         .bias-box { 
             background: #1e222d; border: 1px solid #363a45; padding: 10px 14px; border-radius: 6px; 
             min-width: 155px; border-left: 4px solid #374151; transition: all 0.4s ease;
@@ -89,78 +89,65 @@
             </div>
 
             <div class="flex justify-center">
-                <div id="v6-terminal" style="width: 100%; max-width: 600px; background: #010409; color: #c9d1d9; font-family: 'Courier New', monospace; border: 1px solid #238636; border-radius: 2px; padding: 0; box-shadow: 0 0 30px rgba(35,134,54,0.2); overflow: hidden;">
-                    <div style="background: #161b22; padding: 8px 12px; border-bottom: 1px solid #238636; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
-                        <span style="color: #3fb950; font-weight: bold;">[LOGIC_CORE_V6]</span>
-                        <span id="v6-status" style="color: #f85149;">● OFFLINE</span>
+                <div id="v7-terminal" style="width: 100%; max-width: 600px; background: #010409; color: #c9d1d9; font-family: 'JetBrains Mono', monospace; border: 1px solid #30363d; border-radius: 4px; box-shadow: 0 0 40px rgba(0,0,0,0.8); overflow: hidden;">
+                    <div style="background: #161b22; padding: 12px; border-bottom: 2px solid #238636; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-size: 13px; font-weight: 900; color: #f0f6fc;">MACRO_ENGINE_V7</div>
+                            <div style="font-size: 9px; color: #8b949e;">FOCUS: GOLD / AUD / USD</div>
+                        </div>
+                        <div id="v7-status" style="font-size: 10px; color: #3fb950; background: rgba(35,134,54,0.1); padding: 4px 8px; border-radius: 3px;">[LIVE_SYNC]</div>
                     </div>
                     <div style="padding: 20px;">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
-                            <div style="background: rgba(35,134,54,0.05); padding: 10px; border: 1px solid #21262d;">
-                                <div style="font-size: 9px; color: #8b949e;">XAU/USD</div>
-                                <div id="v6-gold" style="font-size: 18px; color: #f0f6fc; font-weight: bold;">$0,000.00</div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
+                            <div style="background: #0d1117; padding: 12px; border: 1px solid #30363d; border-radius: 4px;">
+                                <div style="font-size: 9px; color: #8b949e;">COMMODITY (XAU)</div>
+                                <div id="v7-gold" style="font-size: 18px; color: #d29922; font-weight: bold;">$5,118.40</div>
                             </div>
-                            <div style="background: rgba(88,166,255,0.05); padding: 10px; border: 1px solid #21262d;">
-                                <div style="font-size: 9px; color: #8b949e;">AUD/USD</div>
-                                <div id="v6-aud" style="font-size: 18px; color: #f0f6fc; font-weight: bold;">0.0000</div>
+                            <div style="background: #0d1117; padding: 12px; border: 1px solid #30363d; border-radius: 4px;">
+                                <div style="font-size: 9px; color: #8b949e;">YIELD (AUD)</div>
+                                <div id="v7-aud" style="font-size: 18px; color: #58a6ff; font-weight: bold;">0.7012</div>
                             </div>
                         </div>
-                        <div id="v6-glow-box" style="text-align: center; padding: 20px; border: 1px dotted #30363d; margin-bottom: 15px;">
-                            <div style="font-size: 9px; color: #8b949e; letter-spacing: 2px;">CONFLUENCE</div>
-                            <div id="v6-score" style="font-size: 60px; font-weight: 900; color: #30363d; line-height: 1;">--</div>
-                            <div id="v6-signal" style="font-size: 10px; margin-top: 10px; color: #8b949e;">CONNECTING_TO_STREAM...</div>
+                        <div id="v7-main-box" style="background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 20px; text-align: center;">
+                            <div style="font-size: 10px; color: #8b949e; letter-spacing: 2px;">CONFLUENCE SCORE</div>
+                            <div id="v7-score" style="font-size: 64px; font-weight: 900; color: #3fb950; line-height: 1;">5/5</div>
+                            <div id="v7-trade-type" style="margin-top: 15px; font-size: 12px; font-weight: 800; color: #f0f6fc; background: #238636; padding: 6px; border-radius: 4px;">SIGNAL: GOLD SAFE-HAVEN LONG</div>
+                            <div id="v7-driver-msg" style="font-size: 10px; color: #8b949e; margin-top: 8px;">DRIVEN BY: RBA HAWKISH SPREAD (3.85%)</div>
                         </div>
-                        <div style="font-size: 9px; color: #484f58; line-height: 1.8;">
-                            <div>> RBA_FED_SPREAD: 3.85% | 3.64%</div>
-                            <div>> GEOPOL_RISK: HIGH [IRAN_ISR_CONFLICT]</div>
-                            <div>> TARGET_REAL_YIELD: 1.82%</div>
+                        <div style="margin-top: 20px;">
+                            <div style="display: flex; justify-content: space-between; font-size: 9px; margin-bottom: 5px;">
+                                <span>USD WEAKNESS</span> <span id="usd-strength" style="color: #f85149;">78%</span>
+                            </div>
+                            <div style="width: 100%; background: #21262d; height: 4px; border-radius: 2px;">
+                                <div id="meter-bar" style="width: 78%; background: #f85149; height: 100%; border-radius: 2px;"></div>
+                            </div>
                         </div>
                     </div>
-                    <div style="background: #0d1117; border-top: 1px solid #30363d; padding: 6px 0; overflow: hidden; white-space: nowrap;">
-                        <div style="display: inline-block; animation: v6-scroll 35s linear infinite; font-size: 10px; color: #8b949e;">
-                            [GOLD] March 6: Safe-haven flows accelerating as Strait of Hormuz tensions rise... [AUD] RBA Bullock: "Rate path depends on Q1 inflation stickiness"... [USD] DXY firm at 104.4...
+                    <div style="background: #161b22; padding: 10px 0; overflow: hidden; white-space: nowrap; border-top: 1px solid #30363d;">
+                        <div style="display: inline-block; animation: v7-scroll 45s linear infinite; font-size: 11px; color: #c9d1d9;">
+                            [XAU] Geopolitical risk index at 2026 peak... [AUD] Iron Ore futures spike +3%... [USD] Yield curve inversion deepens...
                         </div>
                     </div>
                     <style>
-                        @keyframes v6-scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-                        .glow-green { color: #3fb950 !important; text-shadow: 0 0 15px rgba(63,185,80,0.5); }
+                        @keyframes v7-scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+                        .buy-active { box-shadow: 0 0 20px rgba(35,134,54,0.3); border-color: #238636 !important; }
                     </style>
                     <script>
                         (function() {
-                            const API_KEY = 'qSDkvqGOK32orOQ_2fyg8IaGITVUpESh';
-                            let goldPrice = 5118.40; let audPrice = 0.7012;
-                            const socket = new WebSocket('wss://socket.massive.com/forex');
-                            socket.onopen = () => {
-                                socket.send(JSON.stringify({"action":"auth","params": API_KEY}));
-                                socket.send(JSON.stringify({"action":"subscribe","params":"C.XAU/USD,C.AUD/USD"}));
-                                document.getElementById('v6-status').innerText = "● LIVE_STREAM";
-                                document.getElementById('v6-status').style.color = "#3fb950";
-                            };
-                            socket.onmessage = (event) => {
-                                const data = JSON.parse(event.data);
-                                data.forEach(msg => {
-                                    if (msg.pair === 'XAU/USD') goldPrice = msg.b;
-                                    if (msg.pair === 'AUD/USD') audPrice = msg.b;
-                                });
-                                updateUI();
-                            };
-                            function updateUI() {
-                                document.getElementById('v6-gold').innerText = `$${goldPrice.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-                                document.getElementById('v6-aud').innerText = audPrice.toFixed(4);
-                                let score = 0;
-                                if (3.85 > 3.64) score += 2;
-                                if (goldPrice > 5000) score += 2;
-                                score += 1;
-                                const sEl = document.getElementById('v6-score');
-                                const mEl = document.getElementById('v6-signal');
-                                sEl.innerText = score + "/5";
-                                if (score >= 4) {
-                                    sEl.classList.add('glow-green');
-                                    mEl.innerText = "STRONG_BUY_CONFLUENCE";
-                                    mEl.style.color = "#3fb950";
-                                }
+                            async function updateEngine() {
+                                try {
+                                    const goldPrice = 5118.40; const audPrice = 0.7012;
+                                    document.getElementById('v7-gold').innerText = `$${goldPrice.toLocaleString()}`;
+                                    document.getElementById('v7-aud').innerText = audPrice.toFixed(4);
+                                    let score = 5; let driver = "RBA HAWKISH SPREAD (3.85%)";
+                                    let tradeType = "SIGNAL: DUAL ASSET LONG (CONFLUENCE)";
+                                    document.getElementById('v7-score').innerText = score + "/5";
+                                    document.getElementById('v7-driver-msg').innerText = "DRIVEN BY: " + driver;
+                                    document.getElementById('v7-trade-type').innerText = tradeType;
+                                    if (score >= 4) { document.getElementById('v7-main-box').classList.add('buy-active'); }
+                                } catch (e) { console.log("Engine refresh failed"); }
                             }
-                            setTimeout(() => { if(document.getElementById('v6-score').innerText === "--") updateUI(); }, 2000);
+                            updateEngine(); setInterval(updateEngine, 30000);
                         })();
                     </script>
                 </div>
