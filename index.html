@@ -3,16 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse AI | 2026 Live Terminal</title>
+    <title>MacroPulse AI | Final Stability</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
         .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%; }
-        .bias-box { background: #1e222d; border: 1px solid #363a45; padding: 12px; border-radius: 8px; text-align: center; flex: 1; min-width: 140px; }
-        .news-item { border-bottom: 1px solid #2a2e39; padding: 14px; transition: 0.2s; cursor: pointer; }
-        .news-item:hover { background: #1c222d; }
-        .news-tag { font-size: 9px; font-weight: 900; color: #eab308; background: rgba(234, 179, 8, 0.1); padding: 2px 6px; border-radius: 4px; margin-bottom: 4px; display: inline-block; text-transform: uppercase; }
-        .vix-number { font-size: 3.5rem; line-height: 1; letter-spacing: -3px; font-weight: 900; text-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+        .bias-box { background: #1e222d; border: 1px solid #363a45; padding: 10px; border-radius: 8px; text-align: center; flex: 1; }
     </style>
 </head>
 <body class="p-4 md:p-6">
@@ -23,46 +19,74 @@
             <p class="text-[11px] text-gray-500 font-mono tracking-widest uppercase mt-1">Institutional Terminal • Mar 06, 2026</p>
         </div>
         <div class="flex flex-wrap gap-3 w-full lg:w-auto">
-            <div class="bias-box border-l-4 border-l-blue-500"><span class="text-[10px] uppercase text-gray-400 font-bold block mb-1">Risk Sentiment</span><div class="text-sm font-black text-blue-400 italic">RISK-OFF</div></div>
-            <div class="bias-box border-l-4 border-l-yellow-600"><span class="text-[10px] uppercase text-gray-400 font-bold block mb-1">Gold Bias</span><div class="text-sm font-black text-yellow-500 italic">BULLISH</div></div>
-            <div class="bias-box border-l-4 border-l-orange-500"><span class="text-[10px] uppercase text-gray-400 font-bold block mb-1">AUD Bias</span><div class="text-sm font-black text-orange-400 italic">WEAK</div></div>
-            <div class="bias-box border-l-4 border-l-green-500"><span class="text-[10px] uppercase text-gray-400 font-bold block mb-1">USA (DXY)</span><div class="text-sm font-black text-green-400 italic">STRENGTHENING</div></div>
+            <div class="bias-box border-l-4 border-l-blue-500"><span class="text-[10px] uppercase text-gray-400 font-bold block">Risk</span><div class="text-sm font-black text-blue-400 italic">RISK-OFF (23.75)</div></div>
+            <div class="bias-box border-l-4 border-l-yellow-600"><span class="text-[10px] uppercase text-gray-400 font-bold block">Gold</span><div class="text-sm font-black text-yellow-500 italic">BULLISH</div></div>
+            <div class="bias-box border-l-4 border-l-orange-500"><span class="text-[10px] uppercase text-gray-400 font-bold block">AUD</span><div class="text-sm font-black text-orange-400 italic">WEAK</div></div>
+            <div class="bias-box border-l-4 border-l-green-500"><span class="text-[10px] uppercase text-gray-400 font-bold block">USA</span><div class="text-sm font-black text-green-400 italic">STRONG (DXY)</div></div>
         </div>
     </header>
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 h-[800px]">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-grow overflow-hidden">
         
-        <div class="lg:col-span-3 flex flex-col gap-6">
-            <div class="widget-card p-8 border-t-4 border-t-blue-500 items-center justify-center">
-                <h3 class="text-blue-400 font-black text-xs uppercase tracking-widest mb-4">CBOE VIX SPOT</h3>
-                <div class="vix-number text-white italic">23.75</div>
-            </div>
-            <div class="widget-card flex-grow overflow-hidden">
-                <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-blue-400 text-center">Macro Calendar</div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
-                { "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "importanceFilter": "0,1", "currencyFilter": "USD,AUD" }
-                </script>
+        <div class="lg:col-span-3 h-full">
+            <div class="widget-card">
+                <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-blue-400 text-center">Macro Events</div>
+                <div class="flex-grow">
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
+                    { "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "importanceFilter": "0,1", "currencyFilter": "USD,AUD" }
+                    </script>
+                </div>
             </div>
         </div>
 
-        <div class="lg:col-span-6 flex flex-col gap-6">
-            <div class="grid grid-cols-2 gap-4 h-[450px]">
+        <div class="lg:col-span-6 flex flex-col gap-6 h-full">
+            <div class="grid grid-cols-2 gap-4 h-3/5">
                 <div id="c1" class="widget-card"></div>
                 <div id="c2" class="widget-card"></div>
             </div>
-            <div class="grid grid-cols-2 gap-4 flex-grow">
-                <div id="g1" class="widget-card"></div>
-                <div id="g2" class="widget-card"></div>
+            <div class="grid grid-cols-2 gap-4 h-2/5">
+                <div class="widget-card">
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                    { "interval": "1h", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "OANDA:XAUUSD", "colorTheme": "dark" }
+                    </script>
+                </div>
+                <div class="widget-card">
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                    { "interval": "1h", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "FX:AUDUSD", "colorTheme": "dark" }
+                    </script>
+                </div>
             </div>
         </div>
 
-        <div class="lg:col-span-3 widget-card">
-            <div class="p-4 bg-[#1e222d] border-b border-gray-800 flex justify-between items-center">
-                <span class="text-[11px] font-black uppercase text-yellow-500 italic">Live Macro Feed</span>
-                <span id="sync" class="text-[9px] text-green-500 font-bold animate-pulse">● SYNCED</span>
-            </div>
-            <div id="news-stream" class="flex-grow overflow-y-auto bg-[#0d1017]">
-                <div class="p-10 text-center text-xs text-gray-600 italic">Connecting to wire...</div>
+        <div class="lg:col-span-3 h-full">
+            <div class="widget-card">
+                <div class="p-3 bg-[#1e222d] border-b border-gray-800 flex justify-between items-center">
+                    <span class="text-[11px] font-black uppercase text-yellow-500 italic">Macro Wire</span>
+                    <span class="text-[9px] text-green-500 font-bold animate-pulse">LIVE</span>
+                </div>
+                <div class="flex-grow">
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+                    {
+                      "feedMode": "all_symbols",
+                      "symbolsGroups": [
+                        {
+                          "name": "Macro Focus",
+                          "symbols": [
+                            {"proName": "OANDA:XAUUSD", "title": "Gold"},
+                            {"proName": "FX:AUDUSD", "title": "Australia"},
+                            {"proName": "TVC:DXY", "title": "USA Index"}
+                          ]
+                        }
+                      ],
+                      "isTransparent": true,
+                      "displayMode": "regular",
+                      "width": "100%",
+                      "height": "100%",
+                      "colorTheme": "dark",
+                      "locale": "en"
+                    }
+                    </script>
+                </div>
             </div>
         </div>
     </div>
@@ -72,46 +96,7 @@
         window.onload = () => {
             new TradingView.widget({ "autosize": true, "symbol": "OANDA:XAUUSD", "interval": "60", "theme": "dark", "container_id": "c1", "hide_top_toolbar": true });
             new TradingView.widget({ "autosize": true, "symbol": "FX:AUDUSD", "interval": "60", "theme": "dark", "container_id": "c2", "hide_top_toolbar": true });
-            
-            new TradingView.MediumWidget({ "symbols": [["Gold", "XAUUSD"]], "chartOnly": false, "width": "100%", "height": "100%", "locale": "en", "colorTheme": "dark", "gridLineColor": "rgba(42, 46, 57, 0)", "container_id": "g1" });
-            new TradingView.MediumWidget({ "symbols": [["AUD/USD", "FX:AUDUSD"]], "chartOnly": false, "width": "100%", "height": "100%", "locale": "en", "colorTheme": "dark", "gridLineColor": "rgba(42, 46, 57, 0)", "container_id": "g2" });
-            
-            fetchLiveNews();
-            setInterval(fetchLiveNews, 120000); // Update every 2 mins
         };
-
-        async function fetchLiveNews() {
-            const stream = document.getElementById('news-stream');
-            const sync = document.getElementById('sync');
-            
-            // Using a reliable RSS to JSON converter
-            const api = 'https://api.rss2json.com/v1/api.json?rss_url=https://tradingeconomics.com/rss/news.aspx';
-
-            try {
-                const response = await fetch(api);
-                const data = await response.json();
-                if (data.status === 'ok') {
-                    stream.innerHTML = '';
-                    data.items.forEach(item => {
-                        // STRICT FILTER: Gold, Australia, or USA/Fed
-                        if (item.title.match(/Gold|XAU|Australia|AUD|USA|USD|Fed|RBA|Dollar/i)) {
-                            const div = document.createElement('div');
-                            div.className = 'news-item';
-                            div.innerHTML = `
-                                <span class="news-tag">Breaking</span>
-                                <div class="text-[13px] font-bold leading-tight mb-1">${item.title}</div>
-                                <div class="text-[10px] text-gray-500 font-mono italic">${new Date(item.pubDate).toLocaleTimeString()}</div>
-                            `;
-                            div.onclick = () => window.open(item.link, '_blank');
-                            stream.appendChild(div);
-                        }
-                    });
-                }
-            } catch (e) {
-                sync.innerText = "OFFLINE";
-                sync.className = "text-[9px] text-red-500 font-bold";
-            }
-        }
     </script>
 </body>
 </html>
