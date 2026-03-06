@@ -3,92 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse AI | 2026 Terminal</title>
+    <title>MacroPulse AI | 2026 Stability Build</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; overflow: hidden; height: 100vh; }
-        .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 8px; overflow: hidden; height: 100%; display: flex; flex-direction: column; }
-        .bias-box { background: #1e222d; border: 1px solid #363a45; padding: 10px; border-radius: 6px; text-align: center; flex: 1; }
+        body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; overflow-y: auto; min-height: 100vh; }
+        .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%; }
+        .bias-box { background: #1e222d; border: 1px solid #363a45; padding: 12px; border-radius: 8px; text-align: center; flex: 1; min-width: 140px; }
         iframe { border: none !important; }
     </style>
 </head>
-<body class="p-4">
+<body class="p-4 md:p-6">
 
-    <header class="flex flex-col lg:flex-row justify-between items-center mb-4 gap-4">
-        <div class="flex flex-col">
-            <h1 class="text-3xl font-black text-yellow-500 italic tracking-tighter uppercase">MacroPulse AI</h1>
-            <p class="text-[10px] text-gray-500 font-mono uppercase tracking-[0.2em]">Institutional Terminal • Mar 06, 2026</p>
+    <header class="flex flex-col lg:flex-row justify-between items-start mb-6 gap-6 border-b border-gray-800 pb-6">
+        <div>
+            <h1 class="text-4xl font-black text-yellow-500 italic uppercase tracking-tighter">MacroPulse AI</h1>
+            <p class="text-[11px] text-gray-500 font-mono tracking-widest uppercase mt-1">Institutional Terminal • Mar 06, 2026</p>
         </div>
         
-        <div class="flex gap-3 w-full lg:w-2/3">
+        <div class="flex flex-wrap gap-3 w-full lg:w-auto">
             <div class="bias-box border-l-4 border-l-blue-500">
-                <span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Risk Sentiment</span>
-                <div class="text-xs font-black text-blue-400 italic">RISK-OFF (VIX: 23.75)</div>
+                <span class="text-[10px] uppercase text-gray-400 font-bold block mb-1">Risk Sentiment</span>
+                <div class="text-sm font-black text-blue-400 uppercase italic">RISK-OFF (VIX: 23.75)</div>
             </div>
             <div class="bias-box border-l-4 border-l-yellow-600">
-                <span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Gold Bias</span>
-                <div class="text-xs font-black text-yellow-500 italic">BULLISH ($5,164)</div>
+                <span class="text-[10px] uppercase text-gray-400 font-bold block mb-1">Gold Bias</span>
+                <div class="text-sm font-black text-yellow-500 uppercase">BULLISH ($5,164)</div>
             </div>
             <div class="bias-box border-l-4 border-l-orange-500">
-                <span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">AUD Bias</span>
-                <div class="text-xs font-black text-orange-400 italic">WEAK (0.7031)</div>
+                <span class="text-[10px] uppercase text-gray-400 font-bold block mb-1">AUD Bias</span>
+                <div class="text-sm font-black text-orange-400 uppercase">WEAK (0.7031)</div>
             </div>
             <div class="bias-box border-l-4 border-l-green-500">
-                <span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">USA (DXY)</span>
-                <div class="text-xs font-black text-green-400 italic">STRENGTHENING</div>
+                <span class="text-[10px] uppercase text-gray-400 font-bold block mb-1">USA (DXY)</span>
+                <div class="text-sm font-black text-green-400 uppercase">STRENGTHENING</div>
             </div>
         </div>
     </header>
 
-    <main class="grid grid-cols-12 gap-4 h-[calc(100vh-120px)]">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        <div class="col-span-3 flex flex-col gap-4">
-            <div class="widget-card p-6 items-center justify-center border-t-2 border-blue-500">
-                <h3 class="text-blue-400 font-black text-[10px] uppercase tracking-widest mb-2">VIX Spot</h3>
-                <div class="text-5xl font-black text-white italic tracking-tighter">23.75</div>
-                <div class="text-[9px] text-red-500 font-bold mt-2 animate-pulse uppercase">Market Turbulence High</div>
+        <div class="lg:col-span-3 flex flex-col gap-6">
+            <div class="widget-card p-8 border-t-4 border-t-blue-500 h-[200px]">
+                <h3 class="text-blue-400 font-black text-xs uppercase tracking-widest text-center mb-4">CBOE VIX SPOT</h3>
+                <div class="text-5xl font-black text-white italic text-center">23.75</div>
             </div>
-            <div class="widget-card flex-grow">
-                <iframe src="https://sslecal2.investing.com?eco_importance=2,3&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&category=_employment,_economicIndicators,_centralBanks,_inflation&countries=5,25&calType=day&timeZone=1&lang=1" width="100%" height="100%"></iframe>
-            </div>
-        </div>
-
-        <div class="col-span-6 flex flex-col gap-4">
-            <div class="grid grid-cols-2 gap-4 h-2/3">
-                <div class="widget-card" id="gold_chart"></div>
-                <div class="widget-card" id="aud_chart"></div>
-            </div>
-            <div class="grid grid-cols-2 gap-4 h-1/3">
-                <div class="widget-card">
-                    <div class="p-1 bg-[#1e222d] text-[9px] font-bold text-center text-yellow-500 uppercase border-b border-gray-800">XAU/USD Gauge</div>
-                    <div class="flex-grow" id="gold_gauge"></div>
-                </div>
-                <div class="widget-card">
-                    <div class="p-1 bg-[#1e222d] text-[9px] font-bold text-center text-orange-400 uppercase border-b border-gray-800">AUD/USD Gauge</div>
-                    <div class="flex-grow" id="aud_gauge"></div>
+            <div class="widget-card min-h-[540px]">
+                <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-blue-400 text-center">Economic Calendar</div>
+                <div class="tradingview-widget-container">
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
+                    { "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "importanceFilter": "0,1", "currencyFilter": "USD,AUD" }
+                    </script>
                 </div>
             </div>
         </div>
 
-        <div class="col-span-3 widget-card border-t-2 border-yellow-600">
-            <div class="p-3 bg-[#1e222d] border-b border-gray-800 flex justify-between">
-                <span class="text-[10px] font-black uppercase text-yellow-500">Live Macro Flow</span>
-                <span class="text-[9px] text-green-500 font-bold italic animate-pulse">LIVE SOCKET</span>
+        <div class="lg:col-span-6 flex flex-col gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-[400px]">
+                <div class="widget-card" id="gold_main"></div>
+                <div class="widget-card" id="aud_main"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-[340px]">
+                <div class="widget-card">
+                    <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-yellow-500 text-center">XAU/USD Gauge</div>
+                    <div class="tradingview-widget-container">
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                        { "interval": "1h", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "OANDA:XAUUSD", "showIntervalTabs": true, "displayMode": "single", "colorTheme": "dark" }
+                        </script>
+                    </div>
+                </div>
+                <div class="widget-card">
+                    <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-orange-400 text-center">AUD/USD Gauge</div>
+                    <div class="tradingview-widget-container">
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                        { "interval": "1h", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "FX:AUDUSD", "showIntervalTabs": true, "displayMode": "single", "colorTheme": "dark" }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-3 widget-card min-h-[760px]">
+            <div class="p-4 bg-[#1e222d] border-b border-gray-800 flex justify-between items-center">
+                <span class="text-[11px] font-black uppercase text-yellow-500 italic">Live Macro Flow</span>
+                <span class="text-[9px] text-green-500 font-bold animate-pulse uppercase">Auto-Refresh</span>
             </div>
             <div class="flex-grow">
-                <iframe src="https://www.widgets.investing.com/live-currency-cross-rates?theme=darkTheme&hideColumn=bid,ask,high,low&pairs=8830,1,2,3,7,9" width="100%" height="100%"></iframe>
+                <iframe src="https://www.forexlive.com/widget/news" width="100%" height="100%" style="background: #131722; filter: invert(0.85) hue-rotate(180deg) contrast(1.2);"></iframe>
             </div>
         </div>
-    </main>
+    </div>
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script>
         window.onload = () => {
-            new TradingView.widget({ "autosize": true, "symbol": "OANDA:XAUUSD", "interval": "60", "theme": "dark", "style": "1", "container_id": "gold_chart", "hide_top_toolbar": true, "withdateranges": false, "save_image": false });
-            new TradingView.widget({ "autosize": true, "symbol": "FX:AUDUSD", "interval": "60", "theme": "dark", "style": "1", "container_id": "aud_chart", "hide_top_toolbar": true, "withdateranges": false, "save_image": false });
-            
-            new TradingView.widget({ "interval": "4h", "width": "100%", "height": "100%", "isTransparent": true, "symbol": "OANDA:XAUUSD", "colorTheme": "dark", "container_id": "gold_gauge" });
-            new TradingView.widget({ "interval": "4h", "width": "100%", "height": "100%", "isTransparent": true, "symbol": "FX:AUDUSD", "colorTheme": "dark", "container_id": "aud_gauge" });
+            new TradingView.widget({ "autosize": true, "symbol": "OANDA:XAUUSD", "interval": "60", "theme": "dark", "style": "1", "container_id": "gold_main", "hide_top_toolbar": true, "hide_legend": true });
+            new TradingView.widget({ "autosize": true, "symbol": "FX:AUDUSD", "interval": "60", "theme": "dark", "style": "1", "container_id": "aud_main", "hide_top_toolbar": true, "hide_legend": true });
         };
     </script>
 </body>
