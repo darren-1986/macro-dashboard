@@ -3,22 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse AI | Intelligent HUD</title>
+    <title>MacroPulse AI | 2026 High-Frequency Terminal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; overflow: hidden; }
         .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
-        .bias-box { background: #1e222d; border: 1px solid #363a45; padding: 8px 12px; border-radius: 6px; flex: 1; min-width: 125px; transition: all 0.5s ease; border-left: 4px solid #374151; }
-        .vix-badge { background: linear-gradient(270deg, #450a0a 0%, #1e222d 100%); border: 1px solid #7f1d1d; }
+        
+        /* THE BIAS BOXES */
+        .bias-box { 
+            background: #1e222d; border: 1px solid #363a45; border-radius: 6px; 
+            position: relative; flex: 1; min-width: 145px; height: 68px; padding: 6px; 
+            overflow: hidden;
+        }
+        .vix-badge { 
+            background: linear-gradient(270deg, #450a0a 0%, #1e222d 100%); 
+            border: 1px solid #7f1d1d; height: 68px; border-right: 4px solid #ef4444;
+        }
+
+        .label-text { 
+            font-size: 8px; font-weight: 800; color: #9ca3af; 
+            text-transform: uppercase; position: absolute; top: 6px; left: 10px; z-index: 20; 
+        }
+
+        /* Video/Layout Constraints */
         .video-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         .custom-scroll::-webkit-scrollbar { width: 4px; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #363a45; border-radius: 10px; }
         
-        /* Dynamic States */
-        .bullish { border-left-color: #22c55e; }
-        .bearish { border-left-color: #ef4444; }
-        .neutral { border-left-color: #f59e0b; }
+        /* Refresh Flash Effect */
+        .refreshing { animation: pulse-update 0.8s ease-in-out; }
+        @keyframes pulse-update { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
     </style>
 </head>
 <body class="p-4 h-screen flex flex-col">
@@ -31,65 +46,64 @@
             </div>
             
             <div class="flex gap-2" id="bias-row">
-                <div class="bias-box" id="box-sent">
-                    <span class="text-[8px] uppercase text-gray-400 font-bold block">Sentiment</span>
-                    <div class="text-[11px] font-black uppercase" id="val-sent">Syncing...</div>
+                <div class="bias-box" id="gold-wrap">
+                    <div class="label-text">Gold Bias</div>
+                    <div class="h-full w-full pt-3" id="gold-data"></div>
                 </div>
-                <div class="bias-box" id="box-gold">
-                    <span class="text-[8px] uppercase text-gray-400 font-bold block">Gold Bias</span>
-                    <div class="text-[11px] font-black uppercase" id="val-gold">Syncing...</div>
+                <div class="bias-box" id="aud-wrap">
+                    <div class="label-text">Australia</div>
+                    <div class="h-full w-full pt-3" id="aud-data"></div>
                 </div>
-                <div class="bias-box" id="box-aud">
-                    <span class="text-[8px] uppercase text-gray-400 font-bold block">Australia</span>
-                    <div class="text-[11px] font-black uppercase" id="val-aud">Syncing...</div>
-                </div>
-                <div class="bias-box" id="box-usa">
-                    <span class="text-[8px] uppercase text-gray-400 font-bold block">USA (ORT)</span>
-                    <div class="text-[11px] font-black uppercase" id="val-usa">Syncing...</div>
+                <div class="bias-box" id="usa-wrap">
+                    <div class="label-text">USA (DXY)</div>
+                    <div class="h-full w-full pt-3" id="usa-data"></div>
                 </div>
             </div>
         </div>
         
-        <div class="vix-badge flex items-center gap-3 px-4 py-2 rounded-md border-r-4 border-r-red-600 ml-auto">
-            <div class="text-right">
-                <span class="text-[9px] font-black uppercase text-red-400 block" id="vix-label">Risk-Off</span>
-                <span class="text-[8px] text-gray-500 uppercase">March 06, 2026</span>
+        <div class="vix-badge flex items-center gap-3 px-4 rounded-md ml-auto">
+            <div class="text-right shrink-0">
+                <span class="text-[9px] font-black uppercase text-red-400 block">Sentiment</span>
+                <span class="text-[8px] text-gray-500 uppercase font-mono">MAR 06, 2026</span>
             </div>
             <div class="h-8 w-[1px] bg-gray-700"></div>
-            <div class="text-right">
-                <span class="text-[8px] uppercase text-gray-400 font-bold block">CBOE VIX SPOT</span>
-                <div class="text-xl font-black italic leading-none text-white" id="vix-price">--.--</div>
-            </div>
+            <div class="w-32 h-full pt-4" id="vix-data"></div>
         </div>
     </header>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-grow overflow-hidden">
+        
         <div class="lg:col-span-3 flex flex-col gap-4 overflow-hidden">
             <div class="widget-card shrink-0">
                 <div class="p-1 bg-[#1e222d] text-[9px] font-bold border-b border-gray-800 uppercase text-yellow-500 text-center">Bloomberg Live</div>
                 <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/iEpJwprxDdk?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/dp8PhLsUcFE?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
                 </div>
             </div>
             <div class="widget-card flex-grow">
                 <div class="p-1.5 bg-[#1e222d] text-[9px] font-bold border-b border-gray-800 uppercase text-blue-400 text-center">Macro Events</div>
-                <div class="flex-grow">
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
-                    { "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "importanceFilter": "0,1", "currencyFilter": "USD,AUD" }
-                    </script>
-                </div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
+                { "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "importanceFilter": "0,1", "currencyFilter": "USD,AUD" }
+                </script>
             </div>
         </div>
 
         <div class="lg:col-span-6 flex flex-col gap-4 overflow-y-auto custom-scroll pr-1">
             <div class="grid grid-cols-2 gap-3 h-[300px] shrink-0">
-                <div id="chart_1" class="widget-card"></div>
-                <div id="chart_2" class="widget-card"></div>
+                <div id="gold_chart" class="widget-card"></div>
+                <div id="aud_chart" class="widget-card"></div>
             </div>
-            <div class="widget-card h-[250px] shrink-0">
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
-                { "interval": "1h", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "OANDA:XAUUSD", "colorTheme": "dark" }
-                </script>
+            <div class="grid grid-cols-2 gap-3 h-[250px] shrink-0">
+                <div class="widget-card">
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                    { "interval": "1h", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "OANDA:XAUUSD", "colorTheme": "dark" }
+                    </script>
+                </div>
+                <div class="widget-card">
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                    { "interval": "1h", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "FX:AUDUSD", "colorTheme": "dark" }
+                    </script>
+                </div>
             </div>
         </div>
 
@@ -108,48 +122,44 @@
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script>
-        // Use a hidden TradingView feed to get live data for calculations
-        async function updateMacroLogic() {
-            try {
-                // Simulating the logic pull (Since we're in a browser, we parse the hidden widgets)
-                // In a real live environment, these values update based on price triggers.
-                const mockVix = (Math.random() * (25 - 18) + 18).toFixed(2);
+        const config = {
+            'gold-data': 'OANDA:XAUUSD',
+            'aud-data': 'FX:AUDUSD',
+            'usa-data': 'TVC:DXY',
+            'vix-data': 'CBOE:VIX'
+        };
+
+        function refreshMacroData() {
+            Object.keys(config).forEach(id => {
+                const container = document.getElementById(id);
+                container.classList.add('refreshing');
+                container.innerHTML = '';
                 
-                // 1. UPDATE VIX
-                document.getElementById('vix-price').innerText = mockVix;
-                const isRiskOff = mockVix > 20;
-                document.getElementById('vix-label').innerText = isRiskOff ? "Risk-Off" : "Risk-On";
-                document.getElementById('vix-label').className = isRiskOff ? "text-[9px] font-black uppercase text-red-400 block" : "text-[9px] font-black uppercase text-green-400 block";
-
-                // 2. UPDATE SENTIMENT BOX
-                const sentVal = document.getElementById('val-sent');
-                const sentBox = document.getElementById('box-sent');
-                sentVal.innerText = isRiskOff ? "Extreme Fear" : "Risk Appetite";
-                sentVal.className = isRiskOff ? "text-[11px] font-black uppercase text-red-500" : "text-[11px] font-black uppercase text-green-500";
-                sentBox.className = isRiskOff ? "bias-box bearish" : "bias-box bullish";
-
-                // 3. UPDATE GOLD BIAS (Logic: If VIX is high, Gold is usually Bullish)
-                const goldVal = document.getElementById('val-gold');
-                const goldBox = document.getElementById('box-gold');
-                goldVal.innerText = isRiskOff ? "Safe Haven Buy" : "Consolidating";
-                goldVal.className = isRiskOff ? "text-[11px] font-black uppercase text-yellow-500" : "text-[11px] font-black uppercase text-gray-400";
-                goldBox.className = isRiskOff ? "bias-box bullish" : "bias-box neutral";
-
-                // 4. UPDATE AUSTRALIA & USA
-                document.getElementById('val-aud').innerText = isRiskOff ? "AUD Weak" : "AUD Strong";
-                document.getElementById('box-aud').className = isRiskOff ? "bias-box bearish" : "bias-box bullish";
-                document.getElementById('val-usa').innerText = isRiskOff ? "USD Strong" : "USD Neutral";
-                document.getElementById('box-usa').className = isRiskOff ? "bias-box bullish" : "bias-box neutral";
-
-            } catch (e) { console.error("Sync Error", e); }
+                const script = document.createElement('script');
+                script.type = 'text/javascript';
+                script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js';
+                script.async = true;
+                script.innerHTML = JSON.stringify({
+                    "symbol": config[id],
+                    "colorTheme": "dark",
+                    "isTransparent": true,
+                    "width": "100%",
+                    "locale": "en"
+                });
+                container.appendChild(script);
+                setTimeout(() => container.classList.remove('refreshing'), 1000);
+            });
+            console.log("Terminal Sync Successful - 2026 Live Tape");
         }
 
         window.onload = () => {
-            new TradingView.widget({ "autosize": true, "symbol": "OANDA:XAUUSD", "interval": "15", "theme": "dark", "container_id": "chart_1", "hide_top_toolbar": true });
-            new TradingView.widget({ "autosize": true, "symbol": "FX:AUDUSD", "interval": "15", "theme": "dark", "container_id": "chart_2", "hide_top_toolbar": true });
+            // Static Charts
+            new TradingView.widget({ "autosize": true, "symbol": "OANDA:XAUUSD", "interval": "15", "theme": "dark", "container_id": "gold_chart", "hide_top_toolbar": true });
+            new TradingView.widget({ "autosize": true, "symbol": "FX:AUDUSD", "interval": "15", "theme": "dark", "container_id": "aud_chart", "hide_top_toolbar": true });
             
-            updateMacroLogic();
-            setInterval(updateMacroLogic, 60000); 
+            // Initial Load & 60s Refresh
+            refreshMacroData();
+            setInterval(refreshMacroData, 60000); 
         };
     </script>
 </body>
