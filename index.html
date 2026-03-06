@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse AI | Dual-News Terminal</title>
+    <title>MacroPulse AI | Full Terminal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; overflow-y: auto; min-height: 100vh; }
         .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 8px; overflow: hidden; }
         
-        /* HEADER - DO NOT ALTER */
+        /* HEADER - LOCKED */
         .bias-box { 
             background: #1e222d; border: 1px solid #363a45; padding: 10px 14px; border-radius: 6px; 
             min-width: 155px; border-left: 4px solid #374151; transition: all 0.4s ease;
@@ -20,10 +20,8 @@
 
         .video-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; background: #000; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-
         .chart-box { width: 100%; height: 320px !important; max-height: 320px; }
         
-        /* FOOTER LOGIC SECTION */
         .logic-section { background: #0f172a; border-top: 2px solid #1e293b; padding: 30px; margin-top: 40px; border-radius: 12px; }
         .code-block { background: #000; color: #10b981; padding: 15px; border-radius: 6px; font-family: monospace; font-size: 12px; overflow-x: auto; border: 1px solid #065f46; }
 
@@ -77,6 +75,7 @@
                 <div id="chart-gold" class="widget-card w-1/2 chart-box"></div>
                 <div id="chart-aud" class="widget-card w-1/2 chart-box"></div>
             </div>
+            
             <div class="flex gap-4" style="height: 400px;"> 
                 <div class="widget-card w-1/2 p-2">
                     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
@@ -89,11 +88,68 @@
                     </script>
                 </div>
             </div>
-            <div class="widget-card p-2" style="height: 200px;">
-                <div class="p-1 bg-[#1e222d] text-[10px] font-bold mb-2 uppercase text-yellow-500 text-center rounded">Aggregate Technical Consensus</div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
-                { "interval": "15m", "width": "100%", "isTransparent": true, "height": "160", "symbol": "OANDA:XAUUSD", "showIntervalTabs": false, "displayMode": "multiple", "locale": "en", "colorTheme": "dark" }
-                </script>
+
+            <div class="flex justify-center">
+                <div id="macro-logic-indicator" style="width: 100%; max-width: 600px; background: #0b0e14; color: #e2e8f0; font-family: 'Inter', system-ui, sans-serif; border-radius: 12px; padding: 20px; border: 1px solid #2d3748; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <span style="font-size: 11px; font-weight: 700; color: #718096; text-transform: uppercase;">Custom Macro Score</span>
+                        <div id="status-dot-macro" style="display: flex; align-items: center; font-size: 10px; color: #48bb78;">
+                            <span style="height: 6px; width: 6px; background-color: #48bb78; border-radius: 50%; display: inline-block; margin-right: 5px;"></span> Live
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
+                        <div style="background: #1a202c; padding: 10px; border-radius: 8px; border: 1px solid #2d3748;">
+                            <div style="font-size: 10px; color: #a0aec0; margin-bottom: 4px;">GOLD SPOT</div>
+                            <div id="val-gold" style="font-size: 16px; font-weight: 700; color: #ecc94b;">$0.00</div>
+                        </div>
+                        <div style="background: #1a202c; padding: 10px; border-radius: 8px; border: 1px solid #2d3748;">
+                            <div style="font-size: 10px; color: #a0aec0; margin-bottom: 4px;">AUD/USD</div>
+                            <div id="val-aud" style="font-size: 16px; font-weight: 700; color: #4299e1;">0.0000</div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-bottom: 15px;">
+                        <div id="score-display" style="font-size: 48px; font-weight: 900; line-height: 1; color: #48bb78;">0/5</div>
+                        <div id="signal-label" style="font-size: 12px; font-weight: 600; margin-top: 8px; text-transform: uppercase; letter-spacing: 1px;">Neutral</div>
+                    </div>
+                    <div style="background: #171923; border-radius: 6px; padding: 8px; overflow: hidden; white-space: nowrap;">
+                        <div id="news-ticker" style="display: inline-block; animation: ticker-scroll 30s linear infinite; font-size: 11px; color: #cbd5e0;">
+                            [GOLD] Spot $5,084: Oil-led inflation fears offset USD surge... [AUD] RBA Bullock signals March 17 hike is 'Live'... [USD] 10Y Real Yield holds 1.80% amid Iran conflict escalation...
+                        </div>
+                    </div>
+                    <style>@keyframes ticker-scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }</style>
+                    <script>
+                        (function() {
+                            const API_KEY = 'qSDkvqGOK32orOQ_2fyg8IaGITVUpESh';
+                            const FED_RATE = 3.64; const RBA_RATE = 3.85; const REAL_YIELD = 1.80;
+                            async function updateIndicator() {
+                                try {
+                                    const [gRes, aRes] = await Promise.all([
+                                        fetch(`https://api.massive.com/v2/last/forex/C:XAUUSD?apiKey=${API_KEY}`),
+                                        fetch(`https://api.massive.com/v2/last/forex/C:AUDUSD?apiKey=${API_KEY}`)
+                                    ]);
+                                    const gData = await gRes.json(); const aData = await aRes.json();
+                                    const gold = gData.last.bid; const aud = aData.last.bid;
+                                    document.getElementById('val-gold').innerText = `$${gold.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+                                    document.getElementById('val-aud').innerText = aud.toFixed(4);
+                                    let score = 0;
+                                    if (RBA_RATE > FED_RATE) score += 2;
+                                    if (REAL_YIELD < 2.0) score += 1;
+                                    score += 2;
+                                    const scoreEl = document.getElementById('score-display');
+                                    const labelEl = document.getElementById('signal-label');
+                                    scoreEl.innerText = score + "/5";
+                                    if (score >= 4) { scoreEl.style.color = "#48bb78"; labelEl.innerText = "Strong Buy Confluence"; }
+                                    else if (score >= 2) { scoreEl.style.color = "#ecc94b"; labelEl.innerText = "Consolidating / Neutral"; }
+                                    else { scoreEl.style.color = "#f56565"; labelEl.innerText = "USD Dominance"; }
+                                } catch (e) {
+                                    document.getElementById('status-dot-macro').style.color = "#f56565";
+                                    document.getElementById('status-dot-macro').innerText = "Offline";
+                                }
+                            }
+                            updateIndicator(); setInterval(updateIndicator, 60000);
+                        })();
+                    </script>
+                </div>
             </div>
         </div>
 
@@ -128,14 +184,6 @@
                 <h3 class="text-blue-500 font-bold mb-2 uppercase text-sm">3. DXY Connection</h3>
                 <p class="text-[11px] text-gray-400 leading-relaxed">Strong DXY is a headwind for Gold and AUD. Watch for USD strength in the USA box.</p>
             </div>
-        </div>
-        <h2 class="text-lg font-black text-green-500 mb-4 uppercase italic">Custom Pine Script: Sentiment Oscillator</h2>
-        <div class="code-block">
-            //@version=5<br>
-            indicator("MacroPulse Risk Ratio", overlay=false)<br>
-            gold = request.security("OANDA:XAUUSD", timeframe.period, close)<br>
-            aud = request.security("FX:AUDUSD", timeframe.period, close)<br>
-            plot(gold / aud, color=color.yellow, linewidth=2)
         </div>
     </div>
 
