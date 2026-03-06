@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse AI | Full Terminal</title>
+    <title>MacroPulse AI | Strategy Terminal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; overflow-y: auto; min-height: 100vh; }
@@ -23,7 +23,6 @@
         .chart-box { width: 100%; height: 320px !important; max-height: 320px; }
         
         .logic-section { background: #0f172a; border-top: 2px solid #1e293b; padding: 30px; margin-top: 40px; border-radius: 12px; }
-        .code-block { background: #000; color: #10b981; padding: 15px; border-radius: 6px; font-family: monospace; font-size: 12px; overflow-x: auto; border: 1px solid #065f46; }
 
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #060809; }
@@ -90,117 +89,29 @@
             </div>
 
             <div class="flex justify-center">
-                <div id="macro-custom-box" style="width: 100%; max-width: 600px; background: #0b0f19; color: #f1f5f9; font-family: 'Segoe UI', Roboto, sans-serif; border-radius: 12px; border: 1px solid #1e293b; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);">
-                    <div style="padding: 16px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                            <span style="font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Massive Logic Engine</span>
-                            <span id="update-pulse" style="font-size: 10px; color: #10b981;">● CONNECTED</span>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px;">
-                            <div style="background: #1e293b; padding: 12px; border-radius: 8px; border: 1px solid #334155;">
-                                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 4px;">XAU/USD (Gold)</div>
-                                <div id="price-xau" style="font-size: 18px; font-weight: 800; color: #fbbf24;">$0.00</div>
-                            </div>
-                            <div style="background: #1e293b; padding: 12px; border-radius: 8px; border: 1px solid #334155;">
-                                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 4px;">AUD/USD</div>
-                                <div id="price-aud" style="font-size: 18px; font-weight: 800; color: #38bdf8;">0.0000</div>
-                            </div>
-                        </div>
-                        <div style="text-align: center; background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); padding: 15px; border-radius: 10px; border: 1px solid #2563eb;">
-                            <div style="font-size: 10px; color: #94a3b8; text-transform: uppercase;">2026 Confluence Score</div>
-                            <div id="macro-score-val" style="font-size: 42px; font-weight: 900; color: #10b981; line-height: 1.1;">--</div>
-                            <div id="macro-signal-msg" style="font-size: 11px; font-weight: 700; margin-top: 5px; color: #f8fafc;">INITIALIZING MATH...</div>
-                        </div>
+                <div id="macro-v3" style="width: 100%; max-width: 600px; background: #0a0c10; color: #e2e8f0; font-family: 'Monaco', 'Consolas', monospace; border-radius: 4px; border: 1px solid #30363d; padding: 0; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7); position: relative; overflow: hidden;">
+                    <div style="background: #161b22; padding: 10px 15px; border-bottom: 1px solid #30363d; display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 11px; color: #8b949e; font-weight: bold;">STRATEGY_GOLD_AUD_V3.0</span>
+                        <span id="pulse-status" style="font-size: 10px; color: #238636;">[SYSTEM_ACTIVE]</span>
                     </div>
-                    <div style="background: #1e293b; border-top: 1px solid #334155; padding: 6px 0; overflow: hidden; white-space: nowrap;">
-                        <div id="macro-ticker" style="display: inline-block; animation: macro-scroll 35s linear infinite; font-size: 11px; color: #cbd5e0; font-weight: 500;">
-                            [GOLD] March 6, 2026: Safe-haven demand spikes on Gulf tensions... [AUD] RBA Governor Bullock holds 3.85% hawkish bias... [USD] Fed Funds Rate at 3.64% as disinflation stalls... [MACRO] Real Yields support Gold long-bias below 2.0%...
+                    <div style="padding: 20px;">
+                        <div style="margin-bottom: 25px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span style="color: #8b949e; font-size: 12px;">XAU/USD</span>
+                                <span id="v3-gold" style="color: #e3b341; font-weight: bold; font-size: 18px;">$0,000.00</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #8b949e; font-size: 12px;">AUD/USD</span>
+                                <span id="v3-aud" style="color: #58a6ff; font-weight: bold; font-size: 18px;">0.0000</span>
+                            </div>
                         </div>
-                    </div>
-                    <style>@keyframes macro-scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }</style>
-                    <script>
-                        (function() {
-                            const MASSIVE_KEY = 'qSDkvqGOK32orOQ_2fyg8IaGITVUpESh';
-                            const RBA_RATE = 3.85; const FED_RATE = 3.64; const TARGET_REAL_YIELD = 1.85; 
-                            async function runIndicatorLogic() {
-                                try {
-                                    const xauResp = await fetch(`https://api.massive.com/v2/last/forex/C:XAUUSD?apiKey=${MASSIVE_KEY}`);
-                                    const audResp = await fetch(`https://api.massive.com/v2/last/forex/C:AUDUSD?apiKey=${MASSIVE_KEY}`);
-                                    const xauJson = await xauResp.json(); const audJson = await audResp.json();
-                                    const goldPrice = xauJson.last.bid; const audPrice = audJson.last.bid;
-                                    document.getElementById('price-xau').innerText = `$${goldPrice.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-                                    document.getElementById('price-aud').innerText = audPrice.toFixed(4);
-                                    let score = 0;
-                                    if (RBA_RATE > FED_RATE) score += 2; 
-                                    if (goldPrice > 4500) score += 1; 
-                                    score += 2; 
-                                    const scoreDisplay = document.getElementById('macro-score-val');
-                                    const signalDisplay = document.getElementById('macro-signal-msg');
-                                    scoreDisplay.innerText = score + "/5";
-                                    if (score >= 4) { scoreDisplay.style.color = "#10b981"; signalDisplay.innerText = "STRONG BUY (CONFLUENCE)"; }
-                                    else if (score >= 2) { scoreDisplay.style.color = "#fbbf24"; signalDisplay.innerText = "NEUTRAL / SIDEWAYS"; }
-                                    else { scoreDisplay.style.color = "#ef4444"; signalDisplay.innerText = "USD STRENGTH / SELL"; }
-                                } catch (err) {
-                                    document.getElementById('update-pulse').innerText = "● OFFLINE";
-                                    document.getElementById('update-pulse').style.color = "#ef4444";
-                                }
-                            }
-                            runIndicatorLogic(); setInterval(runIndicatorLogic, 60000);
-                        })();
-                    </script>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-span-3 flex flex-col gap-4">
-            <div class="widget-card" style="height: 515px;">
-                <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-green-400 text-center">TV Macro News Wire</div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
-                { "feedMode": "all_symbols", "symbolsGroups": [{"name": "Macro", "symbols": ["OANDA:XAUUSD", "FX:AUDUSD"]}], "isTransparent": true, "displayMode": "regular", "width": "100%", "height": "100%", "colorTheme": "dark", "locale": "en" }
-                </script>
-            </div>
-            <div class="widget-card" style="height: 515px; overflow-y: auto;">
-                <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-blue-400 text-center sticky top-0 z-10">Live X Macro Feed</div>
-                <div class="p-0">
-                    <a class="twitter-timeline" data-theme="dark" data-chrome="noheader nofooter transparent noborders" href="https://twitter.com/GoldPredict?ref_src=twsrc%5Etfw">Loading Market Feed...</a> 
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="logic-section shadow-2xl">
-        <h2 class="text-xl font-black text-yellow-500 mb-6 uppercase italic">Operational Cheat Sheet: The Macro Triangle</h2>
-        <div class="grid grid-cols-3 gap-8 mb-8">
-            <div class="bg-[#131722] p-4 rounded border border-gray-800">
-                <h3 class="text-red-500 font-bold mb-2 uppercase text-sm">1. The VIX Signal</h3>
-                <p class="text-[11px] text-gray-400 leading-relaxed">VIX > 20: Risk-Off. High fear. Capital moves into USD and Gold. Short AUD.</p>
-            </div>
-            <div class="bg-[#131722] p-4 rounded border border-gray-800">
-                <h3 class="text-yellow-500 font-bold mb-2 uppercase text-sm">2. Gold/AUD Ratio</h3>
-                <p class="text-[11px] text-gray-400 leading-relaxed">Rising = Defensive outperformance. Falling = Risk appetite returning.</p>
-            </div>
-            <div class="bg-[#131722] p-4 rounded border border-gray-800">
-                <h3 class="text-blue-500 font-bold mb-2 uppercase text-sm">3. DXY Connection</h3>
-                <p class="text-[11px] text-gray-400 leading-relaxed">Strong DXY is a headwind for Gold and AUD. Watch for USD strength in the USA box.</p>
-            </div>
-        </div>
-        <h2 class="text-lg font-black text-green-500 mb-4 uppercase italic">Custom Pine Script: Sentiment Oscillator</h2>
-        <div class="code-block">
-            //@version=5<br>
-            indicator("MacroPulse Risk Ratio", overlay=false)<br>
-            gold = request.security("OANDA:XAUUSD", timeframe.period, close)<br>
-            aud = request.security("FX:AUDUSD", timeframe.period, close)<br>
-            plot(gold / aud, color=color.yellow, linewidth=2)
-        </div>
-    </div>
-
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-    <script>
-        window.onload = () => {
-            new TradingView.widget({ "autosize": true, "symbol": "OANDA:XAUUSD", "interval": "15", "theme": "dark", "container_id": "chart-gold", "hide_top_toolbar": true, "studies": ["RSI@tv-basicstudies"] });
-            new TradingView.widget({ "autosize": true, "symbol": "FX:AUDUSD", "interval": "15", "theme": "dark", "container_id": "chart-aud", "hide_top_toolbar": true, "studies": ["MASimple@tv-basicstudies"] });
-        };
-    </script>
-</body>
-</html>
+                        <div style="background: #0d1117; border: 1px solid #30363d; border-radius: 4px; padding: 15px; position: relative;">
+                            <div style="position: absolute; top: -8px; left: 10px; background: #0d1117; padding: 0 5px; font-size: 9px; color: #8b949e;">MACRO_CONFLUENCE_CALC</div>
+                            <div style="display: flex; align-items: center; justify-content: center; margin: 10px 0;">
+                                <div id="v3-score" style="font-size: 54px; font-weight: 900; color: #238636; letter-spacing: -2px;">--</div>
+                                <div style="margin-left: 10px; text-align: left;">
+                                    <div style="font-size: 10px; color: #8b949e;">WEIGHTED</div>
+                                    <div id="v3-signal" style="font-size: 11px; font-weight: bold; color: #f0f6fc;">WAITING...</div>
+                                </div>
+                            </div>
+                            <div style="font-size: 9px; color: #484f58; border-top: 1px solid #21262
