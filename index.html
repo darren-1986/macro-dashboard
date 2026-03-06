@@ -3,20 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse AI | Locked Header + Body Gauges</title>
+    <title>MacroPulse AI | 2026 Professional HUD</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; overflow: hidden; }
         .widget-card { background: #131722; border: 1px solid #2a2e39; border-radius: 8px; overflow: hidden; }
         
-        /* HEADER BOXES - LOCKED DESIGN */
+        /* HEADER BOXES - LOCKED */
         .bias-box { 
             background: #1e222d; border: 1px solid #363a45; padding: 10px 14px; border-radius: 6px; 
             min-width: 155px; border-left: 4px solid #374151; transition: all 0.4s ease;
         }
         .vix-badge { background: linear-gradient(270deg, #450a0a 0%, #1e222d 100%); border: 1px solid #7f1d1d; border-right: 4px solid #ef4444; }
-        
-        /* Dynamic Logic Colors */
         .bullish { border-left-color: #22c55e !important; }
         .bearish { border-left-color: #ef4444 !important; }
         .neutral { border-left-color: #3b82f6 !important; }
@@ -33,39 +31,22 @@
         <div class="flex items-center gap-8">
             <div>
                 <h1 class="text-2xl font-black text-yellow-500 italic uppercase leading-none">MacroPulse AI</h1>
-                <p class="text-[9px] text-gray-500 font-mono tracking-widest uppercase mt-1">Live 2026 Logic Engine</p>
+                <p class="text-[9px] text-gray-500 font-mono tracking-widest uppercase mt-1">Institutional Live Feed</p>
             </div>
-            
             <div class="flex gap-3">
-                <div class="bias-box" id="box-sent">
-                    <span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Sentiment</span>
-                    <div id="val-sent" class="text-xs font-black uppercase">Syncing...</div>
-                </div>
-                <div class="bias-box" id="box-gold">
-                    <span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Gold Bias</span>
-                    <div id="val-gold" class="text-xs font-black uppercase">Syncing...</div>
-                </div>
-                <div class="bias-box" id="box-aud">
-                    <span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Australia</span>
-                    <div id="val-aud" class="text-xs font-black uppercase">Syncing...</div>
-                </div>
-                <div class="bias-box" id="box-usa">
-                    <span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">USA (DXY)</span>
-                    <div id="val-usa" class="text-xs font-black uppercase">Syncing...</div>
-                </div>
+                <div class="bias-box" id="box-sent"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Sentiment</span><div id="val-sent" class="text-xs font-black uppercase">Syncing...</div></div>
+                <div class="bias-box" id="box-gold"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Gold Bias</span><div id="val-gold" class="text-xs font-black uppercase text-yellow-500">Syncing...</div></div>
+                <div class="bias-box" id="box-aud"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Australia</span><div id="val-aud" class="text-xs font-black uppercase">Syncing...</div></div>
+                <div class="bias-box" id="box-usa"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">USA (DXY)</span><div id="val-usa" class="text-xs font-black uppercase text-blue-400">Syncing...</div></div>
             </div>
         </div>
-        
         <div class="vix-badge flex items-center gap-4 px-4 py-1 rounded-md">
             <div class="text-right">
                 <span class="text-[10px] font-black uppercase text-red-400 block" id="vix-status">Risk-Off</span>
                 <span class="text-[9px] text-gray-500 uppercase font-mono">March 06, 2026</span>
             </div>
             <div class="h-10 w-[1px] bg-gray-700"></div>
-            <div>
-                <span class="text-[9px] uppercase text-gray-400 font-bold block">CBOE VIX SPOT</span>
-                <div id="vix-price" class="text-2xl font-black italic leading-none text-white">23.75</div>
-            </div>
+            <div><span class="text-[9px] uppercase text-gray-400 font-bold block">CBOE VIX SPOT</span><div id="vix-price" class="text-2xl font-black italic leading-none text-white">23.75</div></div>
         </div>
     </header>
 
@@ -73,78 +54,66 @@
         
         <div class="col-span-3 flex flex-col gap-4 overflow-hidden">
             <div class="widget-card shrink-0">
-                <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-yellow-500">Live Bloomberg 2026</div>
+                <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-yellow-500">Live Bloomberg Global</div>
                 <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/f--PVIWY2o4?autoplay=1&mute=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/f--PVIWY2o4?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
                 </div>
             </div>
-            
-            <div class="widget-card flex-grow p-1">
-                <div class="p-2 text-[10px] font-bold uppercase text-gray-400">AUD/USD Technicals</div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
-                { "interval": "1m", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "FX:AUDUSD", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "dark" }
+            <div class="widget-card flex-grow">
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
+                { "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "importanceFilter": "0,1", "currencyFilter": "USD,AUD" }
                 </script>
             </div>
         </div>
 
-        <div class="col-span-6 widget-card">
-            <div id="chart-gold" class="h-full w-full"></div>
+        <div class="col-span-6 flex flex-col gap-4 overflow-hidden">
+            <div class="flex gap-4 h-2/3">
+                <div id="chart-gold" class="widget-card w-1/2"></div>
+                <div id="chart-aud" class="widget-card w-1/2"></div>
+            </div>
+            <div class="flex gap-4 h-1/3">
+                <div class="widget-card w-1/2 p-1">
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                    { "interval": "1m", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "OANDA:XAUUSD", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "dark" }
+                    </script>
+                </div>
+                <div class="widget-card w-1/2 p-1">
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                    { "interval": "1m", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "FX:AUDUSD", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "dark" }
+                    </script>
+                </div>
+            </div>
         </div>
 
-        <div class="col-span-3 flex flex-col gap-4 overflow-hidden">
-            <div class="widget-card h-1/3 p-1">
-                <div class="p-2 text-[10px] font-bold uppercase text-gray-400">Gold/USD Technicals</div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
-                { "interval": "1m", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "OANDA:XAUUSD", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "dark" }
-                </script>
-            </div>
-
-            <div class="widget-card flex-grow overflow-y-auto custom-scroll">
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
-                { "feedMode": "all_symbols", "symbolsGroups": [{"name": "Macro", "symbols": ["OANDA:XAUUSD", "FX:AUDUSD"]}], "isTransparent": true, "displayMode": "regular", "width": "100%", "height": "100%", "colorTheme": "dark", "locale": "en" }
-                </script>
-            </div>
+        <div class="col-span-3 widget-card overflow-y-auto custom-scroll">
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+            { "feedMode": "all_symbols", "symbolsGroups": [{"name": "Macro", "symbols": ["OANDA:XAUUSD", "FX:AUDUSD", "TVC:DXY"]}], "isTransparent": true, "displayMode": "regular", "width": "100%", "height": "100%", "colorTheme": "dark", "locale": "en" }
+            </script>
         </div>
     </div>
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script>
-        // 30-SECOND LOGIC FOR HEADER (LOCKED AS REQUESTED)
         function updateHeaderData() {
-            const mkt = {
-                vix: 23.75,
-                gold: 5081.60,
-                aud: 0.7038,
-                dxy: 99.07
-            };
-
+            const mkt = { vix: 23.75, gold: 5081.60, aud: 0.7038, dxy: 99.07 };
             document.getElementById('vix-price').innerText = mkt.vix.toFixed(2);
             const isFear = mkt.vix > 20;
             document.getElementById('vix-status').innerText = isFear ? "Risk-Off" : "Risk-On";
-            
             const sent = document.getElementById('val-sent');
             sent.innerText = isFear ? "Risk-Off" : "Risk-On";
             sent.className = "text-xs font-black uppercase " + (isFear ? "text-red-500" : "text-green-500");
             document.getElementById('box-sent').className = "bias-box " + (isFear ? "bearish" : "bullish");
-
-            const gld = document.getElementById('val-gold');
-            gld.innerText = mkt.gold > 5000 ? "Institutional Buy" : "Bearish Pivot";
-            gld.className = "text-xs font-black uppercase text-yellow-500";
+            document.getElementById('val-gold').innerText = mkt.gold > 5000 ? "Institutional Buy" : "Bearish Pivot";
             document.getElementById('box-gold').className = "bias-box bullish";
-
-            const aud = document.getElementById('val-aud');
-            aud.innerText = mkt.aud < 0.7100 ? "Weak (Short)" : "Strong (Long)";
-            aud.className = "text-xs font-black uppercase " + (mkt.aud < 0.7100 ? "text-red-500" : "text-green-500");
+            document.getElementById('val-aud').innerText = mkt.aud < 0.7100 ? "Weak (Short)" : "Strong (Long)";
             document.getElementById('box-aud').className = "bias-box bearish";
-
-            const usa = document.getElementById('val-usa');
-            usa.innerText = "Safe Haven Strong";
-            usa.className = "text-xs font-black uppercase text-blue-400";
+            document.getElementById('val-usa').innerText = "Safe Haven Strong";
             document.getElementById('box-usa').className = "bias-box neutral";
         }
 
         window.onload = () => {
-            new TradingView.widget({ "autosize": true, "symbol": "OANDA:XAUUSD", "interval": "15", "theme": "dark", "container_id": "chart-gold", "hide_top_toolbar": false });
+            new TradingView.widget({ "autosize": true, "symbol": "OANDA:XAUUSD", "interval": "15", "theme": "dark", "container_id": "chart-gold", "hide_top_toolbar": true });
+            new TradingView.widget({ "autosize": true, "symbol": "FX:AUDUSD", "interval": "15", "theme": "dark", "container_id": "chart-aud", "hide_top_toolbar": true });
             updateHeaderData();
             setInterval(updateHeaderData, 30000); 
         };
