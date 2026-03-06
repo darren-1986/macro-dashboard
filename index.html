@@ -88,46 +88,33 @@
 
         <div class="lg:col-span-3 widget-card min-h-[755px]">
             <div class="p-4 bg-[#1e222d] border-b border-gray-800">
-                <span class="text-[11px] font-black uppercase text-yellow-500">Live: Gold • Australia • USA</span>
+                <span class="text-[11px] font-black uppercase text-yellow-500">Live Wire: Gold • Australia • USA</span>
             </div>
-            <div class="flex-grow" id="news-container">
-                </div>
+            <div class="flex-grow">
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-news.js" async>
+                {
+                  "colorTheme": "dark",
+                  "isTransparent": true,
+                  "width": "100%",
+                  "height": "100%",
+                  "feedMode": "manual",
+                  "symbols": [
+                    { "proName": "OANDA:XAUUSD", "displayName": "Gold" },
+                    { "proName": "FX:AUDUSD", "displayName": "Australia" },
+                    { "proName": "TVC:DXY", "displayName": "USA" }
+                  ],
+                  "locale": "en"
+                }
+                </script>
+            </div>
         </div>
     </div>
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script>
-        function loadNews() {
-            const container = document.getElementById('news-container');
-            container.innerHTML = ''; // Clear current feed
-            const script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-timeline.js';
-            script.async = true;
-            script.innerHTML = JSON.stringify({
-                "feedMode": "manual",
-                "symbols": [
-                    ["Gold", "OANDA:XAUUSD"],
-                    ["Australia", "FX:AUDUSD"],
-                    ["USA", "TVC:DXY"]
-                ],
-                "colorTheme": "dark",
-                "isTransparent": true,
-                "displayMode": "regular",
-                "width": "100%",
-                "height": "100%"
-            });
-            container.appendChild(script);
-        }
-
         window.onload = () => {
-            // Initial Load of everything
             new TradingView.widget({ "autosize": true, "symbol": "OANDA:XAUUSD", "interval": "60", "theme": "dark", "container_id": "gold_chart_restored", "hide_top_toolbar": true, "hide_legend": true, "style": "1" });
             new TradingView.widget({ "autosize": true, "symbol": "FX:AUDUSD", "interval": "60", "theme": "dark", "container_id": "aud_chart_restored", "hide_top_toolbar": true, "hide_legend": true, "style": "1" });
-            
-            loadNews();
-            // Force refresh the news feed every 120 seconds
-            setInterval(loadNews, 120000); 
         };
     </script>
 </body>
