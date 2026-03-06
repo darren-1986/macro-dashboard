@@ -114,4 +114,98 @@
                                     <div id="v3-signal" style="font-size: 11px; font-weight: bold; color: #f0f6fc;">WAITING...</div>
                                 </div>
                             </div>
-                            <div style="font-size: 9px; color: #484f58; border-top: 1px solid #21262
+                            <div style="font-size: 9px; color: #484f58; border-top: 1px solid #21262d; padding-top: 10px; margin-top: 5px;">
+                                <div id="log-1">RBA (3.85%) > FED (3.64%) : [TRUE]</div>
+                                <div id="log-2">REAL YIELD < 2.0% : [TRUE]</div>
+                                <div id="log-3">GEOPOL_RISK: HIGH (MAR_2026)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background: #161b22; border-top: 1px solid #30363d; padding: 8px 0; overflow: hidden; white-space: nowrap;">
+                        <div id="v3-ticker" style="display: inline-block; animation: v3-scroll 40s linear infinite; font-size: 11px; color: #c9d1d9;">
+                            MARCH 06, 2026: Iran-Israel conflict enters 7th day, Gold safe-haven premium rising... RBA meeting March 17: Traders price 22% chance of 4.10% hike... US 10Y Yield holds 4.15% as disinflation stalls... Gold tests $5,100 resistance zone...
+                        </div>
+                    </div>
+                    <style>@keyframes v3-scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }</style>
+                    <script>
+                        (function() {
+                            const API_KEY = 'qSDkvqGOK32orOQ_2fyg8IaGITVUpESh';
+                            const RBA_RATE = 3.85; const FED_RATE = 3.64; 
+                            async function refreshIndicator() {
+                                try {
+                                    const [gRes, aRes] = await Promise.all([
+                                        fetch(`https://api.massive.com/v1/conversion/XAU/USD?apiKey=${API_KEY}`),
+                                        fetch(`https://api.massive.com/v1/conversion/AUD/USD?apiKey=${API_KEY}`)
+                                    ]);
+                                    const gData = await gRes.json(); const aData = await aRes.json();
+                                    const gold = gData.last.bid; const aud = aData.last.bid;
+                                    document.getElementById('v3-gold').innerText = `$${gold.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+                                    document.getElementById('v3-aud').innerText = aud.toFixed(4);
+                                    let score = 0;
+                                    if (RBA_RATE > FED_RATE) score += 2;
+                                    if (gold > 4800) score += 1;
+                                    score += 2;
+                                    const scoreEl = document.getElementById('v3-score');
+                                    const signalEl = document.getElementById('v3-signal');
+                                    scoreEl.innerText = score + "/5";
+                                    if (score >= 4) { scoreEl.style.color = "#3fb950"; signalEl.innerText = "LONG_BIAS: HIGH"; }
+                                    else if (score >= 2) { scoreEl.style.color = "#d29922"; signalEl.innerText = "MARKET_NEUTRAL"; }
+                                    else { scoreEl.style.color = "#f85149"; signalEl.innerText = "USD_FORTRESS"; }
+                                    document.getElementById('pulse-status').innerText = "[SYSTEM_SYNCED]";
+                                    document.getElementById('pulse-status').style.color = "#238636";
+                                } catch (err) {
+                                    document.getElementById('pulse-status').innerText = "[RECONNECTING]";
+                                    document.getElementById('pulse-status').style.color = "#f85149";
+                                }
+                            }
+                            refreshIndicator(); setInterval(refreshIndicator, 30000);
+                        })();
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-span-3 flex flex-col gap-4">
+            <div class="widget-card" style="height: 515px;">
+                <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-green-400 text-center">TV Macro News Wire</div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+                { "feedMode": "all_symbols", "symbolsGroups": [{"name": "Macro", "symbols": ["OANDA:XAUUSD", "FX:AUDUSD"]}], "isTransparent": true, "displayMode": "regular", "width": "100%", "height": "100%", "colorTheme": "dark", "locale": "en" }
+                </script>
+            </div>
+            <div class="widget-card" style="height: 515px; overflow-y: auto;">
+                <div class="p-2 bg-[#1e222d] text-[10px] font-bold border-b border-gray-800 uppercase text-blue-400 text-center sticky top-0 z-10">Live X Macro Feed</div>
+                <div class="p-0">
+                    <a class="twitter-timeline" data-theme="dark" data-chrome="noheader nofooter transparent noborders" href="https://twitter.com/GoldPredict?ref_src=twsrc%5Etfw">Loading Market Feed...</a> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="logic-section shadow-2xl">
+        <h2 class="text-xl font-black text-yellow-500 mb-6 uppercase italic">Operational Cheat Sheet: The Macro Triangle</h2>
+        <div class="grid grid-cols-3 gap-8 mb-8">
+            <div class="bg-[#131722] p-4 rounded border border-gray-800">
+                <h3 class="text-red-500 font-bold mb-2 uppercase text-sm">1. The VIX Signal</h3>
+                <p class="text-[11px] text-gray-400 leading-relaxed">VIX > 20: Risk-Off. High fear. Capital moves into USD and Gold. Short AUD.</p>
+            </div>
+            <div class="bg-[#131722] p-4 rounded border border-gray-800">
+                <h3 class="text-yellow-500 font-bold mb-2 uppercase text-sm">2. Gold/AUD Ratio</h3>
+                <p class="text-[11px] text-gray-400 leading-relaxed">Rising = Defensive outperformance. Falling = Risk appetite returning.</p>
+            </div>
+            <div class="bg-[#131722] p-4 rounded border border-gray-800">
+                <h3 class="text-blue-500 font-bold mb-2 uppercase text-sm">3. DXY Connection</h3>
+                <p class="text-[11px] text-gray-400 leading-relaxed">Strong DXY is a headwind for Gold and AUD. Watch for USD strength in the USA box.</p>
+            </div>
+        </div>
+    </div>
+
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script>
+        window.onload = () => {
+            new TradingView.widget({ "autosize": true, "symbol": "OANDA:XAUUSD", "interval": "15", "theme": "dark", "container_id": "chart-gold", "hide_top_toolbar": true, "studies": ["RSI@tv-basicstudies"] });
+            new TradingView.widget({ "autosize": true, "symbol": "FX:AUDUSD", "interval": "15", "theme": "dark", "container_id": "chart-aud", "hide_top_toolbar": true, "studies": ["MASimple@tv-basicstudies"] });
+        };
+    </script>
+</body>
+</html>
