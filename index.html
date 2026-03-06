@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse AI | V7.7 Terminal</title>
+    <title>MacroPulse AI | V7.8 Speedometers</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; }
@@ -25,7 +25,7 @@
         <div class="flex items-center gap-8">
             <div>
                 <h1 class="text-2xl font-black text-yellow-500 italic uppercase leading-none">MacroPulse AI</h1>
-                <p class="text-[9px] text-gray-500 font-mono tracking-widest uppercase mt-1">Institutional Terminal V7.7</p>
+                <p class="text-[9px] text-gray-500 font-mono tracking-widest uppercase mt-1">Institutional Terminal V7.8</p>
             </div>
             <div class="flex gap-3">
                 <div class="bias-box bearish-active"><span class="text-[9px] uppercase text-gray-400 font-bold block mb-1">Global Sentiment</span><div class="text-xs font-black uppercase">Risk-Off</div></div>
@@ -63,11 +63,26 @@
                 <div id="chart-aud" class="widget-card w-1/2"></div>
             </div>
 
+            <div class="flex gap-4 h-[280px]">
+                <div class="widget-card w-1/2 p-4">
+                    <div class="text-[10px] text-gray-500 font-bold uppercase mb-2">Gold Analysis (XAU/USD)</div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                    { "interval": "1m", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "OANDA:XAUUSD", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "dark" }
+                    </script>
+                </div>
+                <div class="widget-card w-1/2 p-4">
+                    <div class="text-[10px] text-gray-500 font-bold uppercase mb-2">Aussie Analysis (AUD/USD)</div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                    { "interval": "1m", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "FX:AUDUSD", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "dark" }
+                    </script>
+                </div>
+            </div>
+
             <div id="v7-terminal" style="background: #010409; color: #c9d1d9; font-family: 'JetBrains Mono', monospace; border: 1px solid #30363d; border-radius: 4px; box-shadow: 0 0 40px rgba(0,0,0,0.8);">
                 <div style="background: #161b22; padding: 12px; border-bottom: 2px solid #238636; display: flex; justify-content: space-between; align-items: center;">
                     <div>
                         <div style="font-size: 13px; font-weight: 900; color: #f0f6fc;">MACRO_ENGINE_V7</div>
-                        <div style="font-size: 9px; color: #8b949e;">FILTERS: XAU | AUD | USD</div>
+                        <div style="font-size: 9px; color: #8b949e;">FILTERS: XAU | AUD | USA</div>
                     </div>
                     <div style="font-size: 10px; color: #3fb950; background: rgba(35,134,54,0.1); padding: 4px 8px; border-radius: 3px;">[LIVE_SYNC_ACTIVE]</div>
                 </div>
@@ -107,7 +122,7 @@
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script async src="https://platform.twitter.com/widgets.js"></script>
     <script>
-        // ANIMATION SCRIPT TO MAKE PRICES "TICK" FOR REALISM
+        // TICKING ENGINE
         function tickPrice() {
             const gold = 5105.26 + (Math.random() * 0.4 - 0.2);
             const aud = 0.7006 + (Math.random() * 0.0004 - 0.0002);
