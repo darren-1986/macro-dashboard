@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroPulse AI | Full 2026 Restored</title>
+    <title>MacroPulse AI | 2026 Institutional Terminal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #060809; color: #e5e7eb; font-family: 'Inter', sans-serif; overflow-x: hidden; }
@@ -66,8 +66,8 @@
 
         <div class="lg:col-span-6 flex flex-col gap-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-[380px]">
-                <div class="widget-card" id="gold_chart_restored"></div>
-                <div class="widget-card" id="aud_chart_restored"></div>
+                <div class="widget-card" id="gold_chart"></div>
+                <div class="widget-card" id="aud_chart"></div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-[350px]">
@@ -88,22 +88,21 @@
 
         <div class="lg:col-span-3 widget-card min-h-[755px]">
             <div class="p-4 bg-[#1e222d] border-b border-gray-800">
-                <span class="text-[11px] font-black uppercase text-yellow-500">Live: Gold • Australia • USA</span>
+                <span class="text-[11px] font-black uppercase text-yellow-500">Live Wire: Gold • Australia • USA</span>
             </div>
             <div class="flex-grow">
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-news.js" async>
                 {
-                  "feedMode": "manual",
-                  "symbols": [
-                    ["Gold", "XAUUSD"],
-                    ["Australia", "AUDUSD"],
-                    ["USA", "DXY"]
-                  ],
                   "colorTheme": "dark",
                   "isTransparent": true,
-                  "displayMode": "regular",
                   "width": "100%",
-                  "height": "100%"
+                  "height": "100%",
+                  "feedMode": "manual",
+                  "symbols": [
+                    { "proName": "OANDA:XAUUSD", "displayName": "Gold" },
+                    { "proName": "FX:AUDUSD", "displayName": "Australia" },
+                    { "proName": "TVC:DXY", "displayName": "USA" }
+                  ]
                 }
                 </script>
             </div>
@@ -113,8 +112,8 @@
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script>
         window.onload = () => {
-            new TradingView.widget({ "autosize": true, "symbol": "OANDA:XAUUSD", "interval": "60", "theme": "dark", "container_id": "gold_chart_restored", "hide_top_toolbar": true, "hide_legend": true, "style": "1" });
-            new TradingView.widget({ "autosize": true, "symbol": "FX:AUDUSD", "interval": "60", "theme": "dark", "container_id": "aud_chart_restored", "hide_top_toolbar": true, "hide_legend": true, "style": "1" });
+            new TradingView.widget({ "autosize": true, "symbol": "OANDA:XAUUSD", "interval": "60", "theme": "dark", "container_id": "gold_chart", "hide_top_toolbar": true, "hide_legend": true, "style": "1" });
+            new TradingView.widget({ "autosize": true, "symbol": "FX:AUDUSD", "interval": "60", "theme": "dark", "container_id": "aud_chart", "hide_top_toolbar": true, "hide_legend": true, "style": "1" });
         };
     </script>
 </body>
